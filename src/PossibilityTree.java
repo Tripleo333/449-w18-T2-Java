@@ -2,11 +2,20 @@
 public class PossibilityTree {
 	
 	private Constraints constraints = new Constraints();
+	private char[] tasks;
 
-	public State Branch(State state) {
-		// recursive dfs
-		// uses meetsHardConstraints() to determine validity of the branch of the tree
-		return state;
+	public int Branch(int i, State state) {
+		if (!meetsHardConstraints(i, state))
+			return -1;
+		else {
+			int penalty = this.countPenalty(i, state);
+			
+			for (char task : this.tasks) {
+				Branch(i+1,new State(i+1, task, state));
+			} 
+			return penalty;
+		}
+			
 	}
 	
 	/* Meant to be implemented in a loop which provides i
@@ -33,6 +42,7 @@ public class PossibilityTree {
 		}
 		
 		// Determine if the pair {i+1, state.entries[i]} meets the Forced partial Assignment constraint
+		// TODO: fix this semantic error
 		for (char[] mustPair : constraints.forcedPartialAssn) {
 			if (pair == mustPair) {
 				return true; // only one case where this method can return true!
@@ -41,5 +51,7 @@ public class PossibilityTree {
 		
 		return false;
 	}
+	
+	public int countPenalty(int i, State state) { return 0;}
 	
 }

@@ -4,7 +4,7 @@
 public class State {
     
     // Entries is a character A, B, C, D, E, F, G, H for the related task, or X for unknown
-    public char[] entries;
+    public char[] entries = {};
     // Penalty is current penalty value
     public int penalty;
     
@@ -17,5 +17,14 @@ public class State {
         this.penalty = penalty;
     }
     
-    
+    public State(int i, char task, State prevState) {
+    	for (int j = 0; j <= i; j++) {
+    		if (j == i) {
+    			this.entries[j] = task;
+    		}
+    		else {
+    			this.entries[j] = prevState.entries[j]; 
+    		}    			
+    	}
+    }
 }
