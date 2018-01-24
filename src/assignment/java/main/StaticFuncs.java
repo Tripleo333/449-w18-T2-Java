@@ -1,10 +1,10 @@
-
+package assignment.java.main;
 public class StaticFuncs {
-    public static hardConstraints
+    //public static hardConstraints
     
-    public static boolean checkValid(State state, cs) {
+    //public static boolean checkValid(State state, cs) {
         
-    }
+    //}
     
     public static boolean checkFPA(int mach, State state, char[][] cs) {
         for(int constraint = 0; constraint < cs.length; constraint++) {

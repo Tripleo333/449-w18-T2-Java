@@ -1,3 +1,4 @@
+package assignment.java.main;
 /*
  * This is the class that represents an iteration of the algorithm.
  */

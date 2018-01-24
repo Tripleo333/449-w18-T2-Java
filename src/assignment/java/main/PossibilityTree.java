@@ -1,3 +1,4 @@
+package assignment.java.main;
 
 public class PossibilityTree {
 	
