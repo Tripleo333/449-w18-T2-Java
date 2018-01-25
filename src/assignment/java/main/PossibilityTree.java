@@ -4,13 +4,31 @@ public class PossibilityTree {
 	
 	private Constraints constraints = new Constraints();
 	private char[] tasks;
+	private double currentMinPenalty = Double.POSITIVE_INFINITY;
 
-	public int Branch(int i, State state) {
+	public PossibilityTree(char[] possibleTasks) {
+		char[] alphabet = new char[26];
+		for(char c = 'A'; c <= 'Z'; ++c) {
+		    ++c;
+		}
+		int counter = 0;
+		for (char letter : alphabet) {
+			for (char ourLetter : possibleTasks) {
+				if (ourLetter == letter)
+					counter++;
+			}
+		}
+		if (counter == possibleTasks.length)
+			this.tasks = possibleTasks;
+	}
+	
+	public double Branch(int i, State state) {
 		if (!meetsHardConstraints(i, state))
 			return -1;
 		else {
-			int penalty = this.countPenalty(i, state);
-			
+			double penalty = this.countPenalty(i, state);
+			if (penalty >= this.currentMinPenalty)
+				return -1;
 			for (char task : this.tasks) {
 				Branch(i+1,new State(i+1, task, state));
 			} 
@@ -37,12 +55,14 @@ public class PossibilityTree {
 		}
 		
 		// Determine if the pair {i+1, state.entries[i]} and {i+2, state.entries[i+1]} meets the Too Near Tasks constraint
-		for (i = 0; i < constraints.tooNearTasks.length; i++) {
-				if (state.entries[i] == constraints.tooNearTasks[i][0] && state.entries[i+1] == constraints.tooNearTasks[i][1])
-					return false;
+		for (i = 0; i < constraints.tooNearTasks.size(); i++) {
+			char[] myPair = constraints.tooNearTasks.get(i);
+			if (state.entries[i] == myPair[0] && state.entries[i+1] == myPair[1])
+				return false;
+			
 		}
 		
-		// Determine if the pair {i+1, state.entries[i]} meets the Forced partial Assignment constraint
+		// Determine if the pair {i+1, state.entries[i]} meets the Forced Partial Assignment constraint
 		// TODO: fix this semantic error
 		for (char[] mustPair : constraints.forcedPartialAssn) {
 			if (pair == mustPair) {
