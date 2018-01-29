@@ -236,7 +236,7 @@ public class Constraints {
         for (int constraint = 0; constraint < cs.length; constraint++) {
             // If machine we're checking is equal to machine in the constraint
             if (mach == cs[constraint][0]) {
-                // If the task asssigned to the machine does not equal the task that is supposed to be assigned to that machine
+                // If the task assigned to the machine does not equal the task that is supposed to be assigned to that machine
                 if (state.entries[mach] != cs[constraint][1]) {
                     return false;
                 }
