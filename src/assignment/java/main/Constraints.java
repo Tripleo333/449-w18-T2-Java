@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Optional;
 
 public class Constraints {
+	// By Anastasiya:
 	
 	public static final int FORCED_PARTIAL_ASSIGNMENT = 1;
 	public static final int FORBIDDEN_MACHINE = 2;
@@ -80,6 +81,9 @@ public class Constraints {
 		default: 
 			System.err.println("Invalid type argument!");
 		}
+	}
+	
+	// By Joseph:
     /*
      * Please note that for this file I assume mach is an int which is the entry in the array, not the mach number (mach1 = 0, mach2 = 1, so on so forth)
      * 
@@ -94,7 +98,7 @@ public class Constraints {
      */
     public int checkSoftConstraints(int mach, State state) {
         int returned = checkTNP(mach, state, tooNearPenalties.toArray(new Triplet[0]));
-        returned += checkMP(mach, state, machinePenalties.toArray(new int[0][0]));
+        returned += checkMP(mach, state, machinePenalties);
         return returned;
     }
     
