@@ -31,7 +31,7 @@ public class Constraints {
 	 * 8X8 matrix of penalties. If p is the number at position i on line j and an assignment has assigned machine j to task at i, 
 	 * then p is added to the penalty value of that assignment.
 	 */
-	public LinkedList<Integer> machinePenalties;
+	public int[][] machinePenalties;
 	/*
 	 * 
 	 */
@@ -42,9 +42,19 @@ public class Constraints {
 		this.forcedPartialAssn = new LinkedList<char[]>();
 	}
 	
-	public void addConstraintPair(int type, Optional<char[]> pairOpt, Optional<Integer> penaltyOpt) {
+	/*
+	 * PARAM:
+	 * type - Type of constraint, a constant.
+	 * pairOpt - Char array of machine, task or task, task to add to the given constraint's linked list. Not used with constraint type MACHINE_PENALTY.
+	 * penaltyOpt - Penalty associated with a machine-task pair. Used only for soft constraint types (MACHINE_PENALTIES, TOO_NEAR_PENALTIES).
+	 * mechineIndx - Index of outer array corresponding to the machine in question. Used only for MACHINE_PENALTIES
+	 * taskIndx - Index of inner
+	 */
+	public void addConstraintPair(int type, Optional<char[]> pairOpt, Optional<Integer> penaltyOpt, Optional<Integer> machineIndx, Optional<Integer> taskIndx) {
 		Integer penalty = penaltyOpt.isPresent() ? penaltyOpt.get() : 0;
 		char[] pair = pairOpt.isPresent() ? pairOpt.get() : null;
+		int machine = machineIndx.isPresent() ? machineIndx.get().intValue() : 0;
+		int task = taskIndx.isPresent() ? taskIndx.get().intValue() : 0;
 		switch(type) {
 		case FORCED_PARTIAL_ASSIGNMENT:
 			this.forcedPartialAssn.add(pair);
@@ -56,7 +66,7 @@ public class Constraints {
 			this.tooNearTasks.add(pair);
 			break;
 		case MACHINE_PENALTIES:
-			this.machinePenalties.add(penalty);
+			this.machinePenalties[machine][task] = penalty;
 			break;
 		case TOO_NEAR_PENALTIES:
 			Triplet triplet = new Triplet(pair[0], pair[1], penalty);
@@ -65,6 +75,5 @@ public class Constraints {
 		default: 
 			System.err.println("Invalid type argument!");
 		}
-	}
 
 }
