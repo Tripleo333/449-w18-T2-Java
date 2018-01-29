@@ -3,22 +3,76 @@ package assignment.java.main;
 import java.util.LinkedList;
 
 public class StaticFuncs {   
+    /*
+     * Please note that for this file I assume mach is an int which is the entry in the array, not the mach number (mach1 = 0, mach2 = 1, so on so forth)
+     * 
+     */
     
     
-    public static int checkTNP(int mach, State state, Triplet[] cs) {
+    /*
+     * Checks soft constraints given newest filled machine and the state; returns penalty value associated with that assignment
+     * 
+     * @param int mach:     newest filled index in the state given (if state is a, b, x, ... then mach should be 1 to represent b)
+     * @param State state:  given state to check constraints on
+     */
+    public int checkSoftConstraints(int mach, State state) {
+        int returned = checkTNP(mach, state, tooNearPenalties.toArray(new Triplet[0]));
+        returned += checkMP(mach, state, machinePenalties.toArray(new int[0][0]));
+        return returned;
+    }
+    
+    
+    /*
+     * The reason why this one is a little weird is because we want to assume current entry is task 2 and check "behind"
+     * it for task one.  However, if the mach is 0 then we check nothing because there is only one task assigned, and if the mach is 7 then we don't check "behind",
+     * instead we wrap around and check 0.
+     * 
+     * @param int mach:     newest filled index in the state given (if state is a, b, x, ... then mach should be 1 to represent b)
+     * @param State state:  given state to check constraints on
+     * @param Triplet[] cs: array of TNP triplets
+     */
+    public int checkTNP(int mach, State state, Triplet[] cs) {
+        int returned = 0;
+        
+        // Can't do anything; only 1 machine to check; need 2
         if (mach == 0) {
-            return 0;
+            return returned;
         }
         
-        if (mach == 7) {
+        // If we're checking the last machine, wrap around and consider mach 7 as task 1 and mach 0 as task 2
+        else if (mach == 7) {
             for (int i = 0; i < cs.length; i++) {
-                // If task 2 in constraint == task in our mach:
-                if (cs[i].task == state.entries[mach]) {
-                    
+                // If task 1 in constraint == task in mach:
+                if (cs[i].mach == state.entries[mach]) {
+                    // If task 2 in constraint == task in state.entries[0]:
+                    if (cs[i].task == state.entries[0]) {
+                        if (cs[i].penalty > returned) {
+                            returned = cs[i].penalty;
+                        }
+                    }
                 }
             }
         }
+        
+        else {
+            // For all constraints
+            for (int i = 0; i < cs.length; i++) {
+                // If task2 in cs == task assigned to mach
+                if (cs[i].task == state.entries[mach]) {
+                    // If task 1 in cs == task assigned to mach-1
+                    if (cs[i].mach == state.entries[mach-1]) {
+                        // Return penalty
+                        if (cs[i].penalty > returned) {
+                            returned = cs[i].penalty;
+                        }
+                    }
+                }
+            }
+        }
+        
+        return returned;
     }
+    
     
     /*
      * ASSUMING INNER ARRAYS ARE TASKS OUTER ARRAYS ARE MACH'S!
@@ -28,9 +82,10 @@ public class StaticFuncs {
      * @param State state:  given state to check constraints on
      * @param constraints:  Constraints object
      */
-    public static int checkMP(int mach, State state, int[][] cs) {
+    public int checkMP(int mach, State state, int[][] cs) {
         return cs[mach][state.entries[mach]];
     }
+    
     
     /*
      * Checks all hard constraints and returns true if all are passed, returns false if a hard constraint is broken
@@ -39,15 +94,16 @@ public class StaticFuncs {
      * @param State state:  given state to check constraints on
      * @param constraints:  Constraints object
      */
-    public static boolean checkHardConstraints(int mach, State state, Constraints constraints) {
+    public boolean checkHardConstraints(int mach, State state) {
         // Runs checkFPA with mach, state, and the constraints FPA linked list which is converted to a 2d char array
-        if (checkFPA(mach, state, constraints.forcedPartialAssn.toArray(new char[0][0])) == false) return false;
+        if (checkFPA(mach, state, forcedPartialAssn.toArray(new char[0][0])) == false) return false;
         // Runs checkFM with mach, state, and the constraints FM linked list which is converted to a 2d char array
-        if (checkFM(mach, state, constraints.forbiddenMach.toArray(new char[0][0])) == false) return false;
+        if (checkFM(mach, state, forbiddenMach.toArray(new char[0][0])) == false) return false;
         // Runs checkTNT with mach, state, and the constraints TNT linked list which is converted to a 2d char array
-        if (checkTNT(mach, state, constraints.tooNearTasks.toArray(new char[0][0])) == false) return false;
+        if (checkTNT(mach, state, tooNearTasks.toArray(new char[0][0])) == false) return false;
         return true;
     }
+    
     
     /*
      * The reason why this one is a little weird is because we want to assume current entry is task 2 and check "behind"
@@ -58,7 +114,7 @@ public class StaticFuncs {
      * @param State state:  given state to check constraints on
      * @param char[][] cs:  2D array of only Too-Near Task constraints
      */
-    public static boolean checkTNT(int mach, State state, char[][] cs) {
+    public boolean checkTNT(int mach, State state, char[][] cs) {
         // Check nothing because there is only one task assigned to a machine in this state
         if (mach == 0) return true;
         // For each constraint
@@ -88,12 +144,13 @@ public class StaticFuncs {
         return true;
     }
     
+    
     /*
      * @param int mach:     newest filled index in the state given (if state is a, b, x, ... then mach should be 1 to represent b)
      * @param State state:  given state to check constraints on
      * @param char[][] cs:  2D array of only Forced Partial Assignment constraints
      */
-    public static boolean checkFPA(int mach, State state, char[][] cs) {
+    public boolean checkFPA(int mach, State state, char[][] cs) {
         // Checks each constraint in cs
         for (int constraint = 0; constraint < cs.length; constraint++) {
             // If machine we're checking is equal to machine in the constraint
@@ -107,12 +164,13 @@ public class StaticFuncs {
         return true;
     }
 
+    
     /*
      * @param int mach:     newest filled index in the state given (if state is a, b, x, ... then mach should be 1 to represent b)
      * @param State state:  given state to check constraints on
      * @param char[][] cs:  2D array of only Forbidden Machine constraints
      */
-    public static boolean checkFM(int mach, State state, char[][] cs) {
+    public boolean checkFM(int mach, State state, char[][] cs) {
         // For each constraint in cs
         for (int constraint = 0; constraint < cs.length; constraint++) {
             // If the given machine is equal to the machine in the constraint
@@ -125,23 +183,4 @@ public class StaticFuncs {
         }
         return true;
     }
-    
-    /*public static boolean checkFPA(State state, char[][] cs) {
-        // For each machine in the state:
-        for(int mach = 0; mach < state.entries.length; mach++) {
-            // For each constraint in our set of constraints:
-            for(int constraint = 0; constraint < cs.length; constraint++) {
-                // If the machine we're currently looking at is equal to the machine number in the constraint:
-                if (mach == cs[constraint][0]) {
-                    // If the task at the machine is equal to the constraints task:
-                    if (state.entries[mach] == cs[constraint][1]) {
-                        // This means that the given state 
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-    */
 }
