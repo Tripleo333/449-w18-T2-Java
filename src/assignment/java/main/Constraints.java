@@ -47,8 +47,8 @@ public class Constraints {
 	 * type - Type of constraint, a constant.
 	 * pairOpt - Char array of machine, task or task, task to add to the given constraint's linked list. Not used with constraint type MACHINE_PENALTY.
 	 * penaltyOpt - Penalty associated with a machine-task pair. Used only for soft constraint types (MACHINE_PENALTIES, TOO_NEAR_PENALTIES).
-	 * mechineIndx - Index of outer array corresponding to the machine in question. Used only for MACHINE_PENALTIES
-	 * taskIndx - Index of inner
+	 * mechineIndx - Index of outer array corresponding to the machine in question. Used only for MACHINE_PENALTIES.
+	 * taskIndx - Index of inner array corresponding to task assigned to machine in question. Used only for MACHINE_PENALTIES.
 	 */
 	public void addConstraintPair(int type, Optional<char[]> pairOpt, Optional<Integer> penaltyOpt, Optional<Integer> machineIndx, Optional<Integer> taskIndx) {
 		Integer penalty = penaltyOpt.isPresent() ? penaltyOpt.get() : 0;
