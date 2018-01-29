@@ -5,18 +5,6 @@ import java.util.Optional;
 
 public class Constraints {
 	
-	private class Triplet {
-		char mach;
-		char task;
-		Integer penalty;
-		
-		Triplet(char mach, char task, Integer penalty) {
-			this.mach = mach;
-			this.task = task;
-			this.penalty = penalty;
-		}
-	}
-	
 	public static final int FORCED_PARTIAL_ASSIGNMENT = 1;
 	public static final int FORBIDDEN_MACHINE = 2;
 	public static final int TOO_NEAR_TASKS = 3;

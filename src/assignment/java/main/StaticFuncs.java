@@ -4,6 +4,34 @@ import java.util.LinkedList;
 
 public class StaticFuncs {   
     
+    
+    public static int checkTNP(int mach, State state, Triplet[] cs) {
+        if (mach == 0) {
+            return 0;
+        }
+        
+        if (mach == 7) {
+            for (int i = 0; i < cs.length; i++) {
+                // If task 2 in constraint == task in our mach:
+                if (cs[i].task == state.entries[mach]) {
+                    
+                }
+            }
+        }
+    }
+    
+    /*
+     * ASSUMING INNER ARRAYS ARE TASKS OUTER ARRAYS ARE MACH'S!
+     * Returns penalty value associated with the given machine at the given task
+     * 
+     * @param int mach:     newest filled index in the state given (if state is a, b, x, ... then mach should be 1 to represent b)
+     * @param State state:  given state to check constraints on
+     * @param constraints:  Constraints object
+     */
+    public static int checkMP(int mach, State state, int[][] cs) {
+        return cs[mach][state.entries[mach]];
+    }
+    
     /*
      * Checks all hard constraints and returns true if all are passed, returns false if a hard constraint is broken
      * 
