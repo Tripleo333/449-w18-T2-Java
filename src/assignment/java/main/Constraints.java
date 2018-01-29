@@ -33,13 +33,18 @@ public class Constraints {
 	 */
 	public int[][] machinePenalties;
 	/*
-	 * 
+	 * Triplets of <Task1, Task2, Penalty value>. If Task1 and Task2 are assigned to neighboring machines, the penalty value applies.
 	 */
 	public LinkedList<Triplet> tooNearPenalties;
 	
-	
+	/*
+	* No-argument constructor. Initializes LinkedList type fields using their no-arg constructors.
+	*/
 	public Constraints() {
 		this.forcedPartialAssn = new LinkedList<char[]>();
+		this.forbiddenMach = new LinkedList<char[]>();
+		this.tooNearTasks = new LinkedList<char[]>();
+		this.tooNearPenalties = new LinkedList<Triplet>();
 	}
 	
 	/*
