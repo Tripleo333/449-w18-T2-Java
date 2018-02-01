@@ -14,7 +14,7 @@ public class PossibilityTree {
 	public PossibilityTree(char[] possibleTasks) {
 		char[] alphabet = new char[26];
 		for(char c = 'A'; c <= 'Z'; ++c) {
-		    ++c;
+		    alphabet[c-65] = c;
 		}
 		int counter = 0;
 		for (char letter : alphabet) {
