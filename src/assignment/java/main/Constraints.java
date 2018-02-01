@@ -56,11 +56,7 @@ public class Constraints {
 	 * mechineIndx - Index of outer array corresponding to the machine in question. Used only for MACHINE_PENALTIES.
 	 * taskIndx - Index of inner array corresponding to task assigned to machine in question. Used only for MACHINE_PENALTIES.
 	 */
-	public void addConstraintPair(int type, Optional<char[]> pairOpt, Optional<Integer> penaltyOpt, Optional<Integer> machineIndx, Optional<Integer> taskIndx) {
-		Integer penalty = penaltyOpt.isPresent() ? penaltyOpt.get() : 0;
-		char[] pair = pairOpt.isPresent() ? pairOpt.get() : null;
-		int machine = machineIndx.isPresent() ? machineIndx.get().intValue() : 0;
-		int task = taskIndx.isPresent() ? taskIndx.get().intValue() : 0;
+	public void addConstraintPair(int type, char[] pair) {
 		switch(type) {
 		case FORCED_PARTIAL_ASSIGNMENT:
 			this.forcedPartialAssn.add(pair);
@@ -71,16 +67,18 @@ public class Constraints {
 		case TOO_NEAR_TASKS:
 			this.tooNearTasks.add(pair);
 			break;
-		case MACHINE_PENALTIES:
-			this.machinePenalties[machine][task] = penalty;
-			break;
-		case TOO_NEAR_PENALTIES:
-			Triplet triplet = new Triplet(pair[0], pair[1], penalty);
-			this.tooNearPenalties.add(triplet);
-			break;
 		default: 
 			System.err.println("Invalid type argument!");
 		}
+	}
+	
+	public void addMachPenalties(int machineIndx, int taskIndx, int penalty) {
+		this.machinePenalties[machineIndx][taskIndx] = penalty;
+	}
+	
+	public void addTooNearPenalties(char[] pair, int penalty) {
+		Triplet triplet = new Triplet(pair[0], pair[1], penalty);
+		this.tooNearPenalties.add(triplet);
 	}
 	
 	// By Joseph:
