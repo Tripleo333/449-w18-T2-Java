@@ -4,7 +4,6 @@ package assignment.java.main;
  */
 import java.io.File;
 import java.util.Scanner;
-import java.util.regex.*;
 public class fileIO {
 
 	//this is a preattempt at opening a file
@@ -43,19 +42,42 @@ public class fileIO {
             Scanner input = new Scanner(System.in);
             File file = new File(input.nextLine());
             input = new Scanner(file);
-            while(input.hasNextLine()) {
-                String line = input.nextLine();
-                System.out.println(line);
-               
+            String name = "";
+            int counter =0;
+            String garbage = "";
+            String line = input.nextLine();
+
+            // C:\Users\Admin\git\449-w18-T2-Java\src\assignment\java\main\test.txt
+            
+            
+            if(line.matches("Name:(.*)")) {
+                name = input.nextLine();
+                System.out.println("contents of name: " + name);
+                
+            }else if(line.equals("\n")) {
+                garbage = input.nextLine();
+            }else if(line.matches("forced partial assignment:(.*)")) {
+                
+                
             }
+            
             input.close();
-                    
+                        
         }catch(Exception ex) {
             ex.printStackTrace();
         }
     }
-    
 
+    private void forcedPartialAssignment(Scanner input) {
+//        String pattern = "";
+        String line = input.nextLine();
+        while(line.matches("([A-H],[1-8])(.*)")) {
+            char[] lineArray = line.toCharArray();
+            char [] TMPair = {lineArray[1],lineArray[3]};
+            addConstraintPair(1,TMPair);
+            line = input.nextLine();
+        }
+    }
 	
 	
 	
