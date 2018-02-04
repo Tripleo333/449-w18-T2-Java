@@ -68,9 +68,10 @@ public class fileIO {
                     lineCounter++;
                     System.out.println("contents of name: " + name);
 
-                } else if (line.equals("\n")) {
+                } else if (line.matches("\n")) {
                     garbage = input.nextLine();
                     lineCounter++;
+                    System.out.print("line read by NL elseif: " + lineCounter);
                 } else if (line.matches("forced partial assignment:(.*)")) {
                     System.out.println("entered second if");
 
@@ -92,12 +93,32 @@ public class fileIO {
                 } else if (line.matches("too-near tasks:(.*)")) {
                     System.out.println("too-near tasks: elseif");
                     input = f.tooNearTasks(input);
+                    if (!validFile) {
+                        System.out.println(
+                                "Invalid file input on line " + lineCounter);
+                        System.exit(0);
+                    }
                 } else if (line.matches("machine penalties:(.*)")) {
-                    System.out.println("too-near tasks: elseif");
+                    System.out.println("machine penalties: elseif");
                     input = f.machinePenalties(input);
+                    if (!validFile) {
+                        System.out.println(
+                                "Invalid file input on line " + lineCounter);
+                        System.exit(0);
+                    }
+                } else if (line.matches("too-near penalities")) {
+                    System.out.println("too-near penalties elseif");
+                    input = f.tooNearPenalties(input);
+                    if (!validFile) {
+                        System.out.println(
+                                "Invalid file input on line " + lineCounter);
+                        System.exit(0);
+                    }
                 }
-                line = input.nextLine();
-                lineCounter++;
+                if (input.hasNextLine()) {
+                    line = input.nextLine();
+                    lineCounter++;
+                }
             }
             input.close();
 
@@ -105,6 +126,7 @@ public class fileIO {
             ex.printStackTrace();
         }
     }
+
     private Scanner machinePenalties(Scanner input) {
         int pen = 0;
         Constraints c = new Constraints();
@@ -120,15 +142,16 @@ public class fileIO {
                         "Invalid number of elements in line: " + lineCounter);
                 System.exit(0);
             }
-            int [] penaltiesIntArr = new int[8];
-            
+            int[] penaltiesIntArr = new int[8];
+
             for (int y = 0; y < 8; y++) {
                 try {
                     int temp = Integer.parseInt(penaltiesStrArr[y]);
                     penaltiesIntArr[y] = temp;
 
                     if (penaltiesIntArr[y] < 0) {
-                        System.out.println("Invalid number in line: " + lineCounter);
+                        System.out.println(
+                                "Invalid number in line: " + lineCounter);
                         System.exit(0);
                     }
                 } catch (NumberFormatException e) {
@@ -137,29 +160,76 @@ public class fileIO {
                     System.exit(0);
                 }
             }
-/*
- * KNOWN ISSUE:
- * I was unable to use the function addMachPenalties in the constraints file, so I was never able to add the matrix of penalties 
- * all the code is here though so just un-comment the line in the following forloop and everything should be fine.
- * 
- */
+            /*
+             * KNOWN ISSUE: I was unable to use the function addMachPenalties in
+             * the constraints file, so I was never able to add the matrix of
+             * penalties all the code is here though so just un-comment the line
+             * in the following forloop and everything should be fine.
+             * 
+             */
             for (int x = 0; x < 8; x++) {
-                //c.addMachPenalties(i, x , penaltiesIntArr[x]);
+                // c.addMachPenalties(i, x , penaltiesIntArr[x]);
             }
         }
-        //debug
-        System.out.println(Arrays.deepToString(c.machinePenalties));
+        System.out.println("number of lines read: " + lineCounter);
+
+        // debug
+        // System.out.println(Arrays.deepToString(c.machinePenalties));
+        return input;
+    }
+
+    private Scanner tooNearPenalties(Scanner input) {
+        int penalty;
+        String line = input.nextLine();
+        lineCounter++;
+        Constraints c = new Constraints();
+        Pattern p = Pattern.compile(
+                "(.*)((.*)[A-H](.*),(.*)[A-H](.*),(.*)[\\d+](.*))(.*)");
+        Matcher m = p.matcher(line);
+        while (m.find()) {
+            line = line.replaceAll("\\s", "");
+            char[] lineArray = line.toCharArray();
+            char[] TMPair = {lineArray[1], lineArray[3]};
+            System.out.println(
+                    "contents of line array: " + Arrays.toString(lineArray));
+            System.out
+                    .println("contents of TMPair: " + Arrays.toString(TMPair));
+            String numOnly = line.replaceAll("[^0-9]", "");
+            penalty = Integer.parseInt(numOnly);
+            if (penalty < 0) {
+                validFile = false;
+                System.out.println(
+                        "invalid penalty value at line: " + lineCounter);
+                System.exit(0);
+            }
+            c.addTooNearPenalties(TMPair, penalty);
+        }
+        Pattern pNL = Pattern.compile("(.*)");
+        Matcher mNL = pNL.matcher(line);
+        if (!mNL.find()) {
+            validFile = false;
+            System.out.println("problem encountered at line: " + lineCounter);
+            System.exit(0);
+        }
+
+        // debugging
+        for (int i = 0; i < c.tooNearPenalties.size(); i++) {
+            System.out.println(
+                    "attempting to print out contents of c.tooNearPenalties"
+                            + c.tooNearPenalties);
+        }
+
         return input;
     }
 
     private Scanner tooNearTasks(Scanner input) {
-        System.out.println("Beginning of toonear tasks function");
+        // System.out.println("Beginning of toonear tasks function");
         String line = input.nextLine();
         lineCounter++;
         System.out.println(line);
         Constraints c = new Constraints();
         // Matcher m = new Matcher("([1-8],[A-H])(.*)");
-        Pattern p = Pattern.compile("(.*)((.*)[A-B](.*),(.*)[A-H](.*))(.*)");
+        Pattern p = Pattern.compile("(.*)((.*)[A-H](.*),(.*)[A-H](.*))(.*)");
         Matcher m = p.matcher(line);
         while (m.find()) {
             line = line.replaceAll("\\s", "");
@@ -176,6 +246,8 @@ public class fileIO {
         Matcher mNL = pNL.matcher(line);
         if (!mNL.find()) {
             validFile = false;
+            System.out.println("problem encountered at line: " + lineCounter);
+            System.exit(0);
         }
 
         for (int i = 0; i < c.tooNearTasks.size(); i++) {
