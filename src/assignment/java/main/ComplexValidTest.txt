@@ -1,0 +1,26 @@
+Name://notdoneyet
+ComplexValidTest
+
+forced partial assignment:
+(1,D)
+(3,F)
+(6,B)
+
+forbidden machine:
+(2,D)
+
+too-near tasks:
+
+machine penalties:
+10 10 10 10 10 10 10 10
+10 10 10 10 10 10 10 10
+10 10 10 10 10 10 10 10
+10 10 10 10 10 10 10 10
+10 10 10 10 10 10 10 10
+10 10 10 10 10 10 10 10
+10 10 10 10 10 10 10 10
+10 10 10 10 10 10 10 10
+
+too-near penalities
+(1,D,100)
+(6,B,999)
