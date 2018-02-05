@@ -1,4 +1,4 @@
-package assignment.java.main;
+
 /*
  * This is the class that represents an iteration of the algorithm.
  */
@@ -31,5 +31,6 @@ public class State {
     			this.entries[j] = prevState.entries[j]; 
     		}    			
     	}
+    	penalty = prevState.penalty;
     }
 }

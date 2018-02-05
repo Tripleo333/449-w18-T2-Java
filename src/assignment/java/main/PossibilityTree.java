@@ -1,11 +1,11 @@
-package assignment.java.main;
+import java.util.ArrayList;
 
 public class PossibilityTree {
 	
 	private Constraints constraints = new Constraints();
 	public char[] tasks;
-	private double currentMinPenalty = Double.POSITIVE_INFINITY;
-	private State minPenaltyState = null; // Do we need this?
+	public double currentMinPenalty = Double.POSITIVE_INFINITY;
+	public State minPenalty = null;
 
 	/*
 	 * Checks and Initiates the possibleTasks field.
@@ -34,40 +34,97 @@ public class PossibilityTree {
 	 * then branches out a branch for every possible next task and calls itself.
 	 * PARAM:
 	 * i - The current (non-empty) index of the task list. The i+1th index is empty.
-	 * state - The current task list. Full until index i+1. Has a penalty value!
+	 * state - The current task list. Full until index i+1.
 	 */
-	public State Branch(int i, State state, char[] notTaken) {
+	/*
+	public void Branch(int i, State state, char[] notTaken) {
+	    System.out.println("\nMach: " + i);
+	    System.out.println("Entries: ");
+	    for (int z = 0; z < state.entries.length; z++) {
+	        System.out.print(state.entries[z]);
+	    }
+	    System.out.println("");
 	    
+	    /*
+	    if (i >= 7) {
+	        if (this.currentMinPenalty > state.penalty) {
+	            this.currentMinPenalty = state.penalty;
+	            this.minPenalty = state;
+	        }
+	        return state;
+	    }
+	    */
+	    /*
 	    if (!constraints.checkHardConstraints(i, state)) {
-			return null;
+	        System.out.println("Doesn't meet hard constraints");
+			return;
 	    }
 	    
 		else {
-			if (this.currentMinPenalty > state.penalty) { // Moved this here b/c doesn't need to be checked unless hard constraints met
-		           this.currentMinPenalty = state.penalty;
-		    }
-			
-			double penalty = constraints.checkSoftConstraints(i, state); // penalty of the current state...??
+			double penalty = constraints.checkSoftConstraints(i, state);
 			if (penalty >= this.currentMinPenalty) { // Base case...
-				return null;
+				return;
 			}
+			
 			state.penalty += penalty;
+			
+			if (i >= 7) {
+			    System.out.println("test");
+			    if (this.currentMinPenalty > state.penalty) {
+			        this.currentMinPenalty = state.penalty;
+			        this.minPenalty = state;
+			    }
+			    return;
+			}
 			
 			for (int x = 0; x < notTaken.length; x++) {
 			    int counter = 0;
-			    char[] next = new char[8 - i];
+			    char[] next = new char[6 - i];
 			    for (int y = 0; y < notTaken.length; y++) {
 			        if (y != x) {
 			            next[counter] = notTaken[y];
 			            counter++;
 			        }
 			    }
+			    System.out.println(next);
 				Branch(i+1, new State(i+1, notTaken[x], state), next); // Recursive call to self
 			} 
-			//return minPenaltyState; // not initialized anywhere 
-			return state;
+			//return minPenalty;
 		}
-			
+	    */
+	
+	public void Branch(int i, State state, char[] toDo) {	    
+	    
+        if (!constraints.checkHardConstraints(i, state)) {
+            System.out.println("Doesn't meet hard constraints");
+            return;
+        }
+        
+        state.penalty += constraints.checkSoftConstraints(i, state);
+        if (i >= 7) {
+            if (state.penalty < currentMinPenalty) {
+                currentMinPenalty = state.penalty;
+                minPenalty = state;
+            }
+            return;
+        }
+        
+        if (state.penalty > currentMinPenalty) {
+            return;
+        }
+        
+        for (int x = 0; x < toDo.length; x++) {
+            char[] newToDo = toDo.clone();
+            if (toDo[x] != 'X') {
+                newToDo[x] = 'X';
+                Branch(i+1, new State(i+1, toDo[x], state), newToDo);
+            }
+        }
+        return;
+        
+        
+        
+        
 	}
 	
 	

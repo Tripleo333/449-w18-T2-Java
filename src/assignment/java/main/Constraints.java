@@ -1,6 +1,7 @@
-package assignment.java.main;
+
 
 import java.util.LinkedList;
+import java.util.Optional;
 
 public class Constraints {
 	// By Anastasiya:
@@ -8,6 +9,8 @@ public class Constraints {
 	public static final int FORCED_PARTIAL_ASSIGNMENT = 1;
 	public static final int FORBIDDEN_MACHINE = 2;
 	public static final int TOO_NEAR_TASKS = 3;
+	public static final int MACHINE_PENALTIES = 4;
+	public static final int TOO_NEAR_PENALTIES = 5;
 	
 	// Hard Constraints
 	/*
@@ -39,7 +42,6 @@ public class Constraints {
 	* No-argument constructor. Initializes LinkedList type fields using their no-arg constructors.
 	*/
 	public Constraints() {
-
 		this.forcedPartialAssn = new LinkedList<char[]>();
 		this.forbiddenMach = new LinkedList<char[]>();
 		this.tooNearTasks = new LinkedList<char[]>();
@@ -50,11 +52,10 @@ public class Constraints {
 	/*
 	 * PARAM:
 	 * type - Type of constraint, a constant.
-	 * pair - Char array of machine, task or task, task to add to the given constraint's linked list.
-	 * 
-	 * Example:
-	 * char[] pair = {'1', 'A'); 
-	 * constraints.addConstraintPair(Constraints.FORBIDDEN_MACHINE, pair);
+	 * pairOpt - Char array of machine, task or task, task to add to the given constraint's linked list. Not used with constraint type MACHINE_PENALTY.
+	 * penaltyOpt - Penalty associated with a machine-task pair. Used only for soft constraint types (MACHINE_PENALTIES, TOO_NEAR_PENALTIES).
+	 * mechineIndx - Index of outer array corresponding to the machine in question. Used only for MACHINE_PENALTIES.
+	 * taskIndx - Index of inner array corresponding to task assigned to machine in question. Used only for MACHINE_PENALTIES.
 	 */
 	public void addConstraintPair(int type, char[] pair) {
 		switch(type) {
@@ -72,25 +73,10 @@ public class Constraints {
 		}
 	}
 	
-	/*
-	 * Adds a machine penalty to the 2D array of penalties
-	 * PARAM:
-	 * machineIndx - the index of the outer loop
-	 * taskIndx - the index of the inner loop
-	 * penalty - the penalty value to be assigned at index [machineIndx][taskIndx] 
-	 */
 	public void addMachPenalties(int machineIndx, int taskIndx, int penalty) {
 		this.machinePenalties[machineIndx][taskIndx] = penalty;
 	}
 	
-	/*
-	 * Adds a too near penalty triplet to the linked list of too near penalties
-	 * PARAM:
-	 * pair - pair of tasks that cannot be assigned to neighboring machines
-	 * penalty - the penalty to be assigned if this pair of tasks is assigned to neighboring machines
-	 * 
-	 * Note: Uses class Triplet
-	 */
 	public void addTooNearPenalties(char[] pair, int penalty) {
 		Triplet triplet = new Triplet(pair[0], pair[1], penalty);
 		this.tooNearPenalties.add(triplet);
@@ -110,8 +96,16 @@ public class Constraints {
      * @param State state:  given state to check constraints on
      */
     public int checkSoftConstraints(int mach, State state) {
+        if (mach == -1) return 0;
         int returned = checkTNP(mach, state, tooNearPenalties.toArray(new Triplet[0]));
         returned += checkMP(mach, state, machinePenalties);
+        if (returned != 0) {
+            System.out.println("Entries: ");
+            for (int z = 0; z < state.entries.length; z++) {
+                System.out.print(state.entries[z]);
+            }
+            System.out.println("");
+        }
         return returned;
     }
     
@@ -177,7 +171,9 @@ public class Constraints {
      * @param constraints:  Constraints object
      */
     public int checkMP(int mach, State state, int[][] cs) {
-        return cs[mach][state.entries[mach]];
+        if (state.entries[mach] == 'X') return 0;
+        System.out.println();
+        return cs[mach][state.entries[mach] - 65];
     }
     
     
@@ -189,6 +185,7 @@ public class Constraints {
      * @param constraints:  Constraints object
      */
     public boolean checkHardConstraints(int mach, State state) {
+        if (mach == -1) return true;
         // Runs checkFPA with mach, state, and the constraints FPA linked list which is converted to a 2d char array
         if (checkFPA(mach, state, forcedPartialAssn.toArray(new char[0][0])) == false) return false;
         // Runs checkFM with mach, state, and the constraints FM linked list which is converted to a 2d char array
