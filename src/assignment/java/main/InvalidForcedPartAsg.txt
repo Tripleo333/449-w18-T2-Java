@@ -1,5 +1,5 @@
 Name:
-InvalidInForbidMach
+InvalidForcedPartAsg
 
 forced partial assignment:
 (1,A)
@@ -9,11 +9,9 @@ forced partial assignment:
 (8,E)
 (7,F)
 (4,G)
-(5,H)
+(2,H)
 
 forbidden machine:
-(3,D)
-(A,A)
 
 too-near tasks:
 
