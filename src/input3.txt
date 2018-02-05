@@ -1,0 +1,20 @@
+Name:
+test 3 - F A G D H E C B
+
+forced partial assignment:
+
+forbidden machine:
+ 
+too-near tasks:
+
+machine penalties:
+5 4 3 2 1 0 7 6
+0 7 6 5 4 3 2 1
+6 5 4 3 2 1 0 7
+3 2 1 0 7 6 5 4
+7 6 5 4 3 2 1 0
+4 3 2 1 0 7 6 5
+2 1 0 7 6 5 4 3
+1 0 7 6 5 4 3 2
+
+too-near penalities
