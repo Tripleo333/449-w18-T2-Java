@@ -1,5 +1,6 @@
 package assignment.java.main;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -9,23 +10,21 @@ public class Constraints {
 	public static final int FORCED_PARTIAL_ASSIGNMENT = 1;
 	public static final int FORBIDDEN_MACHINE = 2;
 	public static final int TOO_NEAR_TASKS = 3;
-	public static final int MACHINE_PENALTIES = 4;
-	public static final int TOO_NEAR_PENALTIES = 5;
 	
 	// Hard Constraints
 	/*
 	 * These pairs must be included in the final state
 	 * Example: ['1', 'F']
 	 */
-	public LinkedList<char[]> forcedPartialAssn;
+	public ArrayList<char[]> forcedPartialAssn;
 	/*
 	 * These pairs cannot be included in the final state
 	 */
-	public LinkedList<char[]> forbiddenMach;
+	public ArrayList<char[]> forbiddenMach;
 	/*
 	 * For every row i in tooNearTasks, machine i cannot take the first task and machine i+1 cannot take the second task
 	 */
-	public LinkedList<char[]> tooNearTasks;
+	public ArrayList<char[]> tooNearTasks;
 	
 	// Soft Constraints	
 	/*
@@ -36,25 +35,26 @@ public class Constraints {
 	/*
 	 * Triplets of <Task1, Task2, Penalty value>. If Task1 and Task2 are assigned to neighboring machines, the penalty value applies.
 	 */
-	public LinkedList<Triplet> tooNearPenalties;
+	public ArrayList<Triplet> tooNearPenalties;
 	
 	/*
 	* No-argument constructor. Initializes LinkedList type fields using their no-arg constructors.
 	*/
 	public Constraints() {
-		this.forcedPartialAssn = new LinkedList<char[]>();
-		this.forbiddenMach = new LinkedList<char[]>();
-		this.tooNearTasks = new LinkedList<char[]>();
-		this.tooNearPenalties = new LinkedList<Triplet>();
+		this.forcedPartialAssn = new ArrayList<char[]>();
+		this.forbiddenMach = new ArrayList<char[]>();
+		this.tooNearTasks = new ArrayList<char[]>();
+		this.tooNearPenalties = new ArrayList<Triplet>();
 	}
 	
 	/*
 	 * PARAM:
 	 * type - Type of constraint, a constant.
-	 * pairOpt - Char array of machine, task or task, task to add to the given constraint's linked list. Not used with constraint type MACHINE_PENALTY.
-	 * penaltyOpt - Penalty associated with a machine-task pair. Used only for soft constraint types (MACHINE_PENALTIES, TOO_NEAR_PENALTIES).
-	 * mechineIndx - Index of outer array corresponding to the machine in question. Used only for MACHINE_PENALTIES.
-	 * taskIndx - Index of inner array corresponding to task assigned to machine in question. Used only for MACHINE_PENALTIES.
+	 * pair - Char array of machine, task or task, task to add to the given constraint's linked list.
+	 * 
+	 * Example:
+	 * char[] pair = {'1', 'A'); 
+	 * constraints.addConstraintPair(Constraints.FORBIDDEN_MACHINE, pair);
 	 */
 	public void addConstraintPair(int type, char[] pair) {
 		switch(type) {
@@ -72,10 +72,25 @@ public class Constraints {
 		}
 	}
 	
+	/*
+	 * Adds a machine penalty to the 2D array of penalties
+	 * PARAM:
+	 * machineIndx - the index of the outer loop
+	 * taskIndx - the index of the inner loop
+	 * penalty - the penalty value to be assigned at index [machineIndx][taskIndx] 
+	 */
 	public void addMachPenalties(int machineIndx, int taskIndx, int penalty) {
 		this.machinePenalties[machineIndx][taskIndx] = penalty;
 	}
 	
+	/*
+	 * Adds a too near penalty triplet to the linked list of too near penalties
+	 * PARAM:
+	 * pair - pair of tasks that cannot be assigned to neighboring machines
+	 * penalty - the penalty to be assigned if this pair of tasks is assigned to neighboring machines
+	 * 
+	 * Note: Uses class Triplet
+	 */
 	public void addTooNearPenalties(char[] pair, int penalty) {
 		Triplet triplet = new Triplet(pair[0], pair[1], penalty);
 		this.tooNearPenalties.add(triplet);
