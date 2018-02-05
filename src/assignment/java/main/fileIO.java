@@ -107,9 +107,7 @@ public class fileIO {
                 System.out.println("Invalid input on line: " + lineCounter);
                 System.exit(0);
             }
-
             if (line.matches("forbidden machine:") && validFile) {
-
                 System.out.println("entered forbidden machine if:\n");
                 input = fileIO.forbiddenMachine(input, c);
                 if (!validFile) {
@@ -121,8 +119,8 @@ public class fileIO {
                     line = input.nextLine();// should contain "too-near
                                             // tasks:\n"
                     lineCounter++;
-                }   else {
-                    
+                } else {
+
                 }
             } else {
                 System.out.println("Invalid input on line: " + lineCounter);
@@ -130,7 +128,6 @@ public class fileIO {
             }
 
             if (line.matches("too-near tasks:") && validFile) {
-                // System.out.println("too-near tasks: elseif");
                 input = fileIO.tooNearTasks(input, c);
                 if (!validFile) {
                     System.out.println(
@@ -153,20 +150,30 @@ public class fileIO {
             }
 
             if (line.matches("machine penalties:") && validFile) {
-                System.out.println("machine penalties: elseif");
+                System.out.println("\n\nmachine penalties: if statment");
                 input = fileIO.machinePenalties(input, c);
                 if (!validFile) {
                     System.out.println(
                             "Invalid file input on line " + lineCounter);
                     System.exit(0);
                 }
+                if (input.hasNextLine()) {
+                    line = input.nextLine();
+                    lineCounter++;
+                } else {
+                    System.out.println("invalid file, line " + lineCounter);
+                    validFile = false;
+                    System.exit(0);
+
+                }
             } else {
                 System.out.println("Invalid input on line: " + lineCounter);
                 System.exit(0);
             }
 
-            if (line.matches("too-near penalities")) {
-                System.out.println("too-near penalties elseif");
+            // TODO: problem in the following
+            if (line.matches("too-near penalities") && validFile) {
+                System.out.println("\n\ntoo-near penalties if statment");
                 input = fileIO.tooNearPenalties(input, c);
                 if (!validFile) {
                     System.out.println(
@@ -174,12 +181,11 @@ public class fileIO {
                     System.exit(0);
                 }
             } else {
+                System.out.println("wtfffff");
                 System.out.println("Invalid input on line: " + lineCounter);
                 System.exit(0);
             }
-
             input.close();
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -225,8 +231,34 @@ public class fileIO {
         }
         System.out.println("number of lines read: " + lineCounter);
 
-        // TODO: debug
-        // System.out.println(Arrays.deepToString(c.machinePenalties));
+        // reading newline and the line after that which should contain
+        // "too-near penalties"
+        if (!input.hasNextLine()) {
+            System.out.println("Invalid input line " + (++lineCounter));
+            validFile = false;
+            System.exit(0);
+        } else {
+            String line = input.nextLine();
+            lineCounter++;
+            Pattern PMachPenNL = Pattern.compile("");
+            Matcher MMachPenNL = PMachPenNL.matcher(line);
+            if (!MMachPenNL.find()) {
+                validFile = false;
+                System.out.println("Invalid input line " + lineCounter);
+                validFile = false;
+                System.exit(0);
+            }
+        }
+        if (!input.hasNextLine()) {
+            System.out.println("Invalid input line " + (lineCounter + 1));
+            validFile = false;
+            System.exit(0);
+        } else {
+            System.out.println("contents of validFile here: " + validFile);
+            System.out.println(
+                    "contents of lineCounter here: " + lineCounter + "\n");
+
+        }
         return input;
     }
 
@@ -296,14 +328,11 @@ public class fileIO {
             System.exit(0);
         }
 
-        for (int i = 0; i < c.tooNearTasks.size(); i++) {
-            System.out.println(c.tooNearTasks.get(i));
-        }
-        
-        System.out.println("number of lines read: " + lineCounter);
-        System.out.println("value of validFile: " + validFile);
+        /*
+         * for (int i = 0; i < c.tooNearTasks.size(); i++) {
+         * System.out.println(c.tooNearTasks.get(i)); }
+         */
         return input;
-
     }
 
     private static Scanner forbiddenMachine(Scanner input, Constraints c) {
