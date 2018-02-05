@@ -1,8 +1,6 @@
 package assignment.java.main;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Optional;
 
 public class Constraints {
 	// By Anastasiya:
@@ -16,15 +14,15 @@ public class Constraints {
 	 * These pairs must be included in the final state
 	 * Example: ['1', 'F']
 	 */
-	public ArrayList<char[]> forcedPartialAssn;
+	public LinkedList<char[]> forcedPartialAssn;
 	/*
 	 * These pairs cannot be included in the final state
 	 */
-	public ArrayList<char[]> forbiddenMach;
+	public LinkedList<char[]> forbiddenMach;
 	/*
 	 * For every row i in tooNearTasks, machine i cannot take the first task and machine i+1 cannot take the second task
 	 */
-	public ArrayList<char[]> tooNearTasks;
+	public LinkedList<char[]> tooNearTasks;
 	
 	// Soft Constraints	
 	/*
@@ -35,16 +33,18 @@ public class Constraints {
 	/*
 	 * Triplets of <Task1, Task2, Penalty value>. If Task1 and Task2 are assigned to neighboring machines, the penalty value applies.
 	 */
-	public ArrayList<Triplet> tooNearPenalties;
+	public LinkedList<Triplet> tooNearPenalties;
 	
 	/*
 	* No-argument constructor. Initializes LinkedList type fields using their no-arg constructors.
 	*/
 	public Constraints() {
-		this.forcedPartialAssn = new ArrayList<char[]>();
-		this.forbiddenMach = new ArrayList<char[]>();
-		this.tooNearTasks = new ArrayList<char[]>();
-		this.tooNearPenalties = new ArrayList<Triplet>();
+
+		this.forcedPartialAssn = new LinkedList<char[]>();
+		this.forbiddenMach = new LinkedList<char[]>();
+		this.tooNearTasks = new LinkedList<char[]>();
+		this.tooNearPenalties = new LinkedList<Triplet>();
+		this.machinePenalties = new int[8][8];
 	}
 	
 	/*

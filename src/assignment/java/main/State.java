@@ -5,9 +5,13 @@ package assignment.java.main;
 public class State {
     
     // Entries is a character A, B, C, D, E, F, G, H for the related task, or X for unknown
-    public char[] entries = {};
+    public char[] entries = {'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'};
     // Penalty is current penalty value
     public int penalty;
+    
+    public State() {
+        
+    }
     
     public State(char[] entries) {
         this(entries, 0);

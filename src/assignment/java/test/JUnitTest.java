@@ -26,14 +26,14 @@ class JUnitTest {
 		PossibilityTree pt = new PossibilityTree(c);
 	
 		c = ("ABCDEFGG").toCharArray();		
-		assertFalse(c.equals(pt.getTasks()));
+		assertFalse(c.equals(pt.tasks));
 		
 		c = ("ABCDEFGH").toCharArray();
-		assertArrayEquals(c, pt.getTasks());
+		assertArrayEquals(c, pt.tasks);
 		
 		c = ("GHBEFADC").toCharArray();
 		PossibilityTree py = new PossibilityTree(c);
-		assertArrayEquals(c, py.getTasks());		
+		assertArrayEquals(c, py.tasks);		
 	}
 	
 	@Test

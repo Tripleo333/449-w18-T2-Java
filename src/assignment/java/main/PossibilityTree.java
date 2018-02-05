@@ -3,8 +3,9 @@ package assignment.java.main;
 public class PossibilityTree {
 	
 	private Constraints constraints = new Constraints();
-	private char[] tasks;
+	public char[] tasks;
 	private double currentMinPenalty = Double.POSITIVE_INFINITY;
+	private State minPenaltyState = null; // Do we need this?
 
 	/*
 	 * Checks and Initiates the possibleTasks field.
@@ -33,24 +34,43 @@ public class PossibilityTree {
 	 * then branches out a branch for every possible next task and calls itself.
 	 * PARAM:
 	 * i - The current (non-empty) index of the task list. The i+1th index is empty.
-	 * state - The current task list. Full until index i+1.
+	 * state - The current task list. Full until index i+1. Has a penalty value!
 	 */
-	public double Branch(int i, State state) {
-		if (!constraints.checkHardConstraints(i, state))
-			return -1;
+	public State Branch(int i, State state, char[] notTaken) {
+	    
+	    if (!constraints.checkHardConstraints(i, state)) {
+			return null;
+	    }
+	    
 		else {
-			double penalty = constraints.checkSoftConstraints(i, state);
-			if (penalty >= this.currentMinPenalty) // Base case...
-				return penalty;
-			this.currentMinPenalty = penalty;
+			if (this.currentMinPenalty > state.penalty) { // Moved this here b/c doesn't need to be checked unless hard constraints met
+		           this.currentMinPenalty = state.penalty;
+		    }
 			
-			for (char task : this.tasks) {
-				Branch(i+1,new State(i+1, task, state)); // Recursive call to self
+			double penalty = constraints.checkSoftConstraints(i, state); // penalty of the current state...??
+			if (penalty >= this.currentMinPenalty) { // Base case...
+				return null;
+			}
+			state.penalty += penalty;
+			
+			for (int x = 0; x < notTaken.length; x++) {
+			    int counter = 0;
+			    char[] next = new char[8 - i];
+			    for (int y = 0; y < notTaken.length; y++) {
+			        if (y != x) {
+			            next[counter] = notTaken[y];
+			            counter++;
+			        }
+			    }
+				Branch(i+1, new State(i+1, notTaken[x], state), next); // Recursive call to self
 			} 
-			return penalty;
+			//return minPenaltyState; // not initialized anywhere 
+			return state;
 		}
 			
 	}
+	
+	
 	
 	
 	

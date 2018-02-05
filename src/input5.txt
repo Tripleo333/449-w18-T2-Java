@@ -1,0 +1,25 @@
+Name:
+test 5 - B, C, D, E, A, F, G, H - test FPA w/ highest pen
+
+forced partial assignment:
+(5,F)
+(6,G)
+(7,H)
+
+forbidden machine:
+ 
+too-near tasks:
+
+machine penalties:
+7 0 1 2 3 4 5 6
+6 7 0 1 2 3 4 5
+5 6 7 0 1 2 3 4
+4 5 6 7 0 1 2 3
+3 4 5 6 7 0 1 2
+2 3 4 5 6 7 0 1
+1 2 3 4 5 6 7 0
+0 1 2 3 4 5 6 7
+
+too-near penalities
+(F,G,10)
+(G,H,10)
