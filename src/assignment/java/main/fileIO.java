@@ -49,22 +49,24 @@ public class fileIO {
 
             File file = new File(str);
             Scanner input = new Scanner(file);
-            /*
-             * Scanner input = new Scanner(System.in);
-             * 
-             * File file = new File(input.nextLine()); input = new
-             * Scanner(file);
-             */
             String name = "";
             int counter = 0;
             String garbage = "";
             String line;
-            //Pattern pNewLine = "[\n\r]";
             // C:\Users\Admin\git\449-w18-T2-Java\src\assignment\java\main\test.txt
             // /home/uga/joel.lowe/workspace/449-w18-T2-Java-master/src/assignment/java/main/test.txt
-            line = input.nextLine();
+            if(input.hasNextLine()) {
+                line = input.nextLine();
+            }else {
+                System.out.println("Invalid file.");
+                System.exit(0);
+                
+            }
             lineCounter++;
-            if (line.matches("(?s)Name:") && validFile) {
+            Pattern PnameNL = Pattern.compile("Name:");
+            Matcher MnameNL = PnameNL.matcher(line);
+            System.out.println("Contents of line: "+line);
+            if (MnameNL.find() && validFile) {
                 name = input.nextLine();// should contain a string for name
                 lineCounter++;
                 line = input.nextLine();// reads new line
@@ -79,6 +81,9 @@ public class fileIO {
                 line = input.nextLine(); // line should be "forced partial
                                          // assignment:\n"
                 lineCounter++;
+            } else {
+                System.out.println("Invalid input on line " + lineCounter);
+                
             }
 
             if (line.matches("forced partial assignment:\n") && validFile) {
