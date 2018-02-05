@@ -3,13 +3,8 @@ InvalidMachPenal
 
 forced partial assignment:
 (1,A)
-(3,B)
+(4,B)
 (2,C)
-(6,D)
-(8,E)
-(7,F)
-(4,G)
-(5,H)
 
 forbidden machine:
 (3,D)
@@ -29,4 +24,3 @@ machine penalties:
 5  30 5  0  1  2  6  9
 
 too-near penalities
-(A,G,1)
