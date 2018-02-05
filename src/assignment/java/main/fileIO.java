@@ -117,21 +117,36 @@ public class fileIO {
                             "Invalid file input on line " + lineCounter);
                     System.exit(0);
                 }
-                line = input.nextLine();// should contain "too-near tasks:\n"
-                lineCounter++;
+                if (input.hasNextLine()) {
+                    line = input.nextLine();// should contain "too-near
+                                            // tasks:\n"
+                    lineCounter++;
+                }   else {
+                    
+                }
             } else {
                 System.out.println("Invalid input on line: " + lineCounter);
                 System.exit(0);
             }
 
             if (line.matches("too-near tasks:") && validFile) {
-                System.out.println("too-near tasks: elseif");
+                // System.out.println("too-near tasks: elseif");
                 input = fileIO.tooNearTasks(input, c);
                 if (!validFile) {
                     System.out.println(
                             "Invalid file input on line " + lineCounter);
                     System.exit(0);
                 }
+                if (input.hasNextLine()) {
+                    line = input.nextLine();// should contain "machine
+                                            // penalties:"
+                    lineCounter++;
+                } else {
+                    System.out.println("invalid file, line " + lineCounter);
+                    validFile = false;
+                    System.exit(0);
+                }
+
             } else {
                 System.out.println("Invalid input on line: " + lineCounter);
                 System.exit(0);
@@ -174,7 +189,7 @@ public class fileIO {
 
     private static Scanner machinePenalties(Scanner input, Constraints c) {
         int pen = 0;
-        for (int i = 1; i <= 8; i++) {
+        for (int i = 0; i < 8; i++) {
             String line = input.nextLine();
             lineCounter++;
             String[] penaltiesStrArr = line.split(" ");
@@ -257,6 +272,7 @@ public class fileIO {
     }
 
     private static Scanner tooNearTasks(Scanner input, Constraints c) {
+        System.out.println("in too near tasks function");
         String line = input.nextLine();
         lineCounter++;
         System.out.println(line);
@@ -283,6 +299,7 @@ public class fileIO {
         for (int i = 0; i < c.tooNearTasks.size(); i++) {
             System.out.println(c.tooNearTasks.get(i));
         }
+        
         System.out.println("number of lines read: " + lineCounter);
         System.out.println("value of validFile: " + validFile);
         return input;
