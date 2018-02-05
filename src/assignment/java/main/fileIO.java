@@ -5,7 +5,6 @@ package assignment.java.main;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class fileIO {
@@ -34,100 +33,123 @@ public class fileIO {
      * }
      * 
      */
+    public static void main(String[] args) {
+        fileIO("C:\\Users\\Admin\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\test.txt");
+    }
 
     private static boolean validFile = true;
     private static int lineCounter = 0;
 
+    @SuppressWarnings("resource")
     public static Constraints fileIO(String str) {
-        
+
         Constraints c = new Constraints();
         try {
             System.out.println("Enter the file name with the extension: ");
-            
+
             File file = new File(str);
             Scanner input = new Scanner(file);
-/*          
-            Scanner input = new Scanner(System.in);
-
-            File file = new File(input.nextLine());
-            input = new Scanner(file);
-*/          
+            /*
+             * Scanner input = new Scanner(System.in);
+             * 
+             * File file = new File(input.nextLine()); input = new
+             * Scanner(file);
+             */
             String name = "";
             int counter = 0;
             String garbage = "";
             String line;
-            lineCounter++;
-
+            //Pattern pNewLine = "[\n\r]";
             // C:\Users\Admin\git\449-w18-T2-Java\src\assignment\java\main\test.txt
             // /home/uga/joel.lowe/workspace/449-w18-T2-Java-master/src/assignment/java/main/test.txt
-            while (input.hasNextLine()) {
-                line = input.nextLine();
-
-                if (line.matches("Name:(.*)")) {
-                    name = input.nextLine();
-                    lineCounter++;
-                    line = input.nextLine();
-                    lineCounter++;
-                    System.out.println("contents of name: " + name);
-
-                } else if (line.matches("\n")) {
-                    garbage = input.nextLine();
-                    lineCounter++;
-                    System.out.print("line read by NL elseif: " + lineCounter);
-                } else if (line.matches("forced partial assignment:(.*)")) {
-                    System.out.println("entered second if");
-
-                    input = fileIO.forcedPartialAssignment(input, c);
-                    if (!validFile) {
-                        System.out.println(
-                                "Invalid file input on line " + lineCounter);
-                        System.exit(0);
-                    }
-                } else if (line.matches("forbidden machine:(.*)")) {
-
-                    System.out.println("entered forbidden machine elseif");
-                    input = fileIO.forbiddenMachine(input, c);
-                    if (!validFile) {
-                        System.out.println(
-                                "Invalid file input on line " + lineCounter);
-                        System.exit(0);
-                    }
-                } else if (line.matches("too-near tasks:(.*)")) {
-                    System.out.println("too-near tasks: elseif");
-                    input = fileIO.tooNearTasks(input, c);
-                    if (!validFile) {
-                        System.out.println(
-                                "Invalid file input on line " + lineCounter);
-                        System.exit(0);
-                    }
-                } else if (line.matches("machine penalties:(.*)")) {
-                    System.out.println("machine penalties: elseif");
-                    input = fileIO.machinePenalties(input, c);
-                    if (!validFile) {
-                        System.out.println(
-                                "Invalid file input on line " + lineCounter);
-                        System.exit(0);
-                    }
-                } else if (line.matches("too-near penalities")) {
-                    System.out.println("too-near penalties elseif");
-                    input = fileIO.tooNearPenalties(input, c);
-                    if (!validFile) {
-                        System.out.println(
-                                "Invalid file input on line " + lineCounter);
-                        System.exit(0);
-                    }
+            line = input.nextLine();
+            lineCounter++;
+            if (line.matches("(?s)Name:") && validFile) {
+                name = input.nextLine();// should contain a string for name
+                lineCounter++;
+                line = input.nextLine();// reads new line
+                lineCounter++;
+                
+                if(!line.matches("\n")) {//checks that it infact reads new line 
+                    validFile = false;
+                    System.out.println("invalid line: " + lineCounter);
+                    System.exit(0);
                 }
-                if (input.hasNextLine()) {
-                    line = input.nextLine();
-                    lineCounter++;
+                System.out.println("contents of name: " + name);
+                line = input.nextLine(); // line should be "forced partial
+                                         // assignment:\n"
+                lineCounter++;
+            }
+
+            if (line.matches("forced partial assignment:\n") && validFile) {
+                // System.out.println("in forced partial assignment if
+                // statment:\n");
+                input = fileIO.forcedPartialAssignment(input, c);
+                if (!validFile) {
+                    System.out.println(
+                            "Invalid file input on line " + lineCounter);
+                    System.exit(0);
+                }
+                line = input.nextLine(); // should contain "forbidden
+                                         // machine:\n"
+                lineCounter++;
+            } else {
+                System.out.println("Invalid input on line: " + lineCounter);
+                System.exit(0);
+            }
+
+            if (line.matches("forbidden machine:\n") && validFile) {
+
+                System.out.println("entered forbidden machine if:\n");
+                input = fileIO.forbiddenMachine(input, c);
+                if (!validFile) {
+                    System.out.println(
+                            "Invalid file input on line " + lineCounter);
+                    System.exit(0);
+                }
+                line = input.nextLine();// should contain "too-near tasks:\n"
+                lineCounter++;
+            } else {
+                System.out.println("Invalid input on line: " + lineCounter);
+                System.exit(0);                
+            }
+
+            if (line.matches("too-near tasks:\n") && validFile) {
+                System.out.println("too-near tasks: elseif");
+                input = fileIO.tooNearTasks(input, c);
+                if (!validFile) {
+                    System.out.println(
+                            "Invalid file input on line " + lineCounter);
+                    System.exit(0);
                 }
             }
+
+            if (line.matches("machine penalties:\n")) {
+                System.out.println("machine penalties: elseif");
+                input = fileIO.machinePenalties(input, c);
+                if (!validFile) {
+                    System.out.println(
+                            "Invalid file input on line " + lineCounter);
+                    System.exit(0);
+                }
+            }
+
+            if (line.matches("too-near penalities\n")) {
+                System.out.println("too-near penalties elseif");
+                input = fileIO.tooNearPenalties(input, c);
+                if (!validFile) {
+                    System.out.println(
+                            "Invalid file input on line " + lineCounter);
+                    System.exit(0);
+                }
+            }
+
             input.close();
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
         return c;
     }
 
@@ -171,7 +193,7 @@ public class fileIO {
              * (probably) Fixed
              */
             for (int x = 0; x < 8; x++) {
-                c.addMachPenalties(i, x , penaltiesIntArr[x]);
+                c.addMachPenalties(i, x, penaltiesIntArr[x]);
             }
         }
         System.out.println("number of lines read: " + lineCounter);
@@ -216,25 +238,21 @@ public class fileIO {
 
         // debugging
         /*
-        for (int i = 0; i < c.tooNearPenalties.size(); i++) {
-            System.out.println(
-                    "attempting to print out contents of c.tooNearPenalties"
-                            + c.tooNearPenalties);
-        }
-        */
+         * for (int i = 0; i < c.tooNearPenalties.size(); i++) {
+         * System.out.println(
+         * "attempting to print out contents of c.tooNearPenalties" +
+         * c.tooNearPenalties); }
+         */
         return input;
     }
 
     private static Scanner tooNearTasks(Scanner input, Constraints c) {
-        // System.out.println("Beginning of toonear tasks function");
         String line = input.nextLine();
         lineCounter++;
         System.out.println(line);
-        // Matcher m = new Matcher("([1-8],[A-H])(.*)");
-        Pattern p = Pattern.compile("(.*)((.*)[A-H](.*),(.*)[A-H](.*))(.*)");
+        Pattern p = Pattern.compile("([A-H],[A-H])\n");
         Matcher m = p.matcher(line);
         while (m.find()) {
-            line = line.replaceAll("\\s", "");
             char[] lineArray = line.toCharArray();
             char[] TMPair = {lineArray[1], lineArray[3]};
             c.addConstraintPair(3, TMPair);
@@ -244,7 +262,7 @@ public class fileIO {
             m = p.matcher(line);
         }
 
-        Pattern pNL = Pattern.compile("(.*)");
+        Pattern pNL = Pattern.compile("\n");
         Matcher mNL = pNL.matcher(line);
         if (!mNL.find()) {
             validFile = false;
@@ -261,15 +279,11 @@ public class fileIO {
     }
 
     private static Scanner forbiddenMachine(Scanner input, Constraints c) {
-        // String pattern = "";
         String line = input.nextLine();
         lineCounter++;
-        System.out.println(line);
-        // Matcher m = new Matcher("([1-8],[A-H])(.*)");
-        Pattern p = Pattern.compile("(.*)((.*)[1-8](.*),(.*)[A-H](.*))(.*)");
+        Pattern p = Pattern.compile("([1-8],[A-H])\n");
         Matcher m = p.matcher(line);
         while (m.find()) {
-            line = line.replaceAll("\\s", "");
             char[] lineArray = line.toCharArray();
             char[] TMPair = {lineArray[1], lineArray[3]};
             c.addConstraintPair(2, TMPair);
@@ -279,12 +293,12 @@ public class fileIO {
             m = p.matcher(line);
         }
 
-        Pattern pNL = Pattern.compile("(.*)");
+        Pattern pNL = Pattern.compile("\n");
         Matcher mNL = pNL.matcher(line);
         if (!mNL.find()) {
             validFile = false;
         }
-
+//TODO: debug
         for (int i = 0; i < c.forbiddenMach.size(); i++) {
             System.out.println(c.forbiddenMach.get(i));
         }
@@ -293,16 +307,14 @@ public class fileIO {
 
     }
 
-    private static Scanner forcedPartialAssignment(Scanner input, Constraints c) {
-        // String pattern = "";
+    private static Scanner forcedPartialAssignment(Scanner input,
+            Constraints c) {
         String line = input.nextLine();
         lineCounter++;
         System.out.println(line);
-        // Matcher m = new Matcher("([1-8],[A-H])(.*)");
-        Pattern p = Pattern.compile("(.*)((.*)[1-8](.*),(.*)[A-H](.*))(.*)");
+        Pattern p = Pattern.compile("([1-8],[A-H])\n");
         Matcher m = p.matcher(line);
         while (m.find()) {
-            line = line.replaceAll("\\s", "");
             char[] lineArray = line.toCharArray();
             char[] TMPair = {lineArray[1], lineArray[3]};
             c.addConstraintPair(1, TMPair);
@@ -312,12 +324,12 @@ public class fileIO {
             m = p.matcher(line);
         }
 
-        Pattern pNL = Pattern.compile("(.*)");
+        Pattern pNL = Pattern.compile("\n");
         Matcher mNL = pNL.matcher(line);
         if (!mNL.find()) {
             validFile = false;
         }
-
+        // TODO: DEBUG
         for (int i = 0; i < c.forcedPartialAssn.size(); i++) {
             System.out.println(c.forcedPartialAssn.get(i));
         }
