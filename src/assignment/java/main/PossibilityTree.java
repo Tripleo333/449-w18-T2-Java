@@ -1,10 +1,11 @@
-package assignment.java.main;
+
 
 public class PossibilityTree {
 	
 	private Constraints constraints = new Constraints();
-	private char[] tasks;
+	public char[] tasks;
 	private double currentMinPenalty = Double.POSITIVE_INFINITY;
+	private State minPenalty = null;
 
 	/*
 	 * Checks and Initiates the possibleTasks field.
@@ -35,22 +36,43 @@ public class PossibilityTree {
 	 * i - The current (non-empty) index of the task list. The i+1th index is empty.
 	 * state - The current task list. Full until index i+1.
 	 */
-	public double Branch(int i, State state) {
-		if (!constraints.checkHardConstraints(i, state))
-			return -1;
+	public State Branch(int i, State state, char[] notTaken) {
+	    if (i >= 8) {
+	        if (this.currentMinPenalty > state.penalty) {
+	            this.currentMinPenalty = state.penalty;
+	        }
+	        return state;
+	    }
+	    
+	    else if (!constraints.checkHardConstraints(i, state)) {
+			return null;
+	    }
+	    
 		else {
 			double penalty = constraints.checkSoftConstraints(i, state);
-			if (penalty >= this.currentMinPenalty) // Base case...
-				return penalty;
-			this.currentMinPenalty = penalty;
+			if (penalty >= this.currentMinPenalty) { // Base case...
+				return null;
+			}
 			
-			for (char task : this.tasks) {
-				Branch(i+1,new State(i+1, task, state)); // Recursive call to self
+			state.penalty += penalty;
+			
+			for (int x = 0; x < notTaken.length; x++) {
+			    int counter = 0;
+			    char[] next = new char[8 - i];
+			    for (int y = 0; y < notTaken.length; y++) {
+			        if (y != x) {
+			            next[counter] = notTaken[y];
+			            counter++;
+			        }
+			    }
+				Branch(i+1, new State(i+1, notTaken[x], state), next); // Recursive call to self
 			} 
-			return penalty;
+			return minPenalty;
 		}
 			
 	}
+	
+	
 	
 	
 	

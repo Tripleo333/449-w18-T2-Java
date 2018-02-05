@@ -1,4 +1,4 @@
-package assignment.java.main;
+
 /**
  * 
  */
@@ -34,32 +34,34 @@ public class fileIO {
      * }
      * 
      */
-    public static void main(String[] args) {
-        fileIO();
-
-    }
 
     private static boolean validFile = true;
     private static int lineCounter = 0;
 
-    public static void fileIO() {
-
+    public static Constraints fileIO(String str) {
+        
+        Constraints c = new Constraints();
         try {
             System.out.println("Enter the file name with the extension: ");
+            
+            File file = new File(str);
+            Scanner input = new Scanner(file);
+/*          
             Scanner input = new Scanner(System.in);
 
             File file = new File(input.nextLine());
             input = new Scanner(file);
+*/          
             String name = "";
             int counter = 0;
             String garbage = "";
-            String line = input.nextLine();
+            String line;
             lineCounter++;
 
             // C:\Users\Admin\git\449-w18-T2-Java\src\assignment\java\main\test.txt
             // /home/uga/joel.lowe/workspace/449-w18-T2-Java-master/src/assignment/java/main/test.txt
-            fileIO f = new fileIO();
             while (input.hasNextLine()) {
+                line = input.nextLine();
 
                 if (line.matches("Name:(.*)")) {
                     name = input.nextLine();
@@ -75,7 +77,7 @@ public class fileIO {
                 } else if (line.matches("forced partial assignment:(.*)")) {
                     System.out.println("entered second if");
 
-                    input = f.forcedPartialAssignment(input);
+                    input = fileIO.forcedPartialAssignment(input, c);
                     if (!validFile) {
                         System.out.println(
                                 "Invalid file input on line " + lineCounter);
@@ -84,7 +86,7 @@ public class fileIO {
                 } else if (line.matches("forbidden machine:(.*)")) {
 
                     System.out.println("entered forbidden machine elseif");
-                    input = f.forbiddenMachine(input);
+                    input = fileIO.forbiddenMachine(input, c);
                     if (!validFile) {
                         System.out.println(
                                 "Invalid file input on line " + lineCounter);
@@ -92,7 +94,7 @@ public class fileIO {
                     }
                 } else if (line.matches("too-near tasks:(.*)")) {
                     System.out.println("too-near tasks: elseif");
-                    input = f.tooNearTasks(input);
+                    input = fileIO.tooNearTasks(input, c);
                     if (!validFile) {
                         System.out.println(
                                 "Invalid file input on line " + lineCounter);
@@ -100,7 +102,7 @@ public class fileIO {
                     }
                 } else if (line.matches("machine penalties:(.*)")) {
                     System.out.println("machine penalties: elseif");
-                    input = f.machinePenalties(input);
+                    input = fileIO.machinePenalties(input, c);
                     if (!validFile) {
                         System.out.println(
                                 "Invalid file input on line " + lineCounter);
@@ -108,7 +110,7 @@ public class fileIO {
                     }
                 } else if (line.matches("too-near penalities")) {
                     System.out.println("too-near penalties elseif");
-                    input = f.tooNearPenalties(input);
+                    input = fileIO.tooNearPenalties(input, c);
                     if (!validFile) {
                         System.out.println(
                                 "Invalid file input on line " + lineCounter);
@@ -125,11 +127,12 @@ public class fileIO {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        
+        return c;
     }
 
-    private Scanner machinePenalties(Scanner input) {
+    private static Scanner machinePenalties(Scanner input, Constraints c) {
         int pen = 0;
-        Constraints c = new Constraints();
         for (int i = 1; i <= 8; i++) {
             String line = input.nextLine();
             lineCounter++;
@@ -165,10 +168,10 @@ public class fileIO {
              * the constraints file, so I was never able to add the matrix of
              * penalties all the code is here though so just un-comment the line
              * in the following forloop and everything should be fine.
-             * 
+             * (probably) Fixed
              */
             for (int x = 0; x < 8; x++) {
-                // c.addMachPenalties(i, x , penaltiesIntArr[x]);
+                c.addMachPenalties(i, x , penaltiesIntArr[x]);
             }
         }
         System.out.println("number of lines read: " + lineCounter);
@@ -178,11 +181,10 @@ public class fileIO {
         return input;
     }
 
-    private Scanner tooNearPenalties(Scanner input) {
+    private static Scanner tooNearPenalties(Scanner input, Constraints c) {
         int penalty;
         String line = input.nextLine();
         lineCounter++;
-        Constraints c = new Constraints();
         Pattern p = Pattern.compile(
                 "(.*)((.*)[A-H](.*),(.*)[A-H](.*),(.*)[\\d+](.*))(.*)");
         Matcher m = p.matcher(line);
@@ -213,21 +215,21 @@ public class fileIO {
         }
 
         // debugging
+        /*
         for (int i = 0; i < c.tooNearPenalties.size(); i++) {
             System.out.println(
                     "attempting to print out contents of c.tooNearPenalties"
                             + c.tooNearPenalties);
         }
-
+        */
         return input;
     }
 
-    private Scanner tooNearTasks(Scanner input) {
+    private static Scanner tooNearTasks(Scanner input, Constraints c) {
         // System.out.println("Beginning of toonear tasks function");
         String line = input.nextLine();
         lineCounter++;
         System.out.println(line);
-        Constraints c = new Constraints();
         // Matcher m = new Matcher("([1-8],[A-H])(.*)");
         Pattern p = Pattern.compile("(.*)((.*)[A-H](.*),(.*)[A-H](.*))(.*)");
         Matcher m = p.matcher(line);
@@ -258,12 +260,11 @@ public class fileIO {
 
     }
 
-    private Scanner forbiddenMachine(Scanner input) {
+    private static Scanner forbiddenMachine(Scanner input, Constraints c) {
         // String pattern = "";
         String line = input.nextLine();
         lineCounter++;
         System.out.println(line);
-        Constraints c = new Constraints();
         // Matcher m = new Matcher("([1-8],[A-H])(.*)");
         Pattern p = Pattern.compile("(.*)((.*)[1-8](.*),(.*)[A-H](.*))(.*)");
         Matcher m = p.matcher(line);
@@ -292,12 +293,11 @@ public class fileIO {
 
     }
 
-    private Scanner forcedPartialAssignment(Scanner input) {
+    private static Scanner forcedPartialAssignment(Scanner input, Constraints c) {
         // String pattern = "";
         String line = input.nextLine();
         lineCounter++;
         System.out.println(line);
-        Constraints c = new Constraints();
         // Matcher m = new Matcher("([1-8],[A-H])(.*)");
         Pattern p = Pattern.compile("(.*)((.*)[1-8](.*),(.*)[A-H](.*))(.*)");
         Matcher m = p.matcher(line);

@@ -1,4 +1,4 @@
-package assignment.java.main;
+
 
 import java.util.LinkedList;
 import java.util.Optional;
@@ -46,6 +46,7 @@ public class Constraints {
 		this.forbiddenMach = new LinkedList<char[]>();
 		this.tooNearTasks = new LinkedList<char[]>();
 		this.tooNearPenalties = new LinkedList<Triplet>();
+		this.machinePenalties = new int[8][8];
 	}
 	
 	/*
