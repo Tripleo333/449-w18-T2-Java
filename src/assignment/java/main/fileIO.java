@@ -50,29 +50,34 @@ public class fileIO {
             File file = new File(str);
             Scanner input = new Scanner(file);
             String name = "";
-            int counter = 0;
-            String garbage = "";
-            String line;
+            String line = "";
+
             // C:\Users\Admin\git\449-w18-T2-Java\src\assignment\java\main\test.txt
             // /home/uga/joel.lowe/workspace/449-w18-T2-Java-master/src/assignment/java/main/test.txt
-            if(input.hasNextLine()) {
+
+            if (input.hasNextLine()) {
                 line = input.nextLine();
-            }else {
+            } else {
                 System.out.println("Invalid file.");
                 System.exit(0);
-                
             }
             lineCounter++;
-            Pattern PnameNL = Pattern.compile("Name:");
+            Pattern PnameNL = Pattern.compile("Name:");// no need to check for
+                                                       // newline because
+                                                       // input.newline eats \n
             Matcher MnameNL = PnameNL.matcher(line);
-            System.out.println("Contents of line: "+line);
             if (MnameNL.find() && validFile) {
-                name = input.nextLine();// should contain a string for name
-                lineCounter++;
+                if (input.hasNextLine()) {
+                    name = input.nextLine();// should contain a string for name
+                    lineCounter++;
+                } else {
+                    System.out.println("Invalid file.");
+                    System.exit(0);
+                }
                 line = input.nextLine();// reads new line
                 lineCounter++;
-                
-                if(!line.matches("\n")) {//checks that it infact reads new line 
+
+                if (!line.matches("")) {// checks that it infact reads new line
                     validFile = false;
                     System.out.println("invalid line: " + lineCounter);
                     System.exit(0);
@@ -83,10 +88,10 @@ public class fileIO {
                 lineCounter++;
             } else {
                 System.out.println("Invalid input on line " + lineCounter);
-                
+
             }
 
-            if (line.matches("forced partial assignment:\n") && validFile) {
+            if (line.matches("forced partial assignment:") && validFile) {
                 // System.out.println("in forced partial assignment if
                 // statment:\n");
                 input = fileIO.forcedPartialAssignment(input, c);
@@ -103,7 +108,7 @@ public class fileIO {
                 System.exit(0);
             }
 
-            if (line.matches("forbidden machine:\n") && validFile) {
+            if (line.matches("forbidden machine:") && validFile) {
 
                 System.out.println("entered forbidden machine if:\n");
                 input = fileIO.forbiddenMachine(input, c);
@@ -116,10 +121,10 @@ public class fileIO {
                 lineCounter++;
             } else {
                 System.out.println("Invalid input on line: " + lineCounter);
-                System.exit(0);                
+                System.exit(0);
             }
 
-            if (line.matches("too-near tasks:\n") && validFile) {
+            if (line.matches("too-near tasks:") && validFile) {
                 System.out.println("too-near tasks: elseif");
                 input = fileIO.tooNearTasks(input, c);
                 if (!validFile) {
@@ -127,9 +132,12 @@ public class fileIO {
                             "Invalid file input on line " + lineCounter);
                     System.exit(0);
                 }
+            } else {
+                System.out.println("Invalid input on line: " + lineCounter);
+                System.exit(0);
             }
 
-            if (line.matches("machine penalties:\n")) {
+            if (line.matches("machine penalties:") && validFile) {
                 System.out.println("machine penalties: elseif");
                 input = fileIO.machinePenalties(input, c);
                 if (!validFile) {
@@ -137,9 +145,12 @@ public class fileIO {
                             "Invalid file input on line " + lineCounter);
                     System.exit(0);
                 }
+            } else {
+                System.out.println("Invalid input on line: " + lineCounter);
+                System.exit(0);
             }
 
-            if (line.matches("too-near penalities\n")) {
+            if (line.matches("too-near penalities")) {
                 System.out.println("too-near penalties elseif");
                 input = fileIO.tooNearPenalties(input, c);
                 if (!validFile) {
@@ -147,6 +158,9 @@ public class fileIO {
                             "Invalid file input on line " + lineCounter);
                     System.exit(0);
                 }
+            } else {
+                System.out.println("Invalid input on line: " + lineCounter);
+                System.exit(0);
             }
 
             input.close();
@@ -190,20 +204,13 @@ public class fileIO {
                     System.exit(0);
                 }
             }
-            /*
-             * KNOWN ISSUE: I was unable to use the function addMachPenalties in
-             * the constraints file, so I was never able to add the matrix of
-             * penalties all the code is here though so just un-comment the line
-             * in the following forloop and everything should be fine.
-             * (probably) Fixed
-             */
             for (int x = 0; x < 8; x++) {
                 c.addMachPenalties(i, x, penaltiesIntArr[x]);
             }
         }
         System.out.println("number of lines read: " + lineCounter);
 
-        // debug
+        // TODO: debug
         // System.out.println(Arrays.deepToString(c.machinePenalties));
         return input;
     }
@@ -212,11 +219,9 @@ public class fileIO {
         int penalty;
         String line = input.nextLine();
         lineCounter++;
-        Pattern p = Pattern.compile(
-                "(.*)((.*)[A-H](.*),(.*)[A-H](.*),(.*)[\\d+](.*))(.*)");
+        Pattern p = Pattern.compile("([A-H],[A-H],[\\d+])");
         Matcher m = p.matcher(line);
         while (m.find()) {
-            line = line.replaceAll("\\s", "");
             char[] lineArray = line.toCharArray();
             char[] TMPair = {lineArray[1], lineArray[3]};
             System.out.println(
@@ -233,7 +238,7 @@ public class fileIO {
             }
             c.addTooNearPenalties(TMPair, penalty);
         }
-        Pattern pNL = Pattern.compile("(.*)");
+        Pattern pNL = Pattern.compile("");
         Matcher mNL = pNL.matcher(line);
         if (!mNL.find()) {
             validFile = false;
@@ -255,7 +260,7 @@ public class fileIO {
         String line = input.nextLine();
         lineCounter++;
         System.out.println(line);
-        Pattern p = Pattern.compile("([A-H],[A-H])\n");
+        Pattern p = Pattern.compile("([A-H],[A-H])");
         Matcher m = p.matcher(line);
         while (m.find()) {
             char[] lineArray = line.toCharArray();
@@ -267,7 +272,7 @@ public class fileIO {
             m = p.matcher(line);
         }
 
-        Pattern pNL = Pattern.compile("\n");
+        Pattern pNL = Pattern.compile("");
         Matcher mNL = pNL.matcher(line);
         if (!mNL.find()) {
             validFile = false;
@@ -279,6 +284,7 @@ public class fileIO {
             System.out.println(c.tooNearTasks.get(i));
         }
         System.out.println("number of lines read: " + lineCounter);
+        System.out.println("value of validFile: " + validFile);
         return input;
 
     }
@@ -286,7 +292,7 @@ public class fileIO {
     private static Scanner forbiddenMachine(Scanner input, Constraints c) {
         String line = input.nextLine();
         lineCounter++;
-        Pattern p = Pattern.compile("([1-8],[A-H])\n");
+        Pattern p = Pattern.compile("([1-8],[A-H])");
         Matcher m = p.matcher(line);
         while (m.find()) {
             char[] lineArray = line.toCharArray();
@@ -298,12 +304,12 @@ public class fileIO {
             m = p.matcher(line);
         }
 
-        Pattern pNL = Pattern.compile("\n");
+        Pattern pNL = Pattern.compile("");
         Matcher mNL = pNL.matcher(line);
         if (!mNL.find()) {
             validFile = false;
         }
-//TODO: debug
+        // TODO: debug
         for (int i = 0; i < c.forbiddenMach.size(); i++) {
             System.out.println(c.forbiddenMach.get(i));
         }
@@ -317,7 +323,7 @@ public class fileIO {
         String line = input.nextLine();
         lineCounter++;
         System.out.println(line);
-        Pattern p = Pattern.compile("([1-8],[A-H])\n");
+        Pattern p = Pattern.compile("([1-8],[A-H])");
         Matcher m = p.matcher(line);
         while (m.find()) {
             char[] lineArray = line.toCharArray();
@@ -329,7 +335,7 @@ public class fileIO {
             m = p.matcher(line);
         }
 
-        Pattern pNL = Pattern.compile("\n");
+        Pattern pNL = Pattern.compile("");
         Matcher mNL = pNL.matcher(line);
         if (!mNL.find()) {
             validFile = false;
