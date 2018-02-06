@@ -1,5 +1,7 @@
 package assignment.java.main;
-
+/**
+ * 
+ */
 import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -8,35 +10,6 @@ import java.util.regex.Pattern;
 
 public class fileIO {
 
-    // this is a preattempt at opening a file
-    // final version should return a buffered reader or scanner (havn't decided
-    // yet)
-    // I'll make another function below that parses it and adds it to their
-    // respective places
-
-    /*
-     * available tools for string manipulation: contains, indexof
-     * 
-     * regexes: looking for a word that is 2-20 characters in length
-     * [A-Za-z]{2,20} or \\w{2,20}
-     * 
-     * Pattern checkRegex = Pattern.compile(theRegex); Matcher regexmatcher =
-     * checkRegex.matcher(str2Check);
-     * 
-     * while(regexMatcher.find()){ if (regexMatcher.group().length() != 0){
-     * system.out.println(regexMatcher.group().trim());
-     * 
-     * 
-     * }
-     * 
-     * }
-     * 
-     */
-    /*
-    public static void main(String[] args) {
-        fileIO("C:\\Users\\Admin\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\test.txt");
-    }
-    */
     private static boolean validFile = true;
     private static int lineCounter = 0;
 
@@ -45,7 +18,7 @@ public class fileIO {
 
         Constraints c = new Constraints();
         try {
-            System.out.println("Enter the file name with the extension: ");
+//            System.out.println("Enter the file name with the extension: ");
 
             File file = new File(str);
             Scanner input = new Scanner(file);
@@ -172,7 +145,7 @@ public class fileIO {
             }
 
 //DONE		 //TODO: problem in the following
-            if (line.matches("too-near penalties") && validFile) {
+            if (line.matches("too-near penalities") && validFile) {
                 System.out.println("\n\ntoo-near penalties if statement");
                 if(input.hasNextLine()) {
 	                input = fileIO.tooNearPenalties(input, c);
@@ -190,6 +163,8 @@ public class fileIO {
             System.out.println("input scanner is closed and everything was read in fine.");
         } catch (Exception ex) {
             ex.printStackTrace();
+            System.out.println("could not open file");
+            System.exit(0);
         }
 
         return c;
