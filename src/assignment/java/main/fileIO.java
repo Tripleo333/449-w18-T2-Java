@@ -1,12 +1,11 @@
-//package assignment.java.main;
-/**
- * 
- */
+package assignment.java.main;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 public class fileIO {
 
     // this is a preattempt at opening a file
@@ -60,7 +59,7 @@ public class fileIO {
                 line = input.nextLine();
             } else {
                 System.out.println("Invalid file.");
-                System.exit(0);
+                return null;
             }
             lineCounter++;
             Pattern PnameNL = Pattern.compile("Name:");// no need to check for
@@ -151,7 +150,7 @@ public class fileIO {
             }
 
             if (line.matches("machine penalties:") && validFile) {
-                System.out.println("\n\nmachine penalties: if statment");
+                System.out.println("\n\nmachine penalties: if statement");
                 input = fileIO.machinePenalties(input, c);
                 if (!validFile) {
                     System.out.println(
@@ -172,14 +171,16 @@ public class fileIO {
                 System.exit(0);
             }
 
-            // TODO: problem in the following
-            if (line.matches("too-near penalities") && validFile) {
-//                System.out.println("\n\ntoo-near penalties if statment");
-                input = fileIO.tooNearPenalties(input, c);
-                if (!validFile) {
-                    System.out.println(
-                            "Invalid file input on line " + lineCounter);
-                    System.exit(0);
+//DONE		 //TODO: problem in the following
+            if (line.matches("too-near penalties") && validFile) {
+                System.out.println("\n\ntoo-near penalties if statement");
+                if(input.hasNextLine()) {
+	                input = fileIO.tooNearPenalties(input, c);
+	                if (!validFile) {
+	                    System.out.println(
+	                            "Invalid file input on line " + lineCounter);
+	                    System.exit(0);
+	                }
                 }
             } else {
                 System.out.println("Invalid input on line: " + lineCounter);
@@ -200,7 +201,6 @@ public class fileIO {
             String line = input.nextLine();
             lineCounter++;
             String[] penaltiesStrArr = line.split(" ");
-
             // the following is checking that its all ints and only 8 ints
             if (penaltiesStrArr.length != 8) {
                 validFile = false;
@@ -214,7 +214,6 @@ public class fileIO {
                 try {
                     int temp = Integer.parseInt(penaltiesStrArr[y]);
                     penaltiesIntArr[y] = temp;
-
                     if (penaltiesIntArr[y] < 0) {
                         System.out.println(
                                 "Invalid number in line: " + lineCounter);
@@ -299,12 +298,10 @@ public class fileIO {
         return input;
     }
 
-    private static Scanner tooNearTasks(Scanner input, Constraints c) {
-        System.out.println("in too near tasks function");
-        String line = input.nextLine();
+    private static void mFind(String line, String regex, Scanner input, Constraints c) {
         lineCounter++;
         System.out.println(line);
-        Pattern p = Pattern.compile("([A-H],[A-H])");
+        Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(line);
         while (m.find()) {
             char[] lineArray = line.toCharArray();
@@ -315,7 +312,7 @@ public class fileIO {
             System.out.println("pair accepted. Line read: " + lineCounter);
             m = p.matcher(line);
         }
-
+        
         Pattern pNL = Pattern.compile("");
         Matcher mNL = pNL.matcher(line);
         if (!mNL.find()) {
@@ -323,7 +320,12 @@ public class fileIO {
             System.out.println("problem encountered at line: " + lineCounter);
             System.exit(0);
         }
-
+    }
+    
+    private static Scanner tooNearTasks(Scanner input, Constraints c) {
+        System.out.println("in too near tasks function");
+        String line = input.nextLine();
+        mFind(line, "[(][A-H][,][A-H][)]", input, c);
         /*
          * for (int i = 0; i < c.tooNearTasks.size(); i++) {
          * System.out.println(c.tooNearTasks.get(i)); }
@@ -333,25 +335,9 @@ public class fileIO {
 
     private static Scanner forbiddenMachine(Scanner input, Constraints c) {
         String line = input.nextLine();
-        lineCounter++;
-        Pattern p = Pattern.compile("([1-8],[A-H])");
-        Matcher m = p.matcher(line);
-        while (m.find()) {
-            char[] lineArray = line.toCharArray();
-            char[] TMPair = {lineArray[1], lineArray[3]};
-            c.addConstraintPair(2, TMPair);
-            line = input.nextLine();
-            lineCounter++;
-            System.out.println("pair accepted. Line read: " + lineCounter);
-            m = p.matcher(line);
-        }
-
-        Pattern pNL = Pattern.compile("");
-        Matcher mNL = pNL.matcher(line);
-        if (!mNL.find()) {
-            validFile = false;
-        }
-        // TODO: debug
+        mFind(line, "[(][0-7][,][A-H][)]", input, c);
+        // TODO: debog
+        //	check if different from fpa pairs
         for (int i = 0; i < c.forbiddenMach.size(); i++) {
             System.out.println(c.forbiddenMach.get(i));
         }
@@ -363,25 +349,7 @@ public class fileIO {
     private static Scanner forcedPartialAssignment(Scanner input,
             Constraints c) {
         String line = input.nextLine();
-        lineCounter++;
-        System.out.println(line);
-        Pattern p = Pattern.compile("([1-8],[A-H])");
-        Matcher m = p.matcher(line);
-        while (m.find()) {
-            char[] lineArray = line.toCharArray();
-            char[] TMPair = {lineArray[1], lineArray[3]};
-            c.addConstraintPair(1, TMPair);
-            line = input.nextLine();
-            lineCounter++;
-            System.out.println("pair accepted. Line read: " + lineCounter);
-            m = p.matcher(line);
-        }
-
-        Pattern pNL = Pattern.compile("");
-        Matcher mNL = pNL.matcher(line);
-        if (!mNL.find()) {
-            validFile = false;
-        }
+        mFind(line, "[(][0-7][,][A-H][)]", input, c);
         // TODO: DEBUG
         for (int i = 0; i < c.forcedPartialAssn.size(); i++) {
             System.out.println(c.forcedPartialAssn.get(i));

@@ -1,4 +1,4 @@
-
+package assignment.java.main;
 /*
  * This is the class that represents an iteration of the algorithm.
  */
@@ -23,7 +23,7 @@ public class State {
     }
     
     public State(int i, char task, State prevState) {
-    	for (int j = 0; j <= i; j++) {
+    	for (int j = 0; j < 8; j++) {
     		if (j == i) {
     			this.entries[j] = task;
     		}

@@ -2,8 +2,12 @@ package assignment.java.test;
 
 //import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.Assert.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 //import java.util.Arrays;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import assignment.java.main.*;
 
 class JUnitTest {
@@ -23,7 +27,7 @@ class JUnitTest {
 	@Test
 	void possibilityTreeInit() {
 		char[] c = ("ABCDEFGH").toCharArray();
-		PossibilityTree pt = new PossibilityTree(c);
+		PossibilityTree pt = new PossibilityTree(c, null);
 	
 		c = ("ABCDEFGG").toCharArray();		
 		assertFalse(c.equals(pt.tasks));
@@ -32,7 +36,7 @@ class JUnitTest {
 		assertArrayEquals(c, pt.tasks);
 		
 		c = ("GHBEFADC").toCharArray();
-		PossibilityTree py = new PossibilityTree(c);
+		PossibilityTree py = new PossibilityTree(c, null);
 		assertArrayEquals(c, py.tasks);		
 	}
 	
@@ -91,19 +95,15 @@ class JUnitTest {
 		for(int i = 0; i < 8; i++) {
 			for(int j = 0; j < 8; j++) {
 				int pen = j+i+i;
-				System.out.printf("%3d", pen);
 				constraint.addMachPenalties(i, j, j+i);
 			}
-			System.out.println();
 		}
 		System.out.println();
 		for(int i = 0; i < 8; i++) {
 			for(int j = 0; j < 8; j++) {
 				int expPen = j+i+i;
-				System.out.printf("%3d", expPen);
 //				assertEquals(expPen, constraint.machinePenalties[i][j]);
 			}
-			System.out.println();
 		}
 	}	
 	
@@ -145,66 +145,140 @@ class JUnitTest {
 //		assertFalse(constraint.checkFM(0, state, constraint.forbiddenMach.toArray(new char[0][0])));
 	
 		
-		
-/*		
-		char [] str = ("ABCDEFGH").toCharArray();
-		PossibilityTree pt = new PossibilityTree(str);
-		State state = new State(str);
-
-		char [] pair = ("0A").toCharArray();
-		pt.addFM(pair);
-		assertEquals(-1, (int) pt.Branch(0, state));
 	}
 	
-	void constraintAdd() {
-		char [] str = ("ABCDEFGH").toCharArray();
-		PossibilityTree pt = new PossibilityTree(str);
-		State state = new State(str);
+	@Test
+	void complexInvalidTest() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\ComplexInvalidTest.txt");
+		State state = new State();
+		PossibilityTree pt = new PossibilityTree(("ABCDEFGH").toCharArray(), c);
+		pt.Branch(-1, state, pt.tasks);
+	}
+	
+	@Test
+	void complexValidTest() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\ComplexValidTest.txt");
+		State state = new State();
+		PossibilityTree pt = new PossibilityTree(("ABCDEFGH").toCharArray(), c);
+		pt.Branch(-1, state, pt.tasks);
+	}
+	
+	@Test
+	void InvalidFileName() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\InvalidFileName.txt");
+		State state = new State();
+		PossibilityTree pt = new PossibilityTree(("ABCDEFGH").toCharArray(), c);
+		pt.Branch(-1, state, pt.tasks);
+	}
+	
+	@Test
+	void InvalidForcedPartAsg() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\InvalidForcedPartAsg.txt");
+		State state = new State();
+		PossibilityTree pt = new PossibilityTree(("ABCDEFGH").toCharArray(), c);
+		pt.Branch(-1, state, pt.tasks);
+	}
+	
+	@Test
+	void InvalidInForbidMach() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\InvalidInForbidMach.txt");
+		State state = new State();
+		PossibilityTree pt = new PossibilityTree(("ABCDEFGH").toCharArray(), c);
+		pt.Branch(-1, state, pt.tasks);
+	}
+	
+	@Test
+	void InvalidMachPenal() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\InvalidMachPenal.txt");
+		State state = new State();
+		PossibilityTree pt = new PossibilityTree(("ABCDEFGH").toCharArray(), c);
+		pt.Branch(-1, state, pt.tasks);
+	}
+	
+	@Test
+	void InvalidMachPenalNotEnough() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\InvalidMachPenalNotEnough.txt");
+		State state = new State();
+		PossibilityTree pt = new PossibilityTree(("ABCDEFGH").toCharArray(), c);
+		pt.Branch(-1, state, pt.tasks);
+	}
+	
+	@Test
+	void InvalidSpaces() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\InvalidSpaces.txt");
+		State state = new State();
+		PossibilityTree pt = new PossibilityTree(("ABCDEFGH").toCharArray(), c);
+		pt.Branch(-1, state, pt.tasks);
+	}
+	
+	@Test
+	void InvalidTooNearPenal() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\InvalidTooNearPenal.txt");
+		State state = new State();
+		PossibilityTree pt = new PossibilityTree(("ABCDEFGH").toCharArray(), c);
+		pt.Branch(-1, state, pt.tasks);
+	}
+	
+	@Test
+	void InvalidTooNearTask() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\InvalidTooNearTask.txt");
+		State state = new State();
+		PossibilityTree pt = new PossibilityTree(("ABCDEFGH").toCharArray(), c);
+		pt.Branch(-1, state, pt.tasks);
+	}
+	
+	@Test
+	void emptyFileIO() {
+		final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+		System.setOut(new PrintStream(outContent));
 		
-		char[] pair = ("1A").toCharArray();
-		pt.addFPA(pair);
-		pair = ("2B").toCharArray();
-		pt.addFPA(pair);
-		pair = ("3C").toCharArray();
-		pt.addFPA(pair);
-		pair = ("4D").toCharArray();
-		pt.addFPA(pair);
-		pair = ("5E").toCharArray();
-		pt.addFPA(pair);
-		pair = ("6F").toCharArray();
-		pt.addFPA(pair);
-		pair = ("7G").toCharArray();
-		pt.addFPA(pair);
-		pair = ("0H").toCharArray();
-		pt.addFPA(pair);
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\empty.txt");
+		assertEquals(c, null);
+	}
+	
+	@Test
+	void simple1FileIO() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\input1.txt");
+		State state = new State();
+		PossibilityTree pt = new PossibilityTree(("ABCDEFGH").toCharArray(), c);
+		pt.Branch(-1, state, pt.tasks);
+		assertEquals(("ABCDEFGH").toCharArray(), pt.tasks);
+	}
 
-		int[][] mp = new int[8][8];
+	@Test
+	void simple2FileIO() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\input2.txt");
+		assertEquals(c, ("ABCDEFGH").toCharArray());
+	}
 
-		for(int i=0;i<8;i++) {
-			for(int j=0;j<8;j++) {
-				if(i+j>7)		
-					mp[i][j] = i+j-8;
-				else
-					mp[i][j] = i+j;
-			}
-		}
-		int[] k = mp[0];
-		mp[0] = mp[7];
-		mp[7] = k;
-		for(int i=0;i<8;i++) {
-			for(int j=0;j<8;j++) {
-				System.out.print(mp[i][j]);
-			}
-			System.out.println();
-		}
-		pt.addMP(mp);
-		
-		System.out.print("state.entries: ");
-		System.out.println(state.entries);
-		System.out.println("state.penalty: " + state.penalty);
-		System.out.println(pt.Branch(1, state));
+	@Test
+	void simple3FileIO() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\input3.txt");
 
-		
-*/	}
+	}
+	
+	@Test
+	void FPAhighPen1() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\input4.txt");
 
+	}
+	
+	@Test
+	void FPAhighPen2() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\input5.txt");
+
+	}
+	
+	@Test
+	void FMleastPen1() {
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\input6.txt");
+
+	}
+	
+	@Test 
+	void FMleastPen2(){
+		Constraints c = fileIO.fileIO("D:\\eclipse-workspace\\git\\449-w18-T2-Java\\src\\input7.txt");
+
+	}
+	
 }
