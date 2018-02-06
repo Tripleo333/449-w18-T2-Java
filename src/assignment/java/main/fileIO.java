@@ -1,4 +1,4 @@
-package assignment.java.main;
+//package assignment.java.main;
 /**
  * 
  */
@@ -33,10 +33,11 @@ public class fileIO {
      * }
      * 
      */
+    /*
     public static void main(String[] args) {
         fileIO("C:\\Users\\Admin\\git\\449-w18-T2-Java\\src\\assignment\\java\\main\\test.txt");
     }
-
+    */
     private static boolean validFile = true;
     private static int lineCounter = 0;
 

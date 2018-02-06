@@ -98,14 +98,7 @@ public class Constraints {
     public int checkSoftConstraints(int mach, State state) {
         if (mach == -1) return 0;
         int returned = checkTNP(mach, state, tooNearPenalties.toArray(new Triplet[0]));
-        returned += checkMP(mach, state, machinePenalties);
-        if (returned != 0) {
-            System.out.println("Entries: ");
-            for (int z = 0; z < state.entries.length; z++) {
-                System.out.print(state.entries[z]);
-            }
-            System.out.println("");
-        }
+        returned += checkMP(mach, state);
         return returned;
     }
     
@@ -170,10 +163,9 @@ public class Constraints {
      * @param State state:  given state to check constraints on
      * @param constraints:  Constraints object
      */
-    public int checkMP(int mach, State state, int[][] cs) {
+    public int checkMP(int mach, State state) {
         if (state.entries[mach] == 'X') return 0;
-        System.out.println();
-        return cs[mach][state.entries[mach] - 65];
+        return machinePenalties[mach][state.entries[mach] - 65];
     }
     
     
@@ -188,6 +180,7 @@ public class Constraints {
         if (mach == -1) return true;
         // Runs checkFPA with mach, state, and the constraints FPA linked list which is converted to a 2d char array
         if (checkFPA(mach, state, forcedPartialAssn.toArray(new char[0][0])) == false) return false;
+        System.out.println("returned true");
         // Runs checkFM with mach, state, and the constraints FM linked list which is converted to a 2d char array
         if (checkFM(mach, state, forbiddenMach.toArray(new char[0][0])) == false) return false;
         // Runs checkTNT with mach, state, and the constraints TNT linked list which is converted to a 2d char array
@@ -240,12 +233,12 @@ public class Constraints {
      * @param int mach:     newest filled index in the state given (if state is a, b, x, ... then mach should be 1 to represent b)
      * @param State state:  given state to check constraints on
      * @param char[][] cs:  2D array of only Forced Partial Assignment constraints
-     */
+     */ 
     public boolean checkFPA(int mach, State state, char[][] cs) {
         // Checks each constraint in cs
         for (int constraint = 0; constraint < cs.length; constraint++) {
             // If machine we're checking is equal to machine in the constraint
-            if (mach == cs[constraint][0]) {
+            if ((mach + 48) == cs[constraint][0]) {
                 // If the task assigned to the machine does not equal the task that is supposed to be assigned to that machine
                 if (state.entries[mach] != cs[constraint][1]) {
                     return false;
@@ -265,7 +258,7 @@ public class Constraints {
         // For each constraint in cs
         for (int constraint = 0; constraint < cs.length; constraint++) {
             // If the given machine is equal to the machine in the constraint
-            if (mach == cs[constraint][0]) {
+            if ((mach + 48) == cs[constraint][0]) {
                 // If the forbidden task is assigned to that machine
                 if (state.entries[mach] == cs[constraint][1]) {
                     return false;

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class PossibilityTree {
 	
-	private Constraints constraints = new Constraints();
+	private Constraints constraints;
 	public char[] tasks;
 	public double currentMinPenalty = Double.POSITIVE_INFINITY;
 	public State minPenalty = null;
@@ -12,7 +12,7 @@ public class PossibilityTree {
 	 * PARAM:
 	 * possibleTasks - A char array of upper-case letters indicating tasks that are possible. Tasks don't have to be in any particular order.
 	*/
-	public PossibilityTree(char[] possibleTasks) {
+	public PossibilityTree(char[] possibleTasks, Constraints cs) {
 		char[] alphabet = new char[26];
 		for(char c = 'A'; c <= 'Z'; ++c) {
 		    alphabet[c-65] = c;
@@ -26,6 +26,7 @@ public class PossibilityTree {
 		}
 		if (counter == possibleTasks.length)
 			this.tasks = possibleTasks;
+		constraints = cs;
 	}
 	
 	/*
@@ -95,12 +96,19 @@ public class PossibilityTree {
 	
 	public void Branch(int i, State state, char[] toDo) {	    
 	    
+        System.out.println("i: " + i + "\nEntries: ");
+        for (int z = 0; z < state.entries.length; z++) {
+            System.out.print(state.entries[z]);
+        }
+        System.out.println("");
+	    
         if (!constraints.checkHardConstraints(i, state)) {
             System.out.println("Doesn't meet hard constraints");
             return;
         }
         
         state.penalty += constraints.checkSoftConstraints(i, state);
+        
         if (i >= 7) {
             if (state.penalty < currentMinPenalty) {
                 currentMinPenalty = state.penalty;
@@ -108,7 +116,6 @@ public class PossibilityTree {
             }
             return;
         }
-        
         if (state.penalty > currentMinPenalty) {
             return;
         }
