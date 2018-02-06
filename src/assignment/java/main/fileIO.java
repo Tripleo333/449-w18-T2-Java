@@ -173,7 +173,7 @@ public class fileIO {
 
             // TODO: problem in the following
             if (line.matches("too-near penalities") && validFile) {
-                System.out.println("\n\ntoo-near penalties if statment");
+//                System.out.println("\n\ntoo-near penalties if statment");
                 input = fileIO.tooNearPenalties(input, c);
                 if (!validFile) {
                     System.out.println(
@@ -181,11 +181,11 @@ public class fileIO {
                     System.exit(0);
                 }
             } else {
-                System.out.println("wtfffff");
                 System.out.println("Invalid input on line: " + lineCounter);
                 System.exit(0);
             }
             input.close();
+            System.out.println("input scanner is closed and everything was read in fine.");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -253,11 +253,6 @@ public class fileIO {
             System.out.println("Invalid input line " + (lineCounter + 1));
             validFile = false;
             System.exit(0);
-        } else {
-            System.out.println("contents of validFile here: " + validFile);
-            System.out.println(
-                    "contents of lineCounter here: " + lineCounter + "\n");
-
         }
         return input;
     }
@@ -271,10 +266,10 @@ public class fileIO {
         while (m.find()) {
             char[] lineArray = line.toCharArray();
             char[] TMPair = {lineArray[1], lineArray[3]};
-            System.out.println(
-                    "contents of line array: " + Arrays.toString(lineArray));
-            System.out
-                    .println("contents of TMPair: " + Arrays.toString(TMPair));
+//            System.out.println(
+//                    "contents of line array: " + Arrays.toString(lineArray));
+//            System.out
+//                    .println("contents of TMPair: " + Arrays.toString(TMPair));
             String numOnly = line.replaceAll("[^0-9]", "");
             penalty = Integer.parseInt(numOnly);
             if (penalty < 0) {
