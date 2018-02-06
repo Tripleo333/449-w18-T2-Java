@@ -144,8 +144,9 @@ public class fileIO {
                 System.exit(0);
             }
 
-//DONE		 //TODO: problem in the following
-            if (line.matches("too-near penalities") && validFile) {
+            Pattern PTNP = Pattern.compile("too-near penalities|too-near penalties");
+            Matcher MTNP = PTNP.matcher(line);
+            if (MTNP.find() && validFile) {
                 System.out.println("\n\ntoo-near penalties if statement");
                 if(input.hasNextLine()) {
 	                input = fileIO.tooNearPenalties(input, c);
