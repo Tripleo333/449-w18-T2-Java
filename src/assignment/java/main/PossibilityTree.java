@@ -98,13 +98,13 @@ public class PossibilityTree {
 	
 	public void Branch(int i, State state, char[] toDo) {	    
 
-/*
+
         System.out.print("i: " + i + "\nEntries: ");
         for (int z = 0; z < state.entries.length; z++) {
             System.out.print(state.entries[z]);
         }
         System.out.println("");
-*/    
+    
         if (!constraints.checkHardConstraints(i, state)) {
 //            System.out.println("Doesn't meet hard constraints");
             return;

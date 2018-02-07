@@ -305,7 +305,7 @@ public class fileIO {
         Matcher m = p.matcher(line);
         while (m.find()) {
             char[] lineArray = line.toCharArray();
-	    int sub = lineArray[1] - 1;
+            int sub = lineArray[1] - 1;
             char[] TMPair = {(char)sub, lineArray[3]};
             c.addConstraintPair(type, TMPair);
             line = input.nextLine();
