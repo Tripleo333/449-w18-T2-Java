@@ -4,9 +4,9 @@ test 6 - BCADEFGH or BCDEFGHA - test FM w/ least pen
 forced partial assignment:
 
 forbidden machine:
-(0,A)
-(1,B)
-(2,C)
+(1,A)
+(2,B)
+(3,C)
  
 too-near tasks:
 

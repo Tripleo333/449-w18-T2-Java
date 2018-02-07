@@ -2,14 +2,14 @@ Name:
 test 1
 
 forced partial assignment:
-(0,A)
-(1,B)
-(2,C)
+(1,A)
+(2,B)
+(3,C)
 
 forbidden machine:
-(0,A)
-(1,B)
-(2,C)
+(1,A)
+(2,B)
+(3,C)
  
 too-near tasks:
 (A,B)
