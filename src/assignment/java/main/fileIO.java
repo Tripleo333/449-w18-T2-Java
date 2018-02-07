@@ -15,8 +15,8 @@ public class fileIO {
 
     @SuppressWarnings("resource")
     public static Constraints fileIO(String str) {
-        validFile = true;
-        lineCounter = 0;
+    	validFile = true;
+    	lineCounter = 0;
         Constraints c = new Constraints();
         try {
             // System.out.println("Enter the file name with the extension: ");
@@ -40,8 +40,8 @@ public class fileIO {
                                                        // newline because
                                                        // input.newline eats \n
             Matcher MnameNL = PnameNL.matcher(line);
-            // if (MnameNL.find() && validFile) {
-            if (line.equals("Name:") && validFile) {
+//            if (MnameNL.find() && validFile) {
+            if(line.equals("Name:") && validFile) {
 
                 if (input.hasNextLine()) {
                     name = input.nextLine();// should contain a string for name
@@ -160,14 +160,14 @@ public class fileIO {
 
             if (line.equals("too-near penalties:") && validFile) {
                 System.out.println("\n\ntoo-near penalties if statement");
-                if (input.hasNextLine()) {
-                    input = fileIO.tooNearPenalties(input, c);
-                    if (!validFile) {
-                        System.err.println(
-                                "Invalid file input on line " + lineCounter);
-                        System.exit(0);
-                        return c;
-                    }
+                if(input.hasNextLine()) {
+	                input = fileIO.tooNearPenalties(input, c);
+	                if (!validFile) {
+	                    System.err.println(
+	                            "Invalid file input on line " + lineCounter);
+	                    System.exit(0);
+	                    return c;
+	                }
                 }
             } else {
                 System.err.println("Invalid input on line: " + lineCounter);
@@ -178,7 +178,7 @@ public class fileIO {
             System.out.println(
                     "input scanner is closed and everything was read in fine.");
         } catch (Exception ex) {
-            // ex.printStackTrace();
+//            ex.printStackTrace();
             System.err.println("could not open file");
             System.exit(0);
             return c;
@@ -236,10 +236,9 @@ public class fileIO {
         } else {
             String line = input.nextLine();
             lineCounter++;
-            // Pattern PMachPenNL = Pattern.compile("");
-            // Matcher MMachPenNL = PMachPenNL.matcher(line);
-            // if (!MMachPenNL.find()) {
-            if (line.equals("")) {
+            Pattern PMachPenNL = Pattern.compile("");
+            Matcher MMachPenNL = PMachPenNL.matcher(line);
+            if (!MMachPenNL.find()) {
                 validFile = false;
                 System.err.println("Invalid input line " + lineCounter);
                 System.exit(0);
@@ -282,7 +281,7 @@ public class fileIO {
 //        Pattern pNL = Pattern.compile("");
 //        Matcher mNL = pNL.matcher(line);
 //        if (!mNL.find()) {
-        if(!line.equals("")) {
+        if(line.equals("")) {
             validFile = false;
             System.err.println("problem encountered at line: " + lineCounter);
             System.exit(0);
@@ -299,16 +298,15 @@ public class fileIO {
         return input;
     }
 
-    private static void mFind(String line, String regex, Scanner input,
-            Constraints c, int type) {
+    private static void mFind(String line, String regex, Scanner input, Constraints c, int type) {
         lineCounter++;
         System.out.println(line);
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(line);
         while (m.find()) {
             char[] lineArray = line.toCharArray();
-            int sub = lineArray[1] - 1;
-            char[] TMPair = {(char) sub, lineArray[3]};
+	    int sub = lineArray[1] - 1;
+            char[] TMPair = {(char)sub, lineArray[3]};
             c.addConstraintPair(type, TMPair);
             line = input.nextLine();
             lineCounter++;
@@ -341,10 +339,10 @@ public class fileIO {
         String line = input.nextLine();
         mFind(line, "[(][1-8][,][A-H][)]", input, c, c.FORBIDDEN_MACHINE);
         // TODO: debug
-        // check if different from fpa pairs
-        // for (int i = 0; i < c.forbiddenMach.size(); i++) {
-        // System.out.println(c.forbiddenMach.get(i));
-        // }
+        //	check if different from fpa pairs
+//        for (int i = 0; i < c.forbiddenMach.size(); i++) {
+//            System.out.println(c.forbiddenMach.get(i));
+//        }
         System.out.println("number of lines read: " + lineCounter);
         return input;
     }
@@ -352,11 +350,10 @@ public class fileIO {
     private static Scanner forcedPartialAssignment(Scanner input,
             Constraints c) {
         String line = input.nextLine();
-        mFind(line, "[(][1-8][,][A-H][)]", input, c,
-                c.FORCED_PARTIAL_ASSIGNMENT);
-        // for (int i = 0; i < c.forcedPartialAssn.size(); i++) {
-        // System.out.println(c.forcedPartialAssn.get(i));
-        // }
+        mFind(line, "[(][1-8][,][A-H][)]", input, c, c.FORCED_PARTIAL_ASSIGNMENT);
+//        for (int i = 0; i < c.forcedPartialAssn.size(); i++) {
+//            System.out.println(c.forcedPartialAssn.get(i));
+//        }
         System.out.println("number of lines read: " + lineCounter);
         return input;
     }

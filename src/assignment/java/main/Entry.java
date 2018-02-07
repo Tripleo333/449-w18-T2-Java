@@ -10,7 +10,7 @@ public class Entry {
         PossibilityTree pt = new PossibilityTree(new char[] {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}, c);
         pt.Branch(-1, state, pt.tasks);
         State min = pt.minPenalty;
-        String returned = "";
+        String returned;
 
         if (min == null) {
             returned = "No valid solution possible!";
