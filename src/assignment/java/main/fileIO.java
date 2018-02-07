@@ -304,7 +304,8 @@ public class fileIO {
         Matcher m = p.matcher(line);
         while (m.find()) {
             char[] lineArray = line.toCharArray();
-            char[] TMPair = {lineArray[1], lineArray[3]};
+	    int sub = lineArray[1] - 1;
+            char[] TMPair = {(char)sub, lineArray[3]};
             c.addConstraintPair(type, TMPair);
             line = input.nextLine();
             lineCounter++;
@@ -335,7 +336,7 @@ public class fileIO {
 
     private static Scanner forbiddenMachine(Scanner input, Constraints c) {
         String line = input.nextLine();
-        mFind(line, "[(][0-7][,][A-H][)]", input, c, c.FORBIDDEN_MACHINE);
+        mFind(line, "[(][1-8][,][A-H][)]", input, c, c.FORBIDDEN_MACHINE);
         // TODO: debug
         //	check if different from fpa pairs
 //        for (int i = 0; i < c.forbiddenMach.size(); i++) {
@@ -348,7 +349,7 @@ public class fileIO {
     private static Scanner forcedPartialAssignment(Scanner input,
             Constraints c) {
         String line = input.nextLine();
-        mFind(line, "[(][0-7][,][A-H][)]", input, c, c.FORCED_PARTIAL_ASSIGNMENT);
+        mFind(line, "[(][1-8][,][A-H][)]", input, c, c.FORCED_PARTIAL_ASSIGNMENT);
 //        for (int i = 0; i < c.forcedPartialAssn.size(); i++) {
 //            System.out.println(c.forcedPartialAssn.get(i));
 //        }
