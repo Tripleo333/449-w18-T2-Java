@@ -3,6 +3,7 @@ Omar
 
 forced partial assignment:
 (1,A)
+(2,B)
 
 forbidden machine:
 (2,B)
