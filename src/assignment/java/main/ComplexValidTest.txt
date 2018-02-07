@@ -21,6 +21,6 @@ machine penalties:
 10 10 10 10 10 10 10 10
 10 10 10 10 10 10 10 10
 
-too-near penalities
-(1,D,100)
-(6,B,999)
+too-near penalties
+(B,D,100)
+(G,B,999)

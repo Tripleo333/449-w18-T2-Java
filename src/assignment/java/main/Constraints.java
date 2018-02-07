@@ -1,4 +1,4 @@
-
+package assignment.java.main;
 
 import java.util.LinkedList;
 import java.util.Optional;
@@ -124,12 +124,12 @@ public class Constraints {
         else if (mach == 7) {
             for (int i = 0; i < cs.length; i++) {
                 // If task 1 in constraint == task in mach:
-                if (cs[i].mach == state.entries[mach]) {
+                if (cs[i].task1 == state.entries[mach]) {
                     // If task 2 in constraint == task in state.entries[0]:
-                    if (cs[i].task == state.entries[0]) {
-                        if (cs[i].penalty > returned) {
-                            returned = cs[i].penalty;
-                        }
+                    if (cs[i].task2 == state.entries[0]) {
+//newest penalty wins                        if (cs[i].penalty > returned) {
+                    	returned = cs[i].penalty;
+                        //}
                     }
                 }
             }
@@ -139,13 +139,13 @@ public class Constraints {
             // For all constraints
             for (int i = 0; i < cs.length; i++) {
                 // If task2 in cs == task assigned to mach
-                if (cs[i].task == state.entries[mach]) {
+                if (cs[i].task2 == state.entries[mach]) {
                     // If task 1 in cs == task assigned to mach-1
-                    if (cs[i].mach == state.entries[mach-1]) {
+                    if (cs[i].task1 == state.entries[mach-1]) {
                         // Return penalty
-                        if (cs[i].penalty > returned) {
-                            returned = cs[i].penalty;
-                        }
+//newest penalty wins                         if (cs[i].penalty > returned) {
+                    	returned = cs[i].penalty;
+                        //}
                     }
                 }
             }
@@ -180,7 +180,7 @@ public class Constraints {
         if (mach == -1) return true;
         // Runs checkFPA with mach, state, and the constraints FPA linked list which is converted to a 2d char array
         if (checkFPA(mach, state, forcedPartialAssn.toArray(new char[0][0])) == false) return false;
-        System.out.println("returned true");
+//        System.out.println("returned true");
         // Runs checkFM with mach, state, and the constraints FM linked list which is converted to a 2d char array
         if (checkFM(mach, state, forbiddenMach.toArray(new char[0][0])) == false) return false;
         // Runs checkTNT with mach, state, and the constraints TNT linked list which is converted to a 2d char array
@@ -214,13 +214,10 @@ public class Constraints {
             }
             // Mach does not equal 7 or 0, so we assume mach == task 2 and check backward
             else if (state.entries[mach] == cs[constraint][1]) {
-                // if mach == task2
-                if (state.entries[mach] == cs[constraint][1]) {
-                    // if entry behind mach == task 1
-                    if (state.entries[mach-1] == cs[constraint][0]) {
-                        return false;
-                    }
-                }
+            	// if entry behind mach == task 1
+            	if (state.entries[mach-1] == cs[constraint][0]) {
+            		return false;
+            	}
             }
         }
         // (If mach == 7 then if mach == task 1 then entry[0] != task 2) and (if mach == task 2 then mach-1 != task 1)

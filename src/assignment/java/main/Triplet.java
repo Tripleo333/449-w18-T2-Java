@@ -1,20 +1,20 @@
-//package assignment.java.main;
+package assignment.java.main;
 	
 public class Triplet {
-    char mach;
-    char task;
+    char task1;
+    char task2;
     Integer penalty;
     
-    Triplet(char mach, char task, Integer penalty) {
-        this.mach = mach;
-        this.task = task;
+    Triplet(char task1, char task2, Integer penalty) {
+        this.task1 = task1;
+        this.task2 = task2;
         this.penalty = penalty;
     }
     
     //Omar added a to string function to use for debugging later 
     
-    public String toString() {
-        String str = "Mach " + this.mach + " task " + this.task + " penalty " + penalty + "\n";
-        return str;
-    }
+//    public String toString() {
+//        String str = "Task1 " + this.task1 + " task2 " + this.task2 + " penalty " + penalty + "\n";
+//        return str;
+//    }
 }
