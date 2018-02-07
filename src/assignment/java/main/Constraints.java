@@ -65,6 +65,8 @@ public class Constraints {
 			this.forbiddenMach.add(pair);
 			break;
 		case TOO_NEAR_TASKS:
+		    int sub = pair[0] + 1;
+		    pair = new char[] {(char)sub, pair[1]};
 			this.tooNearTasks.add(pair);
 			break;
 		default: 
@@ -215,6 +217,8 @@ public class Constraints {
             // Mach does not equal 7 or 0, so we assume mach == task 2 and check backward
             else if (state.entries[mach] == cs[constraint][1]) {
             	// if entry behind mach == task 1
+                System.out.println("\nMach " + state.entries[mach] + "\nMach - 1 " + state.entries[mach-1]);
+                System.out.println(cs[constraint][0]);
             	if (state.entries[mach-1] == cs[constraint][0]) {
             		return false;
             	}

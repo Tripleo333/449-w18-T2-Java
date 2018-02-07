@@ -104,7 +104,7 @@ public class PossibilityTree {
             System.out.print(state.entries[z]);
         }
         System.out.println("");
-*/    
+*/
         if (!constraints.checkHardConstraints(i, state)) {
 //            System.out.println("Doesn't meet hard constraints");
             return;
