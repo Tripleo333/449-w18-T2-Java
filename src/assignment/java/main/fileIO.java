@@ -19,7 +19,7 @@ public class fileIO {
     	lineCounter = 0;
         Constraints c = new Constraints();
         try {
-//            System.out.println("Enter the file name with the extension: ");
+            // System.out.println("Enter the file name with the extension: ");
 
             File file = new File(str);
             Scanner input = new Scanner(file);
@@ -40,7 +40,9 @@ public class fileIO {
                                                        // newline because
                                                        // input.newline eats \n
             Matcher MnameNL = PnameNL.matcher(line);
-            if (MnameNL.find() && validFile) {
+//            if (MnameNL.find() && validFile) {
+            if(line.equals("Name:") && validFile) {
+
                 if (input.hasNextLine()) {
                     name = input.nextLine();// should contain a string for name
                     lineCounter++;
@@ -67,9 +69,7 @@ public class fileIO {
 
             }
 
-            if (line.matches("forced partial assignment:") && validFile) {
-                // System.out.println("in forced partial assignment if
-                // statment:\n");
+            if (line.equals("forced partial assignment:") && validFile) {
                 input = fileIO.forcedPartialAssignment(input, c);
                 if (!validFile) {
                     System.err.println(
@@ -85,7 +85,8 @@ public class fileIO {
                 System.exit(0);
                 return c;
             }
-            if (line.matches("forbidden machine:") && validFile) {
+
+            if (line.equals("forbidden machine:") && validFile) {
                 System.out.println("entered forbidden machine if:\n");
                 input = fileIO.forbiddenMachine(input, c);
                 if (!validFile) {
@@ -107,7 +108,7 @@ public class fileIO {
                 return c;
             }
 
-            if (line.matches("too-near tasks:") && validFile) {
+            if (line.equals("too-near tasks:") && validFile) {
                 input = fileIO.tooNearTasks(input, c);
                 if (!validFile) {
                     System.err.println(
@@ -132,7 +133,7 @@ public class fileIO {
                 return c;
             }
 
-            if (line.matches("machine penalties:") && validFile) {
+            if (line.equals("machine penalties:") && validFile) {
                 System.out.println("\n\nmachine penalties: if statement");
                 input = fileIO.machinePenalties(input, c);
                 if (!validFile) {
@@ -157,9 +158,7 @@ public class fileIO {
                 return c;
             }
 
-            Pattern PTNP = Pattern.compile("too-near penalties:");
-            Matcher MTNP = PTNP.matcher(line);
-            if (MTNP.find() && validFile) {
+            if (line.equals("too-near penalties:") && validFile) {
                 System.out.println("\n\ntoo-near penalties if statement");
                 if(input.hasNextLine()) {
 	                input = fileIO.tooNearPenalties(input, c);
@@ -176,7 +175,8 @@ public class fileIO {
                 return c;
             }
             input.close();
-            System.out.println("input scanner is closed and everything was read in fine.");
+            System.out.println(
+                    "input scanner is closed and everything was read in fine.");
         } catch (Exception ex) {
 //            ex.printStackTrace();
             System.err.println("could not open file");
@@ -263,10 +263,10 @@ public class fileIO {
         while (m.find()) {
             char[] lineArray = line.toCharArray();
             char[] TMPair = {lineArray[1], lineArray[3]};
-//            System.out.println(
-//                    "contents of line array: " + Arrays.toString(lineArray));
-//            System.out
-//                    .println("contents of TMPair: " + Arrays.toString(TMPair));
+            // System.out.println(
+            // "contents of line array: " + Arrays.toString(lineArray));
+            // System.out
+            // .println("contents of TMPair: " + Arrays.toString(TMPair));
             String numOnly = line.replaceAll("[^0-9]", "");
             penalty = Integer.parseInt(numOnly);
             if (penalty < 0) {
@@ -311,7 +311,7 @@ public class fileIO {
             System.out.println("pair accepted. Line read: " + lineCounter);
             m = p.matcher(line);
         }
-        
+
         Pattern pNL = Pattern.compile("");
         Matcher mNL = pNL.matcher(line);
         if (!mNL.find()) {
@@ -321,7 +321,7 @@ public class fileIO {
             return;
         }
     }
-    
+
     private static Scanner tooNearTasks(Scanner input, Constraints c) {
         System.out.println("in too near tasks function");
         String line = input.nextLine();
