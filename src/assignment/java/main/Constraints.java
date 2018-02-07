@@ -1,7 +1,6 @@
 package assignment.java.main;
 
 import java.util.LinkedList;
-import java.util.Optional;
 
 public class Constraints {
 	// By Anastasiya:

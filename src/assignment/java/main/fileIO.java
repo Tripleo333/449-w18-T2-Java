@@ -157,7 +157,7 @@ public class fileIO {
                 return c;
             }
 
-            Pattern PTNP = Pattern.compile("too-near penalities|too-near penalties");
+            Pattern PTNP = Pattern.compile("too-near penalties:");
             Matcher MTNP = PTNP.matcher(line);
             if (MTNP.find() && validFile) {
                 System.out.println("\n\ntoo-near penalties if statement");

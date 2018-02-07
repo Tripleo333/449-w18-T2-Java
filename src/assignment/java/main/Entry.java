@@ -1,3 +1,5 @@
+package assignment.java.main;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -11,7 +13,7 @@ public class Entry {
         String returned;
 
         if (min == null) {
-            returned = "No valid solution possible!";
+            System.out.println("No valid solution possible!");
         }
         
         else {
