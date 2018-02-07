@@ -1,4 +1,4 @@
-//package assignment.java.main;
+package assignment.java.main;
 /**
  * 
  */
@@ -236,9 +236,6 @@ public class fileIO {
         } else {
             String line = input.nextLine();
             lineCounter++;
-            // Pattern PMachPenNL = Pattern.compile("");
-            // Matcher MMachPenNL = PMachPenNL.matcher(line);
-            // if (!MMachPenNL.find()) {
             if (line.equals("")) {
                 validFile = false;
                 System.err.println("Invalid input line " + lineCounter);
@@ -279,10 +276,8 @@ public class fileIO {
             }
             c.addTooNearPenalties(TMPair, penalty);
         }
-//        Pattern pNL = Pattern.compile("");
-//        Matcher mNL = pNL.matcher(line);
-//        if (!mNL.find()) {
-        if(!line.equals("")) {
+
+        if (line.equals("")) {
             validFile = false;
             System.err.println("problem encountered at line: " + lineCounter);
             System.exit(0);
