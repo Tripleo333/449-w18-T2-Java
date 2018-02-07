@@ -1,4 +1,4 @@
-package assignment.java.main;
+//package assignment.java.main;
 
 import java.util.LinkedList;
 
@@ -97,6 +97,7 @@ public class Constraints {
     public int checkSoftConstraints(int mach, State state) {
         if (mach == -1) return 0;
         int returned = checkTNP(mach, state, tooNearPenalties.toArray(new Triplet[0]));
+        //System.out.println(tooNearPenalties.getFirst());
         returned += checkMP(mach, state);
         return returned;
     }

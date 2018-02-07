@@ -1,4 +1,4 @@
-package assignment.java.main;
+//package assignment.java.main;
 	
 public class Triplet {
     char task1;

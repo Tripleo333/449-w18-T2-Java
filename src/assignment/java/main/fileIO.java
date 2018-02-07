@@ -1,4 +1,4 @@
-package assignment.java.main;
+//package assignment.java.main;
 /**
  * 
  */
@@ -278,9 +278,10 @@ public class fileIO {
             }
             c.addTooNearPenalties(TMPair, penalty);
         }
-        Pattern pNL = Pattern.compile("");
-        Matcher mNL = pNL.matcher(line);
-        if (!mNL.find()) {
+//        Pattern pNL = Pattern.compile("");
+//        Matcher mNL = pNL.matcher(line);
+//        if (!mNL.find()) {
+        if(!line.equals("")) {
             validFile = false;
             System.err.println("problem encountered at line: " + lineCounter);
             System.exit(0);

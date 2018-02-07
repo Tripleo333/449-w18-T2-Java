@@ -1,4 +1,4 @@
-package assignment.java.main;
+//package assignment.java.main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,13 +13,12 @@ public class Entry {
         String returned;
 
         if (min == null) {
-            System.out.println("No valid solution possible!");
+            returned = "No valid solution possible!";
         }
         
         else {
-            // PRINT ENTRIES
-            System.out.println(min.entries);
-            System.out.println(pt.currentMinPenalty);
+            returned = "Solution " + min.entries[0] + min.entries[1] + min.entries[2] + min.entries[3] + min.entries[4] + min.entries[5] + min.entries[6] + min.entries[7] + "; Quality: " + min.penalty;
         }
+        System.out.println(returned);
     }
 }
