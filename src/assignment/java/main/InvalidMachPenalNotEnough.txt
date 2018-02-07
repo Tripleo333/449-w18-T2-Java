@@ -14,4 +14,4 @@ machine penalties:
 10 10 10 10 10 10 10 10
 10 10 10 10 10 10 10 10
 
-too-near penalities
+too-near penalties:
