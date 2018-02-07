@@ -1,5 +1,5 @@
 Name:
-InvalidTooNearPenal
+InvalidTooNearPenal 
 
 forced partial assignment:
 (1,A)
@@ -16,7 +16,6 @@ forbidden machine:
 (4,A)
 
 too-near tasks:
-(A,F)
 
 machine penalties:
 3  3  4  5  7  7  6  5
