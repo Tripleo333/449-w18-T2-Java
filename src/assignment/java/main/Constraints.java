@@ -79,7 +79,8 @@ public class Constraints {
 	}
 	
 	public void addTooNearPenalties(char[] pair, int penalty) {
-		Triplet triplet = new Triplet(pair[0], pair[1], penalty);
+	    int sub = pair[0] + 1;
+		Triplet triplet = new Triplet((char)sub, pair[1], penalty);
 		this.tooNearPenalties.add(triplet);
 	}
 	
@@ -123,7 +124,7 @@ public class Constraints {
         }
         
         // If we're checking the last machine, wrap around and consider mach 7 as task 1 and mach 0 as task 2
-        else if (mach == 7) {
+        if (mach == 7) {
             for (int i = 0; i < cs.length; i++) {
                 // If task 1 in constraint == task in mach:
                 if (cs[i].task1 == state.entries[mach]) {
@@ -137,7 +138,6 @@ public class Constraints {
             }
         }
         
-        else {
             // For all constraints
             for (int i = 0; i < cs.length; i++) {
                 // If task2 in cs == task assigned to mach
@@ -151,7 +151,6 @@ public class Constraints {
                     }
                 }
             }
-        }
         
         return returned;
     }
@@ -215,14 +214,12 @@ public class Constraints {
                 }
             }
             // Mach does not equal 7 or 0, so we assume mach == task 2 and check backward
-            else if (state.entries[mach] == cs[constraint][1]) {
+            //else if (state.entries[mach] == cs[constraint][1]) {
             	// if entry behind mach == task 1
-                System.out.println("\nMach " + state.entries[mach] + "\nMach - 1 " + state.entries[mach-1]);
-                System.out.println(cs[constraint][0]);
             	if (state.entries[mach-1] == cs[constraint][0]) {
             		return false;
             	}
-            }
+            //}
         }
         // (If mach == 7 then if mach == task 1 then entry[0] != task 2) and (if mach == task 2 then mach-1 != task 1)
         // Basically, task 1 and 2 are not assigned to mach i and mach i + 1 respectively (or mach i and mach 0 if mach == 7)

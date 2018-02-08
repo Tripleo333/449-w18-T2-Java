@@ -114,6 +114,8 @@ public class PossibilityTree {
         
         if (i >= 7) {
             if (state.penalty < currentMinPenalty) {
+                System.out.println(state.entries);
+                System.out.println(state.penalty);
                 currentMinPenalty = state.penalty;
                 minPenalty = state;
             }
