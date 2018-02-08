@@ -57,7 +57,7 @@ public class fileIO {
                 }
                 if (!line.matches("")) {// checks that it infact reads new line
                     validFile = false;
-                    System.err.println("invalid file at line: " + lineCounter);
+                    writer.println("invalid file at line: " + lineCounter);
                     System.exit(0);
                 }
                 writer.println("contents of name: " + name);
@@ -151,7 +151,7 @@ public class fileIO {
             if (line.equals("machine penalties:") && validFile) {
                 input = fileIO.machinePenalties(input, c, writer);
                 if (!validFile) {
-                    System.err.println(
+                    writer.println(
                             "Invalid file input on line " + lineCounter);
                     System.exit(0);
                     return c;
@@ -211,7 +211,6 @@ public class fileIO {
             String line = "";
             if (input.hasNextLine()) {
                 line = input.nextLine();
-                System.out.println(line);
                 lineCounter++;
             } else {
                 writer.println("Invalid input on line: " + lineCounter);
@@ -262,7 +261,6 @@ public class fileIO {
             String line = "";
             if (input.hasNextLine()) {
                 line = input.nextLine();
-                System.out.println(line);
                 lineCounter++;
             } else {
                 writer.println("Invalid input line " + lineCounter);
@@ -332,7 +330,6 @@ public class fileIO {
             return input;
         }
         */
-        System.out.println("haha");
         return input;
     }
 
@@ -421,7 +418,6 @@ public class fileIO {
         }
         mFind(line, "[(][1-8][,][A-H][)]", input, c,
                 c.FORCED_PARTIAL_ASSIGNMENT, writer);
-        System.out.println("number of lines read: " + lineCounter);
         return input;
     }
 }
