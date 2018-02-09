@@ -303,35 +303,37 @@ public class fileIO {
                     }
                 }
             }
-            if(type == c.TOO_NEAR_PENALTIES) {
+            if (type == c.TOO_NEAR_PENALTIES) {
                 String tooNearPenIntOnly = line.replaceAll("[^\\d.]", "");
                 penalty = Integer.parseInt(tooNearPenIntOnly);
                 c.addTooNearPenalties(TMPair, penalty);
-                
-            }
-            if (type != c.TOO_NEAR_PENALTIES) {
+
+            } else {
                 c.addConstraintPair(type, TMPair);
             }
-            if (type != 5) {
-                if (input.hasNextLine()) {
-                    line = input.nextLine();
-                    lineCounter++;
-                } else {
-                    System.err.println(
-                            "Error while parsing input file" + lineCounter);
-                    System.exit(0);
-                }
-                m = p.matcher(line);
+
+            if (input.hasNextLine()) {
+                line = input.nextLine();
+                lineCounter++;
+            } else if (type != c.TOO_NEAR_PENALTIES) {
+                System.err.println(
+                        "Error while parsing input file " + lineCounter);
+                System.exit(0);
+            } else {
+                break;
             }
+            m = p.matcher(line);
+
         }
-        //
-        // if (!line.equals("") && type != 5) {
-        // validFile = false;
-        // System.err
-        // .println("Error while parsing input file 2 " + lineCounter);
-        // System.exit(0);
-        // return;
-        // }
+        System.out.println("contents of line " + line
+                + "\ncontents of line counter: " + lineCounter);
+        if (!line.equals("") && type != c.TOO_NEAR_PENALTIES) {
+            validFile = false;
+            System.err
+                    .println("Error while parsing input file 2 " + lineCounter);
+            System.exit(0);
+            return;
+        }
     }
 
     private static Scanner tooNearTasks(Scanner input, Constraints c) {
