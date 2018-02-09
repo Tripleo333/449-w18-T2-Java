@@ -30,11 +30,11 @@ public class Entry {
             }
 
             else {
-                returned = "Solution " + min.entries[0] + "\u2081"
-                        + min.entries[1] + "\u2082" + min.entries[2] + "\u2083"
-                        + min.entries[3] + "\u2084" + min.entries[4] + "\u2085"
-                        + min.entries[5] + "\u2086" + min.entries[6] + "\u2087"
-                        + min.entries[7] + "\u2088" + "; Quality: "
+                returned = "Solution " + min.entries[0] + "\u2081 "
+                        + min.entries[1] + "\u2082 " + min.entries[2] + "\u2083 "
+                        + min.entries[3] + "\u2084 " + min.entries[4] + "\u2085 "
+                        + min.entries[5] + "\u2086 " + min.entries[6] + "\u2087 "
+                        + min.entries[7] + "\u2088 " + "; Quality: "
                         + min.penalty;
             }
             writer.println(returned);
