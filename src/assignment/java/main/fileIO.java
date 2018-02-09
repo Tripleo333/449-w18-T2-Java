@@ -1,4 +1,4 @@
-//package assignment.java.main;
+package assignment.java.main;
 /**
  * 
  */
@@ -151,8 +151,9 @@ public class fileIO {
             if (line.equals("machine penalties:") && validFile) {
                 input = fileIO.machinePenalties(input, c, writer);
                 if (!validFile) {
-                    writer.println(
-                            "Invalid file input on line " + lineCounter);
+                    System.err.println("machine penalty error");
+                    writer.close();
+                    validFile = false;
                     System.exit(0);
                     return c;
                 }
@@ -160,15 +161,14 @@ public class fileIO {
                     line = input.nextLine();
                     lineCounter++;
                 } else {
-                    writer.println("invalid file, line " + lineCounter);
+                    System.err.println("invalid file, line " + lineCounter);
                     writer.close();
                     validFile = false;
                     System.exit(0);
                     return c;
-
                 }
             } else {
-                writer.println("Invalid input on line: " + lineCounter);
+                System.err.println("invalid file, line " + lineCounter);
                 writer.close();
                 validFile = false;
                 System.exit(0);
@@ -213,15 +213,14 @@ public class fileIO {
                 line = input.nextLine();
                 lineCounter++;
             } else {
-                writer.println("Invalid input on line: " + lineCounter);
+                System.err.println("machine penalty error");
                 writer.close();
                 System.exit(0);
             }
             String[] penaltiesStrArr = line.split(" ");
             if (penaltiesStrArr.length != 8) {
                 validFile = false;
-                writer.println("Invalid number of elements in line: "
-                        + lineCounter + "in machine penalties");
+                System.err.println("machine penalty errors");
                 System.exit(0);
                 return input;
             }
@@ -232,14 +231,13 @@ public class fileIO {
                     int temp = Integer.parseInt(penaltiesStrArr[y]);
                     penaltiesIntArr[y] = temp;
                     if (penaltiesIntArr[y] < 0) {
-                        writer.println(
-                                "Invalid number in line: " + lineCounter);
+                        System.err.println("machine penalty error");
                         writer.close();
                         System.exit(0);
                         return input;
                     }
                 } catch (NumberFormatException e) {
-                    writer.println("invalid number input line: " + lineCounter);
+                    System.err.println("machine penalty error");
                     writer.close();
                     System.exit(0);
                     return input;
@@ -252,7 +250,7 @@ public class fileIO {
         // reading newline and the line after that which should contain
         // "too-near penalties"
         if (!input.hasNextLine()) {
-            writer.println("Invalid input line " + (++lineCounter));
+            System.err.println("machine penalty error");
             writer.close();
             validFile = false;
             System.exit(0);
@@ -263,14 +261,14 @@ public class fileIO {
                 line = input.nextLine();
                 lineCounter++;
             } else {
-                writer.println("Invalid input line " + lineCounter);
+                System.err.println("machine penalty error");
                 writer.close();
                 System.exit(0);
             }
             /*
             if (line.equals("")) {
                 validFile = false;
-                writer.println("Invalid input line " + lineCounter);
+                System.err.println("machine penalty error");
                 writer.close();
                 System.exit(0);
                 return input;
@@ -278,7 +276,7 @@ public class fileIO {
             */
         }
         if (!input.hasNextLine()) {
-            writer.println("Invalid input line " + (lineCounter + 1));
+            System.err.println("machine penalty error");
             writer.close();
             validFile = false;
             System.exit(0);
@@ -314,7 +312,7 @@ public class fileIO {
             penalty = Integer.parseInt(numOnly);
             if (penalty < 0) {
                 validFile = false;
-                writer.println("invalid penalty value at line: " + lineCounter);
+                System.err.println("invalid machine/task");
                 writer.close();
                 System.exit(0);
                 return input;
@@ -325,7 +323,7 @@ public class fileIO {
         /*
         if (!line.equals("")) {
             validFile = false;
-            System.err.println("problem encountered at line: " + lineCounter);
+            System.err.println("invalid machine/task");
             System.exit(0);
             return input;
         }
@@ -342,24 +340,22 @@ public class fileIO {
             char[] lineArray = line.toCharArray();
             int sub = lineArray[1] - 1;
             char[] TMPair = {(char) sub, lineArray[3]};
-            if (type == 5) {
-                String numOnly = line.replaceAll("[^0-9]", "");
-                int penalty = Integer.parseInt(numOnly);
-                c.addTooNearPenalties(TMPair, penalty);
+            if (type == 1) {
+                for (int i = 0; i < c.forcedPartialAssn.size(); i++) {
+                    if (c.forcedPartialAssn.get(i)[0] == TMPair[0]
+                            || c.forcedPartialAssn.get(i)[0] == TMPair[1]) {
+                        System.err.println("forced assignment error");
+                        writer.close();
+                        System.exit(0);
+                    }
+                }
             }
-            else {
-                c.addConstraintPair(type, TMPair);
-            }
-            
+            c.addConstraintPair(type, TMPair);
             if (input.hasNextLine()) {
                 line = input.nextLine();
                 lineCounter++;
-            } 
-            else if (type == 5 && !input.hasNextLine()){
-                return;
-            }
-            else {
-                writer.println("Problem encounted at line " + lineCounter);
+            } else {
+                writer.println("invalid machine/task");
                 writer.close();
                 System.exit(0);
             }
