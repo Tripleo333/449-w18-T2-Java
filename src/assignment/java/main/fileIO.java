@@ -31,7 +31,8 @@ public class fileIO {
             if (input.hasNextLine()) {
                 line = input.nextLine();
             } else {
-                System.err.println("Error while parsing input file");
+                System.err.println(
+                        "Error while parsing input file" + lineCounter);
                 System.exit(0);
                 return null;
             }
@@ -41,7 +42,8 @@ public class fileIO {
                     name = input.nextLine();// should contain a string for name
                     lineCounter++;
                 } else {
-                    System.err.println("Error while parsing input file");
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
                     System.exit(0);
                     return c;
                 }
@@ -50,12 +52,14 @@ public class fileIO {
                     lineCounter++;
                 } else {
                     validFile = false;
-                    System.err.println("Error while parsing input file");
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
                     System.exit(0);
                 }
                 if (!line.matches("")) {
                     validFile = false;
-                    System.err.println("Error while parsing input file");
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
                     System.exit(0);
                 }
                 if (input.hasNextLine()) {
@@ -64,11 +68,13 @@ public class fileIO {
                     lineCounter++;
                 } else {
                     validFile = false;
-                    System.err.println("Error while parsing input file");
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
                     System.exit(0);
                 }
             } else {
-                System.out.println("Error while parsing input file");
+                System.out.println(
+                        "Error while parsing input file" + lineCounter);
                 validFile = false;
                 System.exit(0);
             }
@@ -76,14 +82,16 @@ public class fileIO {
             if (line.equals("forced partial assignment:") && validFile) {
                 input = fileIO.forcedPartialAssignment(input, c);
                 if (!validFile) {
-                    System.err.println("Error while parsing input file");
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
                     System.exit(0);
                     return c;
                 }
                 line = input.nextLine(); // should contain "forbidden machine:"
                 lineCounter++;
             } else {
-                System.err.println("Error while parsing input file");
+                System.err.println(
+                        "Error while parsing input file" + lineCounter);
                 System.exit(0);
                 return c;
             }
@@ -91,7 +99,8 @@ public class fileIO {
             if (line.equals("forbidden machine:") && validFile) {
                 input = fileIO.forbiddenMachine(input, c);
                 if (!validFile) {
-                    System.err.println("Error while parsing input file");
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
                     System.exit(0);
                     return c;
                 }
@@ -100,11 +109,13 @@ public class fileIO {
                                             // tasks:\n"
                     lineCounter++;
                 } else {
-                    System.err.println("Error while parsing input file");
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
                     System.exit(0);
                 }
             } else {
-                System.err.println("Error while parsing input file");
+                System.err.println(
+                        "Error while parsing input file" + lineCounter);
                 System.exit(0);
                 return c;
             }
@@ -112,7 +123,8 @@ public class fileIO {
             if (line.equals("too-near tasks:") && validFile) {
                 input = fileIO.tooNearTasks(input, c);
                 if (!validFile) {
-                    System.err.println("Error while parsing input file");
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
                     System.exit(0);
                     return c;
                 }
@@ -121,14 +133,16 @@ public class fileIO {
                                             // penalties:"
                     lineCounter++;
                 } else {
-                    System.err.println("Error while parsing input file");
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
                     validFile = false;
                     System.exit(0);
                     return c;
                 }
 
             } else {
-                System.err.println("Error while parsing input file");
+                System.err.println(
+                        "Error while parsing input file" + lineCounter);
                 validFile = false;
                 System.exit(0);
                 return c;
@@ -137,7 +151,8 @@ public class fileIO {
             if (line.equals("machine penalties:") && validFile) {
                 input = fileIO.machinePenalties(input, c);
                 if (!validFile) {
-                    System.err.println("Error while parsing input file");
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
                     validFile = false;
                     System.exit(0);
                     return c;
@@ -147,13 +162,15 @@ public class fileIO {
                     lineCounter++;
 
                 } else {
-                    System.err.println("Error while parsing input file");
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
                     validFile = false;
                     System.exit(0);
                     return c;
                 }
             } else {
-                System.err.println("Error while parsing input file");
+                System.err.println(
+                        "Error while parsing input file" + lineCounter);
                 validFile = false;
                 System.exit(0);
                 return c;
@@ -163,20 +180,22 @@ public class fileIO {
                 if (input.hasNextLine()) {
                     input = fileIO.tooNearPenalties(input, c);
                     if (!validFile) {
-                        System.err.println("Error while parsing input file");
+                        System.err.println(
+                                "Error while parsing input file" + lineCounter);
                         validFile = false;
                         System.exit(0);
                         return c;
                     }
                 }
             } else {
-                System.err.println("Error while parsing input file");
+                System.err.println(
+                        "Error while parsing input file" + lineCounter);
                 System.exit(0);
                 return c;
             }
             input.close();
         } catch (Exception ex) {
-            System.err.println("could not open input file");
+            System.err.println("could not open input file" + lineCounter);
             System.exit(0);
             return c;
         }
@@ -225,7 +244,7 @@ public class fileIO {
         // reading newline and the line after that which should contain
         // "too-near penalties"
         if (!input.hasNextLine()) {
-            System.err.println("Error while parsing input file");
+            System.err.println("Error while parsing input file" + lineCounter);
             validFile = false;
             System.exit(0);
             return input;
@@ -235,11 +254,13 @@ public class fileIO {
                 line = input.nextLine();
                 lineCounter++;
                 if (!line.equals("")) {
-                    System.err.println("Error while parsing input file");
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
                     System.exit(0);
                 }
             } else {
-                System.err.println("Error while parsing input file");
+                System.err.println(
+                        "Error while parsing input file" + lineCounter);
                 System.exit(0);
             }
         }
@@ -250,7 +271,7 @@ public class fileIO {
         int penalty;
         String line = "";
         if (!input.hasNextLine()) {
-            System.err.print("Error while parsing input file");
+            System.err.print("Error while parsing input file" + lineCounter);
             System.exit(0);
         } else {
             line = input.nextLine();
@@ -279,19 +300,23 @@ public class fileIO {
                 }
             }
             c.addConstraintPair(type, TMPair);
-            if (input.hasNextLine()) {
-                line = input.nextLine();
-                lineCounter++;
-            } else {
-                System.err.println("Error while parsing input file");
-                System.exit(0);
+            if (type != 5) {
+                if (input.hasNextLine()) {
+                    line = input.nextLine();
+                    lineCounter++;
+                } else {
+                    System.err.println(
+                            "Error while parsing input file" + lineCounter);
+                    System.exit(0);
+                }
+                m = p.matcher(line);
             }
-            m = p.matcher(line);
         }
 
-        if (!line.equals("")) {
+        if (!line.equals("") && type != 5) {
             validFile = false;
-            System.err.println("Error while parsing input file");
+            System.err
+                    .println("Error while parsing input file 2 " + lineCounter);
             System.exit(0);
             return;
         }
@@ -302,7 +327,7 @@ public class fileIO {
         if (input.hasNextLine()) {
             line = input.nextLine();
         } else {
-            System.err.println("Error while parsing input file");
+            System.err.println("Error while parsing input file" + lineCounter);
             System.exit(0);
         }
         mFind(line, "[(][A-H][,][A-H][)]", input, c, c.TOO_NEAR_TASKS);
@@ -314,7 +339,7 @@ public class fileIO {
         if (input.hasNextLine()) {
             line = input.nextLine();
         } else {
-            System.err.println("Error while parsing input file");
+            System.err.println("Error while parsing input file" + lineCounter);
             System.exit(0);
         }
         mFind(line, "[(][1-8][,][A-H][)]", input, c, c.FORBIDDEN_MACHINE);
@@ -327,7 +352,7 @@ public class fileIO {
         if (input.hasNextLine()) {
             line = input.nextLine();
         } else {
-            System.err.println("Error while parsing input file");
+            System.err.println("Error while parsing input file" + lineCounter);
             System.exit(0);
         }
         mFind(line, "[(][1-8][,][A-H][)]", input, c,
