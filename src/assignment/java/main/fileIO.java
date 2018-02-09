@@ -323,7 +323,6 @@ public class fileIO {
                 return;
             }
             m = p.matcher(line);
-
         }
         if (!m.find() && !line.equals("") && type == c.TOO_NEAR_PENALTIES) {
             System.err.println("invalid task");

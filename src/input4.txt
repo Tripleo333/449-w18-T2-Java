@@ -7,7 +7,7 @@ forced partial assignment:
 (3,C)
 
 forbidden machine:
- 
+
 too-near tasks:
 
 machine penalties:
@@ -20,6 +20,6 @@ machine penalties:
 1 2 3 4 5 6 7 0
 0 1 2 3 4 5 6 7
 
-too-near penalities
+too-near penalties:
 (A,B,10)
 (B,C,10)

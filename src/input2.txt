@@ -4,7 +4,7 @@ test 2 - H G F E D C B A
 forced partial assignment:
 
 forbidden machine:
- 
+
 too-near tasks:
 
 machine penalties:
@@ -17,4 +17,4 @@ machine penalties:
 1 0 7 6 5 4 3 2
 0 7 6 5 4 3 2 1
 
-too-near penalities
+too-near penalties:
