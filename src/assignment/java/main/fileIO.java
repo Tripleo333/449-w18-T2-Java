@@ -286,20 +286,32 @@ public class fileIO {
         lineCounter++;
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(line);
+        if (type == 5)
+            ;
         while (m.find()) {
             char[] lineArray = line.toCharArray();
             int sub = lineArray[1] - 1;
             char[] TMPair = {(char) sub, lineArray[3]};
+            int penalty = 0;
             if (type == 1) {
                 for (int i = 0; i < c.forcedPartialAssn.size(); i++) {
-                    if (c.forcedPartialAssn.get(i)[0] == TMPair[0]
-                            || c.forcedPartialAssn.get(i)[1] == TMPair[1]) {
+                    if ((char) c.forcedPartialAssn.get(i)[0] == (char) TMPair[0]
+                            || (char) c.forcedPartialAssn
+                                    .get(i)[1] == (char) TMPair[1]) {
                         System.err.println("partial assignment error");
                         System.exit(0);
                     }
                 }
             }
-            c.addConstraintPair(type, TMPair);
+            if(type == c.TOO_NEAR_PENALTIES) {
+                String tooNearPenIntOnly = line.replaceAll("[^\\d.]", "");
+                penalty = Integer.parseInt(tooNearPenIntOnly);
+                c.addTooNearPenalties(TMPair, penalty);
+                
+            }
+            if (type != c.TOO_NEAR_PENALTIES) {
+                c.addConstraintPair(type, TMPair);
+            }
             if (type != 5) {
                 if (input.hasNextLine()) {
                     line = input.nextLine();
@@ -312,14 +324,14 @@ public class fileIO {
                 m = p.matcher(line);
             }
         }
-
-        if (!line.equals("") && type != 5) {
-            validFile = false;
-            System.err
-                    .println("Error while parsing input file 2 " + lineCounter);
-            System.exit(0);
-            return;
-        }
+        //
+        // if (!line.equals("") && type != 5) {
+        // validFile = false;
+        // System.err
+        // .println("Error while parsing input file 2 " + lineCounter);
+        // System.exit(0);
+        // return;
+        // }
     }
 
     private static Scanner tooNearTasks(Scanner input, Constraints c) {
