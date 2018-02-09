@@ -320,7 +320,7 @@ public class fileIO {
                         "Error while parsing input file " + lineCounter);
                 System.exit(0);
             } else {
-                break;
+                return;
             }
             m = p.matcher(line);
 
