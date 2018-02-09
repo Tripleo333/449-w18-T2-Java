@@ -357,10 +357,10 @@ public class fileIO {
             if (input.hasNextLine()) {
                 line = input.nextLine();
                 lineCounter++;
-                if (!line.equals("") && (line.charAt(0)<= 57 && line.charAt(0) >= 48)) {
+                if (!line.trim().isEmpty() && (line.charAt(0)<= 57 && line.charAt(0) >= 48)) {
                 	System.err.println("machine penalty error");
                 	System.exit(0);
-                } else {
+                } else if (!line.trim().isEmpty()){
                 	System.err.println("Error while parsing input file");
                 	System.exit(0);
                 }
