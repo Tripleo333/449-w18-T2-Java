@@ -15,7 +15,7 @@ public class fileIO {
     private static int lineCounter = 0;
 
     @SuppressWarnings("resource")
-    public static Constraints fileIO(String str, PrintWriter writer) {
+    public static Constraints fileIO(String str) {
         validFile = true;
         lineCounter = 0;
         Constraints c = new Constraints();
@@ -31,8 +31,7 @@ public class fileIO {
             if (input.hasNextLine()) {
                 line = input.nextLine();
             } else {
-                writer.println("Invalid file.");
-                writer.close();
+                System.err.println("Error while parsing input file");
                 System.exit(0);
                 return null;
             }
@@ -42,8 +41,7 @@ public class fileIO {
                     name = input.nextLine();// should contain a string for name
                     lineCounter++;
                 } else {
-                    writer.println("Invalid file.");
-                    writer.close();
+                    System.err.println("Error while parsing input file");
                     System.exit(0);
                     return c;
                 }
@@ -52,54 +50,48 @@ public class fileIO {
                     lineCounter++;
                 } else {
                     validFile = false;
-                    writer.println("invalid file at line: " + lineCounter);
+                    System.err.println("Error while parsing input file");
                     System.exit(0);
                 }
-                if (!line.matches("")) {// checks that it infact reads new line
+                if (!line.matches("")) {
                     validFile = false;
-                    writer.println("invalid file at line: " + lineCounter);
+                    System.err.println("Error while parsing input file");
                     System.exit(0);
                 }
-                writer.println("contents of name: " + name);
                 if (input.hasNextLine()) {
                     line = input.nextLine(); // line should be "forced partial
                                              // assignment:\n"
                     lineCounter++;
                 } else {
                     validFile = false;
-                    writer.println("invalid file at line: " + lineCounter);
-                    writer.close();
+                    System.err.println("Error while parsing input file");
                     System.exit(0);
                 }
             } else {
-                writer.println("Invalid input on line " + lineCounter);
+                System.out.println("Error while parsing input file");
                 validFile = false;
-                writer.close();
                 System.exit(0);
             }
 
             if (line.equals("forced partial assignment:") && validFile) {
-                input = fileIO.forcedPartialAssignment(input, c, writer);
+                input = fileIO.forcedPartialAssignment(input, c);
                 if (!validFile) {
-                    writer.println("Invalid file input on line " + lineCounter);
-                    writer.close();
+                    System.err.println("Error while parsing input file");
                     System.exit(0);
                     return c;
                 }
                 line = input.nextLine(); // should contain "forbidden machine:"
                 lineCounter++;
             } else {
-                writer.println("Invalid input on line: " + lineCounter);
-                writer.close();
+                System.err.println("Error while parsing input file");
                 System.exit(0);
                 return c;
             }
 
             if (line.equals("forbidden machine:") && validFile) {
-                input = fileIO.forbiddenMachine(input, c, writer);
+                input = fileIO.forbiddenMachine(input, c);
                 if (!validFile) {
-                    writer.println("Invalid file input on line " + lineCounter);
-                    writer.close();
+                    System.err.println("Error while parsing input file");
                     System.exit(0);
                     return c;
                 }
@@ -108,23 +100,19 @@ public class fileIO {
                                             // tasks:\n"
                     lineCounter++;
                 } else {
-                    writer.println(
-                            "Invalid file input on line: " + lineCounter);
-                    writer.close();
+                    System.err.println("Error while parsing input file");
                     System.exit(0);
                 }
             } else {
-                writer.println("Invalid input on line: " + lineCounter);
-                writer.close();
+                System.err.println("Error while parsing input file");
                 System.exit(0);
                 return c;
             }
 
             if (line.equals("too-near tasks:") && validFile) {
-                input = fileIO.tooNearTasks(input, c, writer);
+                input = fileIO.tooNearTasks(input, c);
                 if (!validFile) {
-                    writer.println("Invalid file input on line " + lineCounter);
-                    writer.close();
+                    System.err.println("Error while parsing input file");
                     System.exit(0);
                     return c;
                 }
@@ -133,26 +121,23 @@ public class fileIO {
                                             // penalties:"
                     lineCounter++;
                 } else {
-                    writer.println("invalid file, line " + lineCounter);
+                    System.err.println("Error while parsing input file");
                     validFile = false;
-                    writer.close();
                     System.exit(0);
                     return c;
                 }
 
             } else {
-                writer.println("Invalid input with line: " + lineCounter);
+                System.err.println("Error while parsing input file");
                 validFile = false;
-                writer.close();
                 System.exit(0);
                 return c;
             }
 
             if (line.equals("machine penalties:") && validFile) {
-                input = fileIO.machinePenalties(input, c, writer);
+                input = fileIO.machinePenalties(input, c);
                 if (!validFile) {
-                    System.err.println("machine penalty error");
-                    writer.close();
+                    System.err.println("Error while parsing input file");
                     validFile = false;
                     System.exit(0);
                     return c;
@@ -160,16 +145,15 @@ public class fileIO {
                 if (input.hasNextLine()) {
                     line = input.nextLine();
                     lineCounter++;
+
                 } else {
-                    System.err.println("invalid file, line " + lineCounter);
-                    writer.close();
+                    System.err.println("Error while parsing input file");
                     validFile = false;
                     System.exit(0);
                     return c;
                 }
             } else {
-                System.err.println("invalid file, line " + lineCounter);
-                writer.close();
+                System.err.println("Error while parsing input file");
                 validFile = false;
                 System.exit(0);
                 return c;
@@ -177,35 +161,29 @@ public class fileIO {
 
             if (line.equals("too-near penalties:") && validFile) {
                 if (input.hasNextLine()) {
-                    input = fileIO.tooNearPenalties(input, c, writer);
+                    input = fileIO.tooNearPenalties(input, c);
                     if (!validFile) {
-                        writer.println(
-                                "Invalid file input on line " + lineCounter);
-                        writer.close();
+                        System.err.println("Error while parsing input file");
                         validFile = false;
                         System.exit(0);
                         return c;
                     }
                 }
             } else {
-                writer.println("Invalid input with line: " + lineCounter);
-                writer.close();
+                System.err.println("Error while parsing input file");
                 System.exit(0);
                 return c;
             }
             input.close();
         } catch (Exception ex) {
-            // ex.printStackTrace();
-            writer.println("could not open input file");
-            writer.close();
+            System.err.println("could not open input file");
             System.exit(0);
             return c;
         }
         return c;
     }
 
-    private static Scanner machinePenalties(Scanner input, Constraints c,
-            PrintWriter writer) {
+    private static Scanner machinePenalties(Scanner input, Constraints c) {
         int pen = 0;
         for (int i = 0; i < 8; i++) {
             String line = "";
@@ -214,7 +192,6 @@ public class fileIO {
                 lineCounter++;
             } else {
                 System.err.println("machine penalty error");
-                writer.close();
                 System.exit(0);
             }
             String[] penaltiesStrArr = line.split(" ");
@@ -232,13 +209,11 @@ public class fileIO {
                     penaltiesIntArr[y] = temp;
                     if (penaltiesIntArr[y] < 0) {
                         System.err.println("machine penalty error");
-                        writer.close();
                         System.exit(0);
                         return input;
                     }
                 } catch (NumberFormatException e) {
                     System.err.println("machine penalty error");
-                    writer.close();
                     System.exit(0);
                     return input;
                 }
@@ -250,8 +225,7 @@ public class fileIO {
         // reading newline and the line after that which should contain
         // "too-near penalties"
         if (!input.hasNextLine()) {
-            System.err.println("machine penalty error");
-            writer.close();
+            System.err.println("Error while parsing input file");
             validFile = false;
             System.exit(0);
             return input;
@@ -260,79 +234,34 @@ public class fileIO {
             if (input.hasNextLine()) {
                 line = input.nextLine();
                 lineCounter++;
+                if (!line.equals("")) {
+                    System.err.println("Error while parsing input file");
+                    System.exit(0);
+                }
             } else {
-                System.err.println("machine penalty error");
-                writer.close();
+                System.err.println("Error while parsing input file");
                 System.exit(0);
             }
-            /*
-            if (line.equals("")) {
-                validFile = false;
-                System.err.println("machine penalty error");
-                writer.close();
-                System.exit(0);
-                return input;
-            }
-            */
-        }
-        if (!input.hasNextLine()) {
-            System.err.println("machine penalty error");
-            writer.close();
-            validFile = false;
-            System.exit(0);
-            return input;
         }
         return input;
     }
 
-    private static Scanner tooNearPenalties(Scanner input, Constraints c,
-            PrintWriter writer) {
+    private static Scanner tooNearPenalties(Scanner input, Constraints c) {
         int penalty;
         String line = "";
         if (!input.hasNextLine()) {
-            writer.print("Invalid input line " + lineCounter);
-            writer.close();
+            System.err.print("Error while parsing input file");
             System.exit(0);
         } else {
             line = input.nextLine();
             lineCounter++;
         }
-        /*
-        Pattern p = Pattern.compile("[(][A-H][,][A-H][,][\\d+][)]");
-        Matcher m = p.matcher(line);
-        */
-
-        mFind(line, "[A-H][,][A-H][,][\\d+]", input, c, 5, writer);
-        /*
-        while (m.find()) {
-            System.out.println(line);
-            char[] lineArray = line.toCharArray();
-            char[] TMPair = {lineArray[1], lineArray[3]};
-            String numOnly = line.replaceAll("[^0-9]", "");
-            penalty = Integer.parseInt(numOnly);
-            if (penalty < 0) {
-                validFile = false;
-                System.err.println("invalid machine/task");
-                writer.close();
-                System.exit(0);
-                return input;
-            }
-            c.addTooNearPenalties(TMPair, penalty);
-        }
-        */
-        /*
-        if (!line.equals("")) {
-            validFile = false;
-            System.err.println("invalid machine/task");
-            System.exit(0);
-            return input;
-        }
-        */
+        mFind(line, "[A-H][,][A-H][,][\\d+]", input, c, 5);
         return input;
     }
 
     private static void mFind(String line, String regex, Scanner input,
-            Constraints c, int type, PrintWriter writer) {
+            Constraints c, int type) {
         lineCounter++;
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(line);
@@ -343,9 +272,8 @@ public class fileIO {
             if (type == 1) {
                 for (int i = 0; i < c.forcedPartialAssn.size(); i++) {
                     if (c.forcedPartialAssn.get(i)[0] == TMPair[0]
-                            || c.forcedPartialAssn.get(i)[0] == TMPair[1]) {
-                        System.err.println("forced assignment error");
-                        writer.close();
+                            || c.forcedPartialAssn.get(i)[1] == TMPair[1]) {
+                        System.err.println("partial assignment error");
                         System.exit(0);
                     }
                 }
@@ -355,65 +283,55 @@ public class fileIO {
                 line = input.nextLine();
                 lineCounter++;
             } else {
-                writer.println("invalid machine/task");
-                writer.close();
+                System.err.println("Error while parsing input file");
                 System.exit(0);
             }
             m = p.matcher(line);
         }
 
-        Pattern pNL = Pattern.compile("");
-        Matcher mNL = pNL.matcher(line);
-        if (!mNL.find()) {
+        if (!line.equals("")) {
             validFile = false;
-            writer.println("problem encountered at line: " + lineCounter);
-            writer.close();
+            System.err.println("Error while parsing input file");
             System.exit(0);
             return;
         }
     }
 
-    private static Scanner tooNearTasks(Scanner input, Constraints c,
-            PrintWriter writer) {
+    private static Scanner tooNearTasks(Scanner input, Constraints c) {
         String line = "";
         if (input.hasNextLine()) {
             line = input.nextLine();
         } else {
-            writer.println("Invalid line at " + lineCounter);
-            writer.close();
+            System.err.println("Error while parsing input file");
             System.exit(0);
         }
-        mFind(line, "[(][A-H][,][A-H][)]", input, c, c.TOO_NEAR_TASKS, writer);
+        mFind(line, "[(][A-H][,][A-H][)]", input, c, c.TOO_NEAR_TASKS);
         return input;
     }
 
-    private static Scanner forbiddenMachine(Scanner input, Constraints c,
-            PrintWriter writer) {
+    private static Scanner forbiddenMachine(Scanner input, Constraints c) {
         String line = "";
         if (input.hasNextLine()) {
             line = input.nextLine();
         } else {
-            writer.println("Invalid line at " + lineCounter);
-            writer.close();
+            System.err.println("Error while parsing input file");
             System.exit(0);
         }
-        mFind(line, "[(][1-8][,][A-H][)]", input, c, c.FORBIDDEN_MACHINE,
-                writer);
+        mFind(line, "[(][1-8][,][A-H][)]", input, c, c.FORBIDDEN_MACHINE);
         return input;
     }
 
-    private static Scanner forcedPartialAssignment(Scanner input, Constraints c,
-            PrintWriter writer) {
+    private static Scanner forcedPartialAssignment(Scanner input,
+            Constraints c) {
         String line = "";
         if (input.hasNextLine()) {
             line = input.nextLine();
         } else {
-            writer.println("Invalid line at " + lineCounter);
-            writer.close();
+            System.err.println("Error while parsing input file");
             System.exit(0);
         }
         mFind(line, "[(][1-8][,][A-H][)]", input, c,
-                c.FORCED_PARTIAL_ASSIGNMENT, writer);
+                c.FORCED_PARTIAL_ASSIGNMENT);
         return input;
     }
 }
