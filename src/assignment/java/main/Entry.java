@@ -1,10 +1,8 @@
-//package assignment.java.main;
+package assignment.java.main;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Entry {
     public static void main(String[] args) {

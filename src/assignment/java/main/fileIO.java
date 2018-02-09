@@ -1,10 +1,10 @@
-//package assignment.java.main;
+package assignment.java.main;
 /**
  * 
  */
 import java.io.File;
-import java.io.PrintWriter;
-import java.util.Arrays;
+//import java.io.PrintWriter;
+//import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -298,7 +298,7 @@ public class fileIO {
     }
 
     private static Scanner machinePenalties(Scanner input, Constraints c) {
-        int pen = 0;
+        //int pen = 0;
         for (int i = 0; i < 8; i++) {
             if (input.hasNextLine()) {
                 line = input.nextLine();
@@ -357,6 +357,13 @@ public class fileIO {
             if (input.hasNextLine()) {
                 line = input.nextLine();
                 lineCounter++;
+                if (!line.equals("") && (line.charAt(0)<= 57 && line.charAt(0) >= 48)) {
+                	System.err.println("machine penalty error");
+                	System.exit(0);
+                } else {
+                	System.err.println("Error while parsing input file");
+                	System.exit(0);
+                }
             } else {
                 System.err.println(
                         "Error while parsing input file");
@@ -377,7 +384,7 @@ public class fileIO {
     }
 
     private static Scanner tooNearPenalties(Scanner input, Constraints c) {
-        int penalty;
+        //int penalty;
         if (!input.hasNextLine()) {
             System.err.print("Error while parsing input file");
             System.exit(0);
@@ -410,7 +417,7 @@ public class fileIO {
                     }
                 }
             }
-            if (type == c.TOO_NEAR_PENALTIES) {
+            if (type == Constraints.TOO_NEAR_PENALTIES) {
                 String tooNearPenIntOnly = line.replaceAll("[^\\d.]", "");
                 penalty = Integer.parseInt(tooNearPenIntOnly);
                 c.addTooNearPenalties(TMPair, penalty);
@@ -426,7 +433,7 @@ public class fileIO {
                         line = input.nextLine();
                         lineCounter++;
                     }
-                    else if (type == c.TOO_NEAR_PENALTIES) {
+                    else if (type == Constraints.TOO_NEAR_PENALTIES) {
                         return;
                     }
                     else {
@@ -435,7 +442,7 @@ public class fileIO {
                     }
                 }
                 
-            } else if (type != c.TOO_NEAR_PENALTIES) {
+            } else if (type != Constraints.TOO_NEAR_PENALTIES) {
                 System.err.println(
                         "Error while parsing input file ");
                 System.exit(0);
@@ -445,15 +452,15 @@ public class fileIO {
             }
             m = p.matcher(line);
         }
-        if (!m.find() && !line.trim().isEmpty() && type == c.TOO_NEAR_PENALTIES) {
+        if (!m.find() && !line.trim().isEmpty() && type == Constraints.TOO_NEAR_PENALTIES) {
             System.err.println("invalid task");
             System.exit(0);
         }
-        if (!m.find() && !line.trim().isEmpty() && type == c.FORBIDDEN_MACHINE && (!line.trim().equals("too-near tasks:"))) {
+        if (!m.find() && !line.trim().isEmpty() && type == Constraints.FORBIDDEN_MACHINE && (!line.trim().equals("too-near tasks:"))) {
             System.err.println("invalid machine/task");
             System.exit(0);
         }
-        if (!m.find() && !line.trim().isEmpty() && type == c.TOO_NEAR_TASKS && (!line.trim().equals("machine penalties:"))) {
+        if (!m.find() && !line.trim().isEmpty() && type == Constraints.TOO_NEAR_TASKS && (!line.trim().equals("machine penalties:"))) {
             System.err.println("invalid machine/tasks");
             System.exit(0);
         }
@@ -485,7 +492,7 @@ public class fileIO {
                 System.exit(0);
             }
         }
-        mFind("[(][A-H][,][A-H][)]", input, c, c.TOO_NEAR_TASKS);
+        mFind("[(][A-H][,][A-H][)]", input, c, Constraints.TOO_NEAR_TASKS);
         return input;
     }
 
@@ -506,7 +513,7 @@ public class fileIO {
                 System.exit(0);
             }
         }
-        mFind("[(][1-8][,][A-H][)]", input, c, c.FORBIDDEN_MACHINE);
+        mFind("[(][1-8][,][A-H][)]", input, c, Constraints.FORBIDDEN_MACHINE);
         return input;
     }
 
@@ -530,7 +537,7 @@ public class fileIO {
             }
         }
         mFind("[(][1-8][,][A-H][)]", input, c,
-                c.FORCED_PARTIAL_ASSIGNMENT);
+                Constraints.FORCED_PARTIAL_ASSIGNMENT);
         return input;
     }
 }
