@@ -286,8 +286,7 @@ public class fileIO {
         lineCounter++;
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(line);
-        if (type == 5)
-            ;
+
         while (m.find()) {
             char[] lineArray = line.toCharArray();
             int sub = lineArray[1] - 1;
@@ -310,24 +309,30 @@ public class fileIO {
 
             } else {
                 c.addConstraintPair(type, TMPair);
-            }
-
+            }            
             if (input.hasNextLine()) {
                 line = input.nextLine();
                 lineCounter++;
+                
             } else if (type != c.TOO_NEAR_PENALTIES) {
                 System.err.println(
                         "Error while parsing input file " + lineCounter);
                 System.exit(0);
             } else {
+                
                 return;
             }
             m = p.matcher(line);
 
         }
+        if (!m.find() && !line.equals("") && type == c.TOO_NEAR_PENALTIES) {
+            System.err.println("invalid task");
+            System.exit(0);
+        }
         System.out.println("contents of line " + line
                 + "\ncontents of line counter: " + lineCounter);
-        if (!line.equals("") && type != c.TOO_NEAR_PENALTIES) {
+        
+        if (!line.equals("")) {
             validFile = false;
             System.err
                     .println("Error while parsing input file 2 " + lineCounter);
