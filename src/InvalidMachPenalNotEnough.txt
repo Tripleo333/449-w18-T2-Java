@@ -1,8 +1,8 @@
 Name:
-InvalidMachPanelNotEnough
+InvalidMachPenalNotEnough
 
 forced partial assignment:
-(1, A)
+(1,A)
 
 forbidden machine:
 

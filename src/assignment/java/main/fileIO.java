@@ -329,8 +329,6 @@ public class fileIO {
             System.err.println("invalid task");
             System.exit(0);
         }
-        System.out.println("contents of line " + line
-                + "\ncontents of line counter: " + lineCounter);
         
         if (!line.equals("")) {
             validFile = false;
