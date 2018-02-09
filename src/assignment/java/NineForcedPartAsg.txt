@@ -1,0 +1,30 @@
+Name:
+NineForcedPartAsg
+
+forced partial assignment:
+(1,A)
+(3,B)
+(2,C)
+(6,D)
+(8,E)
+(7,F)
+(4,G)
+(5,H)
+(2,D)
+
+forbidden machine:
+(3,D)
+
+too-near tasks:
+
+machine penalties:
+3 3 4 5 7 7 6 5
+4 2 1 6 0 12 2 10
+2 2 4 5 3 5 57 20
+6 10 3 6 9 52 4 0
+7 3 7 0 3 4 7 9
+1 20 4 60 7 8 6 10
+6 2 6 7 90 6 9 11 
+5 30 5 0 1 2 6 9
+
+too-near penalties:
