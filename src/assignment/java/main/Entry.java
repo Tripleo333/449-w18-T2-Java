@@ -3,6 +3,7 @@ package assignment.java.main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -14,6 +15,7 @@ public class Entry {
                     "This program accepts exactly 2 command line arguments.");
             System.exit(0);
         }
+        
         // Change error stream to a file called errors.txt
         try {
 			File errorWriter = new File("errors.txt");
@@ -26,7 +28,14 @@ public class Entry {
         
         PrintWriter writer = null;
         try {
-            writer = new PrintWriter(args[1], "UTF16");
+        	File outputFile = new File(args[1]);
+        	OutputStreamWriter outputStream;
+    		if (!outputFile.exists()) {
+        		outputStream = new OutputStreamWriter(new FileOutputStream (outputFile), "UTF16");
+        	} else {
+        		outputStream = new OutputStreamWriter(new FileOutputStream (outputFile, true), "UTF16");
+        	}    	
+        	writer = new PrintWriter(outputStream);
 
             Constraints c = fileIO.fileIO(args[0]);
             State state = new State();
@@ -48,6 +57,7 @@ public class Entry {
                         + min.entries[7] + "\u2088 " + "; Quality: "
                         + min.penalty;
             }
+           
             writer.println(returned);
             writer.close();
         } catch (FileNotFoundException e) {
@@ -60,9 +70,8 @@ public class Entry {
             // TODO Auto-generated catch block
 //            e.printStackTrace();
             System.err.println(
-                    "An error was encountered trying to create a file with the name: "
-                            + args[1]);
+                    "An unsupported encoding was provided to OutputStreamWriter");
             System.exit(0);
-        } 
+        }
     }
 }
