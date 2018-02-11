@@ -3,6 +3,8 @@ package assignment.java.main;
  * 
  */
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 //import java.io.PrintWriter;
 //import java.util.Arrays;
 import java.util.Scanner;
@@ -14,12 +16,19 @@ public class fileIO {
     private static boolean validFile = true;
     private static int lineCounter = 0;
     private static String line = "";
+    private static Date date;
+    private static SimpleDateFormat dateFormat;
 
     @SuppressWarnings("resource")
     public static Constraints fileIO(String str) {
         validFile = true;
         lineCounter = 0;
         Constraints c = new Constraints();
+        
+        // time for error reporting
+        fileIO.dateFormat = new SimpleDateFormat("HH:mm:ss:SS z");
+        fileIO.date = new Date();
+        
         try {
             File file = new File(str);
             Scanner input = new Scanner(file);
@@ -31,8 +40,8 @@ public class fileIO {
             if (input.hasNextLine()) {
                 line = input.nextLine();
             } else {
-                System.err.println(
-                        "Error while parsing input file");
+                System.err.println(dateFormat.format(date) +
+                        "	Error while parsing input file");
                 System.exit(0);
                 return null;
             }
@@ -44,7 +53,7 @@ public class fileIO {
                     lineCounter++;
                 }
                 else {
-                    System.err.println("Error while parsing input file");
+                    System.err.println(dateFormat.format(date) + "	Error while parsing input file");
                     System.exit(0);
                 }
             }
@@ -59,13 +68,13 @@ public class fileIO {
                             lineCounter++;
                         }
                         else {
-                            System.err.println("Error while parsing input file");
+                            System.err.println(dateFormat.format(date) + "	Error while parsing input file");
                             System.exit(0);
                         }
                     }
                 } else {
-                    System.err.println(
-                            "Error while parsing input file");
+                    System.err.println(dateFormat.format(date) +
+                            "	Error while parsing input file");
                     System.exit(0);
                     return c;
                 }
@@ -79,14 +88,14 @@ public class fileIO {
                             lineCounter++;
                         }
                         else {
-                            System.err.println("Error while parsing input file");
+                            System.err.println(dateFormat.format(date) + "	Error while parsing input file");
                             System.exit(0);
                         }
                     }
                 } else {
                     validFile = false;
-                    System.err.println(
-                            "Error while parsing input file");
+                    System.err.println(dateFormat.format(date) + 
+                            "	Error while parsing input file");
                     System.exit(0);
                 }
                 /*
@@ -110,16 +119,16 @@ public class fileIO {
                 }
                 */
             } else {
-                System.err.println(
-                        "Error while parsing input file");
+                System.err.println(dateFormat.format(date) + 
+                        "	Error while parsing input file");
                 validFile = false;
                 System.exit(0);
             }
             if (line.trim().equals("forced partial assignment:") && validFile) {
                 input = fileIO.forcedPartialAssignment(input, c);
                 if (!validFile) {
-                    System.err.println(
-                            "Error while parsing input file");
+                    System.err.println(dateFormat.format(date) + 
+                            "	Error while parsing input file");
                     System.exit(0);
                     return c;
                 }
@@ -150,16 +159,16 @@ public class fileIO {
                 lineCounter++;
                 */
             } else {
-                System.err.println(
-                        "Error while parsing input file");
+                System.err.println(dateFormat.format(date) +
+                        "	Error while parsing input file");
                 System.exit(0);
                 return c;
             }
             if (line.trim().equals("forbidden machine:") && validFile) {
                 input = fileIO.forbiddenMachine(input, c);
                 if (!validFile) {
-                    System.err.println(
-                            "Error while parsing input file");
+                    System.err.println(dateFormat.format(date) +
+                            "	Error while parsing input file");
                     System.exit(0);
                     return c;
                 }
@@ -186,16 +195,16 @@ public class fileIO {
                 }
                 */
             } else {
-                System.err.println(
-                        "Error while parsing input file");
+                System.err.println(dateFormat.format(date) +
+                        "	Error while parsing input file");
                 System.exit(0);
                 return c;
             }
             if (line.trim().equals("too-near tasks:") && validFile) {
                 input = fileIO.tooNearTasks(input, c);
                 if (!validFile) {
-                    System.err.println(
-                            "Error while parsing input file");
+                    System.err.println(dateFormat.format(date) +
+                            "	Error while parsing input file");
                     System.exit(0);
                     return c;
                 }
@@ -224,8 +233,8 @@ public class fileIO {
                 */
 
             } else {
-                System.err.println(
-                        "Error while parsing inputs file");
+                System.err.println(dateFormat.format(date) +
+                        "	Error while parsing inputs file");
                 validFile = false;
                 System.exit(0);
                 return c;
@@ -234,8 +243,8 @@ public class fileIO {
             if (line.trim().equals("machine penalties:") && validFile) {
                 input = fileIO.machinePenalties(input, c);
                 if (!validFile) {
-                    System.err.println(
-                            "Error while parsing input file");
+                    System.err.println(dateFormat.format(date) +
+                            "	Error while parsing input file");
                     validFile = false;
                     System.exit(0);
                     return c;
@@ -264,8 +273,8 @@ public class fileIO {
                 }
                 */
             } else {
-                System.err.println(
-                        "Error while parsing input file");
+                System.err.println(dateFormat.format(date) +
+                        "	Error while parsing input file");
                 validFile = false;
                 System.exit(0);
                 return c;
@@ -275,22 +284,22 @@ public class fileIO {
                 if (input.hasNextLine()) {
                     input = fileIO.tooNearPenalties(input, c);
                     if (!validFile) {
-                        System.err.println(
-                                "Error while parsing input file");
+                        System.err.println(dateFormat.format(date) +
+                                "	Error while parsing input file");
                         validFile = false;
                         System.exit(0);
                         return c;
                     }
                 }
             } else {
-                System.err.println(
-                        "Error while parsing input file");
+                System.err.println(dateFormat.format(date) +
+                        "	Error while parsing input file");
                 System.exit(0);
                 return c;
             }
             input.close();
         } catch (Exception ex) {
-            System.err.println("could not open input file");
+            System.err.println(dateFormat.format(date) + "	could not open input file");
             System.exit(0);
             return c;
         }
@@ -304,7 +313,7 @@ public class fileIO {
                 line = input.nextLine();
                 lineCounter++;
             } else {
-                System.err.println("machine penalty error");
+                System.err.println(dateFormat.format(date) + "	machine penalty error");
                 System.exit(0);
             }
             while(line.trim().isEmpty()) {
@@ -313,14 +322,14 @@ public class fileIO {
                     lineCounter++;
                 }
                 else {
-                    System.err.println("Error while parsing input file");
+                    System.err.println(dateFormat.format(date) + "	Error while parsing input file");
                     System.exit(0);
                 }
             }
             String[] penaltiesStrArr = line.split(" ");
             if (penaltiesStrArr.length != 8) {
                 validFile = false;
-                System.err.println("machine penalty errors");
+                System.err.println(dateFormat.format(date) + "	machine penalty errors");
                 System.exit(0);
                 return input;
             }
@@ -331,12 +340,12 @@ public class fileIO {
                     int temp = Integer.parseInt(penaltiesStrArr[y]);
                     penaltiesIntArr[y] = temp;
                     if (penaltiesIntArr[y] < 0) {
-                        System.err.println("machine penalty error");
+                        System.err.println(dateFormat.format(date) + "	machine penalty error");
                         System.exit(0);
                         return input;
                     }
                 } catch (NumberFormatException e) {
-                    System.err.println("machine penalty error");
+                    System.err.println(dateFormat.format(date) + "	machine penalty error");
                     System.exit(0);
                     return input;
                 }
@@ -348,7 +357,7 @@ public class fileIO {
         // reading newline and the line after that which should contain
         // "too-near penalties"
         if (!input.hasNextLine()) {
-            System.err.println("Error while parsing input file");
+            System.err.println(dateFormat.format(date) + "	Error while parsing input file");
             validFile = false;
             System.exit(0);
             return input;
@@ -358,15 +367,15 @@ public class fileIO {
                 line = input.nextLine();
                 lineCounter++;
                 if (!line.trim().isEmpty() && (line.charAt(0)<= 57 && line.charAt(0) >= 48)) {
-                	System.err.println("machine penalty error");
+                	System.err.println(dateFormat.format(date) + "	machine penalty error");
                 	System.exit(0);
                 } else if (!line.trim().isEmpty()){
-                	System.err.println("Error while parsing input file");
+                	System.err.println(dateFormat.format(date) +"	Error while parsing input file");
                 	System.exit(0);
                 }
             } else {
-                System.err.println(
-                        "Error while parsing input file");
+                System.err.println(dateFormat.format(date) +
+                        "	Error while parsing input file");
                 System.exit(0);
             }
             while(line.trim().isEmpty()) {
@@ -375,7 +384,7 @@ public class fileIO {
                     lineCounter++;
                 }
                 else {
-                    System.err.println("Error while parsing input file");
+                    System.err.println(dateFormat.format(date) + "	Error while parsing input file");
                     System.exit(0);
                 }
             }
@@ -386,7 +395,7 @@ public class fileIO {
     private static Scanner tooNearPenalties(Scanner input, Constraints c) {
         //int penalty;
         if (!input.hasNextLine()) {
-            System.err.print("Error while parsing input file");
+            System.err.print(dateFormat.format(date) +"/tError while parsing input file");
             System.exit(0);
         } else {
             line = input.nextLine();
@@ -412,7 +421,7 @@ public class fileIO {
                     if ((char) c.forcedPartialAssn.get(i)[0] == (char) TMPair[0]
                             || (char) c.forcedPartialAssn
                                     .get(i)[1] == (char) TMPair[1]) {
-                        System.err.println("partial assignment error");
+                        System.err.println(dateFormat.format(date) + "	partial assignment error");
                         System.exit(0);
                     }
                 }
@@ -437,14 +446,14 @@ public class fileIO {
                         return;
                     }
                     else {
-                        System.err.println("Error while parsing input file");
+                        System.err.println(dateFormat.format(date) + "	Error while parsing input file");
                         System.exit(0);
                     }
                 }
                 
             } else if (type != Constraints.TOO_NEAR_PENALTIES) {
-                System.err.println(
-                        "Error while parsing input file ");
+                System.err.println(dateFormat.format(date) +
+                        "	Error while parsing input file ");
                 System.exit(0);
             } else {
 
@@ -453,15 +462,15 @@ public class fileIO {
             m = p.matcher(line);
         }
         if (!m.find() && !line.trim().isEmpty() && type == Constraints.TOO_NEAR_PENALTIES) {
-            System.err.println("invalid task");
+            System.err.println(dateFormat.format(date) + "	invalid task");
             System.exit(0);
         }
         if (!m.find() && !line.trim().isEmpty() && type == Constraints.FORBIDDEN_MACHINE && (!line.trim().equals("too-near tasks:"))) {
-            System.err.println("invalid machine/task");
+            System.err.println(dateFormat.format(date) + "	invalid machine/task");
             System.exit(0);
         }
         if (!m.find() && !line.trim().isEmpty() && type == Constraints.TOO_NEAR_TASKS && (!line.trim().equals("machine penalties:"))) {
-            System.err.println("invalid machine/tasks");
+            System.err.println(dateFormat.format(date) + "	invalid machine/tasks");
             System.exit(0);
         }
         /*
@@ -479,7 +488,7 @@ public class fileIO {
         if (input.hasNextLine()) {
             line = input.nextLine();
         } else {
-            System.err.println("Error while parsing input file");
+            System.err.println(dateFormat.format(date) + "	Error while parsing input file");
             System.exit(0);
         }
         while(line.trim().isEmpty()) {
@@ -488,7 +497,7 @@ public class fileIO {
                 lineCounter++;
             }
             else {
-                System.err.println("Error while parsing input file");
+                System.err.println(dateFormat.format(date) + "	Error while parsing input file");
                 System.exit(0);
             }
         }
@@ -500,7 +509,7 @@ public class fileIO {
         if (input.hasNextLine()) {
             line = input.nextLine();
         } else {
-            System.err.println("Error while parsing input file");
+            System.err.println(dateFormat.format(date) + "	Error while parsing input file");
             System.exit(0);
         }
         while(line.trim().isEmpty()) {
@@ -509,7 +518,7 @@ public class fileIO {
                 lineCounter++;
             }
             else {
-                System.err.println("Error while parsing input file");
+                System.err.println(dateFormat.format(date) + "	Error while parsing input file");
                 System.exit(0);
             }
         }
@@ -522,7 +531,7 @@ public class fileIO {
         if (input.hasNextLine()) {
             line = input.nextLine();
         } else {
-            System.err.println("Error while parsing input file");
+            System.err.println(dateFormat.format(date) + "	Error while parsing input file");
             System.exit(0);
         }
         // Skips past blank lines until we hit a non-blank line
@@ -532,7 +541,7 @@ public class fileIO {
                 lineCounter++;
             }
             else {
-                System.err.println("Error while parsing input file");
+                System.err.println(dateFormat.format(date) + "	Error while parsing input file");
                 System.exit(0);
             }
         }

@@ -7,11 +7,12 @@ java -jar asg1jarfile.jar ../inputs/input6.txt output6.txt
 java -jar asg1jarfile.jar ../inputs/input7.txt output7.txt
 java -jar asg1jarfile.jar ../inputs/input8.txt output8.txt
 java -jar asg1jarfile.jar ../inputs/input9.txt output9.txt
-java -jar asg1jarfile.jar ../inputs/InvalidForbiddenMach.txt InvalidForbiddenMachOutput.txt
+java -jar asg1jarfile.jar ../inputs/InvalidForbidMach.txt InvalidForbidMachOutput.txt
 java -jar asg1jarfile.jar ../inputs/InvalidForcedPartAsg.txt InvalidForcedPartAsgOutput.txt
-java -jar asg1jarfile.jar ../inputs/InvalidMachPenaltxt InvalidMachPenalOutput.txt
+java -jar asg1jarfile.jar ../inputs/InvalidInForbidMach.txt InvalidForbiddenMachOutput.txt
+java -jar asg1jarfile.jar ../inputs/InvalidMachPenal.txt InvalidMachPenalOutput.txt
 java -jar asg1jarfile.jar ../inputs/InvalidMachPenalNotEnough.txt InvalidMachPenalNotEnoughOutput.txt
 java -jar asg1jarfile.jar ../inputs/InvalidPartAsg2.txt InvalidPartAsg2Output.txt
 java -jar asg1jarfile.jar ../inputs/InvalidTooNearPenal.txt IInvalidTooNearPenalOutput.txt
 java -jar asg1jarfile.jar ../inputs/NineForcedPartAsg.txt NineForcedPartAsgOutput.txt
-java -jar asg1jarfile.jar ../inputs/ComplexInvalidTest.txt ComplexInvalidTestutput.txt
+#java -jar asg1jarfile.jar ../inputs/ComplexInvalidTest.txt ComplexInvalidTestutput.txt
