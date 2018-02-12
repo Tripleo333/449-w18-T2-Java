@@ -7,6 +7,8 @@ import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Entry {
     public static void main(String[] args) {
@@ -16,17 +18,20 @@ public class Entry {
             System.exit(0);
         }
         
-        // Change error stream to a file called errors.txt
+        // Change error stream to a file
         try {
-			File errorWriter = new File("errors.txt");
+			File errorWriter = new File(new File(args[0]).getName() + "_errors.txt");
 			System.setErr(new PrintStream(new FileOutputStream (errorWriter, true)));
 		} catch (FileNotFoundException e1) {
 			System.err.println(
                     "An error was encountered trying to create the error output file ");
             System.exit(0);
 		}
+        // for error reporting 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss:SS z");
+        Date date = new Date();
         
-        PrintWriter writer = null;
+        PrintWriter writer;
         try {
         	File outputFile = new File(args[1]);
         	OutputStreamWriter outputStream;
@@ -62,15 +67,15 @@ public class Entry {
             writer.close();
         } catch (FileNotFoundException e) {
 //            e.printStackTrace();
-            System.err.println(
-                    "An error was encountered trying to create a file with the name: "
+            System.err.println(dateFormat.format(date) +
+                    "	An error was encountered trying to create a file with the name: "
                             + args[1]);
             System.exit(0);
         } catch (UnsupportedEncodingException e) {
             // TODO Auto-generated catch block
 //            e.printStackTrace();
-            System.err.println(
-                    "An unsupported encoding was provided to OutputStreamWriter");
+            System.err.println(dateFormat.format(date) +
+                    "	An unsupported encoding was provided to OutputStreamWriter");
             System.exit(0);
         }
     }
