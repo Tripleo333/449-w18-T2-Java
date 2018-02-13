@@ -1,4 +1,4 @@
-package assignment.java.main;
+//package assignment.java.main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,6 +19,7 @@ public class Entry {
         }
         
         // Change error stream to a file
+        /*
         try {
 			File errorWriter = new File(new File(args[0]).getName() + "_errors.txt");
 			System.setErr(new PrintStream(new FileOutputStream (errorWriter, true)));
@@ -27,12 +28,12 @@ public class Entry {
                     "An error was encountered trying to create the error output file ");
             System.exit(0);
 		}
-        // for error reporting 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss:SS z");
-        Date date = new Date();
-        
+		*/
+        // for error reporting   
         PrintWriter writer;
         try {
+            writer = new PrintWriter(args[1], "UTF16");
+            /*
         	File outputFile = new File(args[1]);
         	OutputStreamWriter outputStream;
     		if (!outputFile.exists()) {
@@ -41,8 +42,9 @@ public class Entry {
         		outputStream = new OutputStreamWriter(new FileOutputStream (outputFile, true), "UTF16");
         	}    	
         	writer = new PrintWriter(outputStream);
+        	*/
 
-            Constraints c = fileIO.fileIO(args[0]);
+            Constraints c = fileIO.fileIO(args[0], writer);
             State state = new State();
             PossibilityTree pt = new PossibilityTree(
                     new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'}, c);
@@ -67,15 +69,12 @@ public class Entry {
             writer.close();
         } catch (FileNotFoundException e) {
 //            e.printStackTrace();
-            System.err.println(dateFormat.format(date) +
-                    "	An error was encountered trying to create a file with the name: "
-                            + args[1]);
+            System.err.println("An error was encountered trying to create a file with the name: " + args[1]);
             System.exit(0);
         } catch (UnsupportedEncodingException e) {
             // TODO Auto-generated catch block
 //            e.printStackTrace();
-            System.err.println(dateFormat.format(date) +
-                    "	An unsupported encoding was provided to OutputStreamWriter");
+            System.err.println("An unsupported encoding was provided to OutputStreamWriter");
             System.exit(0);
         }
     }
