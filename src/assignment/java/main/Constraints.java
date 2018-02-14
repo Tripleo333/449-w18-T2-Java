@@ -214,12 +214,12 @@ public class Constraints {
                 }
             }
             // Mach does not equal 7 or 0, so we assume mach == task 2 and check backward
-            //else if (state.entries[mach] == cs[constraint][1]) {
+            if (state.entries[mach] == cs[constraint][1]) {
             	// if entry behind mach == task 1
             	if (state.entries[mach-1] == cs[constraint][0]) {
             		return false;
             	}
-            //}
+            }
         }
         // (If mach == 7 then if mach == task 1 then entry[0] != task 2) and (if mach == task 2 then mach-1 != task 1)
         // Basically, task 1 and 2 are not assigned to mach i and mach i + 1 respectively (or mach i and mach 0 if mach == 7)
