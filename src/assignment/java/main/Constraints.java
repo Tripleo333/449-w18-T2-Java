@@ -131,7 +131,7 @@ public class Constraints {
                     // If task 2 in constraint == task in state.entries[0]:
                     if (cs[i].task2 == state.entries[0]) {
 //newest penalty wins                        if (cs[i].penalty > returned) {
-                    	returned = cs[i].penalty;
+                    	returned += cs[i].penalty;
                         //}
                     }
                 }
@@ -146,7 +146,7 @@ public class Constraints {
                     if (cs[i].task1 == state.entries[mach-1]) {
                         // Return penalty
 //newest penalty wins                         if (cs[i].penalty > returned) {
-                    	returned = cs[i].penalty;
+                    	returned += cs[i].penalty;
                         //}
                     }
                 }
