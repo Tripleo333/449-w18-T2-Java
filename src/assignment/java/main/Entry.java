@@ -57,10 +57,10 @@ public class Entry {
             }
 
             else {
-                returned = "Solution " + min.entries[0]
-                        + min.entries[1] + min.entries[2]
-                        + min.entries[3] + min.entries[4] 
-                        + min.entries[5] + min.entries[6] 
+                returned = "Solution " + min.entries[0] + " "
+                        + min.entries[1] + " " + min.entries[2] + " "
+                        + min.entries[3] + " " + min.entries[4] + " " 
+                        + min.entries[5] + " " + min.entries[6] + " " 
                         + min.entries[7] + "; Quality: "
                         + min.penalty;
             }
