@@ -1,4 +1,4 @@
-//package assignment.java.main;
+package assignment.java.main;
 /**
  * 
  */
@@ -16,8 +16,6 @@ public class fileIO {
     private static boolean validFile = true;
     private static int lineCounter = 0;
     private static String line = "";
-    private static Date date;
-    private static SimpleDateFormat dateFormat;
     private static PrintWriter writer;
 
     @SuppressWarnings("resource")
@@ -355,7 +353,7 @@ public class fileIO {
                         return input;
                     }
                 } catch (NumberFormatException e) {
-                    writer.println("machine penalty error");
+                    writer.println("invalid penalty");
                     writer.close();
                     System.exit(0);
                     return input;
@@ -479,7 +477,10 @@ public class fileIO {
             m = p.matcher(line);
         }
         if (!m.find() && !line.trim().isEmpty() && type == Constraints.TOO_NEAR_PENALTIES) {
-            writer.println("invalid task");
+        	if (line.trim().charAt(5) > '9' ||  line.trim().charAt(5) < '0') 
+        		writer.println("invalid penalty");
+        	else
+        		writer.println("invalid task");
             writer.close();
             System.exit(0);
         }

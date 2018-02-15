@@ -1,4 +1,4 @@
-//package assignment.java.main;
+package assignment.java.main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,7 +21,7 @@ public class Entry {
         // Change error stream to a file
         /*
         try {
-			File errorWriter = new File(new File(args[0]).getName() + "_errors.txt");
+			File errorWriter = new File(args[1]);
 			System.setErr(new PrintStream(new FileOutputStream (errorWriter, true)));
 		} catch (FileNotFoundException e1) {
 			System.err.println(
@@ -68,12 +68,10 @@ public class Entry {
             writer.println(returned);
             writer.close();
         } catch (FileNotFoundException e) {
-//            e.printStackTrace();
             System.err.println("An error was encountered trying to create a file with the name: " + args[1]);
             System.exit(0);
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-//            e.printStackTrace();
+
             System.err.println("An unsupported encoding was provided to OutputStreamWriter");
             System.exit(0);
         }

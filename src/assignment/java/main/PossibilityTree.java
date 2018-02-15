@@ -1,4 +1,4 @@
-//package assignment.java.main;
+package assignment.java.main;
 
 
 public class PossibilityTree {
@@ -38,74 +38,11 @@ public class PossibilityTree {
 	 * i - The current (non-empty) index of the task list. The i+1th index is empty.
 	 * state - The current task list. Full until index i+1.
 	 */
-	/*
-	public void Branch(int i, State state, char[] notTaken) {
-	    System.out.println("\nMach: " + i);
-	    System.out.println("Entries: ");
-	    for (int z = 0; z < state.entries.length; z++) {
-	        System.out.print(state.entries[z]);
-	    }
-	    System.out.println("");
-	    
-	    /*
-	    if (i >= 7) {
-	        if (this.currentMinPenalty > state.penalty) {
-	            this.currentMinPenalty = state.penalty;
-	            this.minPenalty = state;
-	        }
-	        return state;
-	    }
-	    */
-	    /*
-	    if (!constraints.checkHardConstraints(i, state)) {
-	        System.out.println("Doesn't meet hard constraints");
-			return;
-	    }
-	    
-		else {
-			double penalty = constraints.checkSoftConstraints(i, state);
-			if (penalty >= this.currentMinPenalty) { // Base case...
-				return;
-			}
-			
-			state.penalty += penalty;
-			
-			if (i >= 7) {
-			    System.out.println("test");
-			    if (this.currentMinPenalty > state.penalty) {
-			        this.currentMinPenalty = state.penalty;
-			        this.minPenalty = state;
-			    }
-			    return;
-			}
-			
-			for (int x = 0; x < notTaken.length; x++) {
-			    int counter = 0;
-			    char[] next = new char[6 - i];
-			    for (int y = 0; y < notTaken.length; y++) {
-			        if (y != x) {
-			            next[counter] = notTaken[y];
-			            counter++;
-			        }
-			    }
-			    System.out.println(next);
-				Branch(i+1, new State(i+1, notTaken[x], state), next); // Recursive call to self
-			} 
-			//return minPenalty;
-		}
-	    */
+
 	
 	public void Branch(int i, State state, char[] toDo) {	    
 
-/*
-        System.out.print("i: " + i + "\nEntries: ");
-        for (int z = 0; z < state.entries.length; z++) {
-            System.out.print(state.entries[z]);
-        }
-        System.out.println("");
-*/
         if (!constraints.checkHardConstraints(i, state)) {
-//            System.out.println("Doesn't meet hard constraints");
             return;
         }
         
@@ -135,47 +72,5 @@ public class PossibilityTree {
         
         
 	}
-	
-	
-	
-	
-	
-	/* Meant to be implemented in a loop which provides i
-	 * PARAM:
-	 * i: the current index of state 
-	 * state: the current state, an instance of State
-	 
-	public boolean meetsHardConstraints(int i, State state) {
-		char[] pair = new char[2];
-		pair[0] = (char)(i+1 + '0');
-		pair[1] = state.entries[i];
 		
-		// Determine if the pair {i+1, state.entries[i]} meets the Forbidden Machines constraint
-		for (char[] pairElem : constraints.forbiddenMach) {
-			if (pair == pairElem) {
-				return false;
-			}
-		}
-		
-		// Determine if the pair {i+1, state.entries[i]} and {i+2, state.entries[i+1]} meets the Too Near Tasks constraint
-		for (i = 0; i < constraints.tooNearTasks.size(); i++) {
-			char[] myPair = constraints.tooNearTasks.get(i);
-			if (state.entries[i] == myPair[0] && state.entries[i+1] == myPair[1])
-				return false;
-			
-		}
-		
-		// Determine if the pair {i+1, state.entries[i]} meets the Forced Partial Assignment constraint
-		// TODO: fix this semantic error
-		for (char[] mustPair : constraints.forcedPartialAssn) {
-			if (pair == mustPair) {
-				return true; // only one case where this method can return true!
-			}
-		}
-		
-		return false;
-	}
-	
-	public int countPenalty(int i, State state) { return 0;}
-	*/
 }
