@@ -485,17 +485,17 @@ public class fileIO {
             System.exit(0);
         }
         if (!m.find() && !line.trim().isEmpty() && type == Constraints.FORCED_PARTIAL_ASSIGNMENT && (!line.trim().equals("forbidden machine:"))) {
-            writer.println("invalid machine/task");
+            writer.println("Error while parsing input file");
             writer.close();
             System.exit(0);
         }
         if (!m.find() && !line.trim().isEmpty() && type == Constraints.FORBIDDEN_MACHINE && (!line.trim().equals("too-near tasks:"))) {
-            writer.println("invalid machine/task");
+            writer.println("Error while parsing input file");
             writer.close();
             System.exit(0);
         }
         if (!m.find() && !line.trim().isEmpty() && type == Constraints.TOO_NEAR_TASKS && (!line.trim().equals("machine penalties:"))) {
-            writer.println("invalid machine/task");
+            writer.println("Error while parsing input file");
             writer.close();
             System.exit(0);
         }
