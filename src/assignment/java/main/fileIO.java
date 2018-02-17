@@ -485,7 +485,7 @@ public class fileIO {
             System.exit(0);
         }
         if (!m.find() && !line.trim().isEmpty() && type == Constraints.FORCED_PARTIAL_ASSIGNMENT && (!line.trim().equals("forbidden machine:"))) {
-            writer.println("Error while parsing input file");
+            writer.println("invalid machine/task");
             writer.close();
             System.exit(0);
         }
