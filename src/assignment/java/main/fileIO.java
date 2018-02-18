@@ -24,11 +24,11 @@ public class fileIO {
         validFile = true;
         lineCounter = 0;
         Constraints c = new Constraints();
-        
+
         // time for error reporting
-        //fileIO.dateFormat = new SimpleDateFormat("HH:mm:ss:SS z");
-        //fileIO.date = new Date();
-        
+        // fileIO.dateFormat = new SimpleDateFormat("HH:mm:ss:SS z");
+        // fileIO.date = new Date();
+
         try {
             File file = new File(str);
             Scanner input = new Scanner(file);
@@ -46,29 +46,27 @@ public class fileIO {
                 return null;
             }
             lineCounter++;
-            
-            while(line.trim().isEmpty()) {
+
+            while (line.trim().isEmpty()) {
                 if (input.hasNextLine()) {
                     line = input.nextLine();
                     lineCounter++;
-                }
-                else {
+                } else {
                     writer.println("Error while parsing input file");
                     writer.close();
                     System.exit(0);
                 }
             }
-            
+
             if (line.trim().equals("Name:") && validFile) {
                 if (input.hasNextLine()) {
                     name = input.nextLine();// should contain a string for name
                     lineCounter++;
-                    while(name.trim().isEmpty()) {
+                    while (name.trim().isEmpty()) {
                         if (input.hasNextLine()) {
                             name = input.nextLine();
                             lineCounter++;
-                        }
-                        else {
+                        } else {
                             writer.println("Error while parsing input file");
                             writer.close();
                             System.exit(0);
@@ -83,13 +81,13 @@ public class fileIO {
                 if (input.hasNextLine()) {
                     line = input.nextLine();// reads new line
                     lineCounter++;
-                    // Reads new lines until we reach a non-empty line; should be "forced partial assignment:"
-                    while(line.trim().isEmpty()) {
+                    // Reads new lines until we reach a non-empty line; should
+                    // be "forced partial assignment:"
+                    while (line.trim().isEmpty()) {
                         if (input.hasNextLine()) {
                             line = input.nextLine();
                             lineCounter++;
-                        }
-                        else {
+                        } else {
                             writer.println("Error while parsing input file");
                             writer.close();
                             System.exit(0);
@@ -102,25 +100,14 @@ public class fileIO {
                     System.exit(0);
                 }
                 /*
-                if (input.hasNextLine()) {
-                    // line should be "forced partial
-                    // assignment:\n"
-                    while(line.trim().isEmpty()) {
-                        if (input.hasNextLine()) {
-                            line = input.nextLine();
-                            lineCounter++;
-                        }
-                        else {
-                            writer.println("Error while parsing input file");
-                        }
-                    }
-                } else {
-                    validFile = false;
-                    writer.println(
-                            "Error while parsing input file");
-                    System.exit(0);
-                }
-                */
+                 * if (input.hasNextLine()) { // line should be "forced partial
+                 * // assignment:\n" while(line.trim().isEmpty()) { if
+                 * (input.hasNextLine()) { line = input.nextLine();
+                 * lineCounter++; } else {
+                 * writer.println("Error while parsing input file"); } } } else
+                 * { validFile = false; writer.println(
+                 * "Error while parsing input file"); System.exit(0); }
+                 */
             } else {
                 writer.println("Error while parsing input file");
                 writer.close();
@@ -136,31 +123,21 @@ public class fileIO {
                     return c;
                 }
                 /*
-                if (input.hasNextLine()) {
-                    line = input.nextLine();
-                    lineCounter++;
-
-                }
-                else {
-                    writer.println("Error while parsing input file");
-                    System.exit(0);
-                }
-                // Goes until we find next non-empty line; should be "forbidden machine:"
-                while(line.trim().isEmpty()) {
-                    if (input.hasNextLine()) {
-                        line = input.nextLine();
-                        lineCounter++;
-                    }
-                    else {
-                        writer.println("Error while parsing input file");
-                        System.exit(0);
-                    }
-                }
-                */
+                 * if (input.hasNextLine()) { line = input.nextLine();
+                 * lineCounter++;
+                 * 
+                 * } else { writer.println("Error while parsing input file");
+                 * System.exit(0); } // Goes until we find next non-empty line;
+                 * should be "forbidden machine:" while(line.trim().isEmpty()) {
+                 * if (input.hasNextLine()) { line = input.nextLine();
+                 * lineCounter++; } else {
+                 * writer.println("Error while parsing input file");
+                 * System.exit(0); } }
+                 */
                 /*
-                line = input.nextLine(); // should contain "forbidden machine:"
-                lineCounter++;
-                */
+                 * line = input.nextLine(); // should contain
+                 * "forbidden machine:" lineCounter++;
+                 */
             } else {
                 writer.println("Error while parsing input file");
                 writer.close();
@@ -176,27 +153,17 @@ public class fileIO {
                     return c;
                 }
                 /*
-                if (input.hasNextLine()) {
-                    line = input.nextLine();// should contain "too-near
-                                            // tasks:\n"
-                    lineCounter++;
-                } else {
-                    writer.println(
-                            "Error while parsing input file");
-                    System.exit(0);
-                }
-                // If the line is blank, skips past blank lines til we find the next line with chars in it (should be too-near tasks)
-                while(line.trim().isEmpty()) {
-                    if (input.hasNextLine()) {
-                        line = input.nextLine();
-                        lineCounter++;
-                    }
-                    else {
-                        writer.println("Error while parsing input file");
-                        System.exit(0);
-                    }
-                }
-                */
+                 * if (input.hasNextLine()) { line = input.nextLine();// should
+                 * contain "too-near // tasks:\n" lineCounter++; } else {
+                 * writer.println( "Error while parsing input file");
+                 * System.exit(0); } // If the line is blank, skips past blank
+                 * lines til we find the next line with chars in it (should be
+                 * too-near tasks) while(line.trim().isEmpty()) { if
+                 * (input.hasNextLine()) { line = input.nextLine();
+                 * lineCounter++; } else {
+                 * writer.println("Error while parsing input file");
+                 * System.exit(0); } }
+                 */
             } else {
                 writer.println("Error while parsing input file");
                 writer.close();
@@ -212,28 +179,15 @@ public class fileIO {
                     return c;
                 }
                 /*
-                if (input.hasNextLine()) {
-                    line = input.nextLine();// should contain "machine
-                                            // penalties:"
-                    lineCounter++;
-                } else {
-                    writer.println(
-                            "Error while parsing input file");
-                    validFile = false;
-                    System.exit(0);
-                    return c;
-                }
-                while(line.trim().isEmpty()) {
-                    if (input.hasNextLine()) {
-                        line = input.nextLine();
-                        lineCounter++;
-                    }
-                    else {
-                        writer.println("Error while parsing input file");
-                        System.exit(0);
-                    }
-                }
-                */
+                 * if (input.hasNextLine()) { line = input.nextLine();// should
+                 * contain "machine // penalties:" lineCounter++; } else {
+                 * writer.println( "Error while parsing input file"); validFile
+                 * = false; System.exit(0); return c; }
+                 * while(line.trim().isEmpty()) { if (input.hasNextLine()) {
+                 * line = input.nextLine(); lineCounter++; } else {
+                 * writer.println("Error while parsing input file");
+                 * System.exit(0); } }
+                 */
 
             } else {
                 writer.println("Error while parsing input file");
@@ -253,28 +207,16 @@ public class fileIO {
                     return c;
                 }
                 /*
-                if (input.hasNextLine()) {
-                    line = input.nextLine();
-                    lineCounter++;
-
-                } else {
-                    writer.println(
-                            "Error while parsing input file");
-                    validFile = false;
-                    System.exit(0);
-                    return c;
-                }
-                while(line.trim().isEmpty()) {
-                    if (input.hasNextLine()) {
-                        line = input.nextLine();
-                        lineCounter++;
-                    }
-                    else {
-                        writer.println("Error while parsing input file");
-                        System.exit(0);
-                    }
-                }
-                */
+                 * if (input.hasNextLine()) { line = input.nextLine();
+                 * lineCounter++;
+                 * 
+                 * } else { writer.println( "Error while parsing input file");
+                 * validFile = false; System.exit(0); return c; }
+                 * while(line.trim().isEmpty()) { if (input.hasNextLine()) {
+                 * line = input.nextLine(); lineCounter++; } else {
+                 * writer.println("Error while parsing input file");
+                 * System.exit(0); } }
+                 */
             } else {
                 writer.println("Error while parsing input file");
                 writer.close();
@@ -311,7 +253,7 @@ public class fileIO {
     }
 
     private static Scanner machinePenalties(Scanner input, Constraints c) {
-        //int pen = 0;
+        // int pen = 0;
         for (int i = 0; i < 8; i++) {
             if (input.hasNextLine()) {
                 line = input.nextLine();
@@ -321,12 +263,11 @@ public class fileIO {
                 writer.close();
                 System.exit(0);
             }
-            while(line.trim().isEmpty()) {
+            while (line.trim().isEmpty()) {
                 if (input.hasNextLine()) {
                     line = input.nextLine();
                     lineCounter++;
-                }
-                else {
+                } else {
                     writer.println("Error while parsing input file");
                     writer.close();
                     System.exit(0);
@@ -376,26 +317,26 @@ public class fileIO {
             if (input.hasNextLine()) {
                 line = input.nextLine();
                 lineCounter++;
-                if (!line.trim().isEmpty() && (line.charAt(0)<= 57 && line.charAt(0) >= 48)) {
-                	writer.println("machine penalty error");
-                	writer.close();
-                	System.exit(0);
-                } else if (!line.trim().isEmpty()){
-                	writer.println("Error while parsing input file");
-                	writer.close();
-                	System.exit(0);
+                if (!line.trim().isEmpty()
+                        && (line.charAt(0) <= 57 && line.charAt(0) >= 48)) {
+                    writer.println("machine penalty error");
+                    writer.close();
+                    System.exit(0);
+                } else if (!line.trim().isEmpty()) {
+                    writer.println("Error while parsing input file");
+                    writer.close();
+                    System.exit(0);
                 }
             } else {
                 writer.println("Error while parsing input file");
                 writer.close();
                 System.exit(0);
             }
-            while(line.trim().isEmpty()) {
+            while (line.trim().isEmpty()) {
                 if (input.hasNextLine()) {
                     line = input.nextLine();
                     lineCounter++;
-                }
-                else {
+                } else {
                     writer.println("Error while parsing input file");
                     writer.close();
                     System.exit(0);
@@ -406,7 +347,7 @@ public class fileIO {
     }
 
     private static Scanner tooNearPenalties(Scanner input, Constraints c) {
-        //int penalty;
+        // int penalty;
         if (!input.hasNextLine()) {
             writer.print("Error while parsing input file");
             System.exit(0);
@@ -418,8 +359,8 @@ public class fileIO {
         return input;
     }
 
-    private static void mFind(String regex, Scanner input,
-            Constraints c, int type) {
+    private static void mFind(String regex, Scanner input, Constraints c,
+            int type) {
         lineCounter++;
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(line);
@@ -451,21 +392,19 @@ public class fileIO {
             if (input.hasNextLine()) {
                 line = input.nextLine();
                 lineCounter++;
-                while(line.trim().isEmpty()) {
+                while (line.trim().isEmpty()) {
                     if (input.hasNextLine()) {
                         line = input.nextLine();
                         lineCounter++;
-                    }
-                    else if (type == Constraints.TOO_NEAR_PENALTIES) {
+                    } else if (type == Constraints.TOO_NEAR_PENALTIES) {
                         return;
-                    }
-                    else {
+                    } else {
                         writer.println("Error while parsing input file");
                         writer.close();
                         System.exit(0);
                     }
                 }
-                
+
             } else if (type != Constraints.TOO_NEAR_PENALTIES) {
                 writer.println("Error while parsing input file ");
                 writer.close();
@@ -476,38 +415,54 @@ public class fileIO {
             }
             m = p.matcher(line);
         }
-        if (!m.find() && !line.trim().isEmpty() && type == Constraints.TOO_NEAR_PENALTIES) {
-        	if (line.trim().charAt(5) > '9' ||  line.trim().charAt(5) < '0') 
-        		writer.println("invalid penalty");
-        	else
-        		writer.println("invalid task");
+        if (!m.find() && !line.trim().isEmpty()
+                && type == Constraints.TOO_NEAR_PENALTIES) {
+            if (line.trim().charAt(5) > '9' || line.trim().charAt(5) < '0')
+                writer.println("invalid penalty");
+            else
+                writer.println("invalid task");
             writer.close();
             System.exit(0);
         }
-        if (!m.find() && !line.trim().isEmpty() && type == Constraints.FORCED_PARTIAL_ASSIGNMENT && (!line.trim().equals("forbidden machine:"))) {
-            writer.println("invalid machine/task");
-            writer.close();
-            System.exit(0);
+        Pattern invalidRegexP = Pattern.compile("[(][\\d][,][\\w][)]");
+        Matcher invalidRegexM = invalidRegexP.matcher(line.trim());
+        if (invalidRegexM.find()) {
+            if (line.trim().charAt(4) >= 'A' || line.trim().charAt(4) <= 'H'
+                    || line.trim().charAt(2) >= '1'
+                    || line.trim().charAt(2) <= '8') {
+                writer.print(line);
+                writer.println("invalid machine/task 1");
+                writer.close();
+                System.exit(0);
+            }
+        } else {
+            if (!m.find() && !line.trim().isEmpty()
+                    && type == Constraints.FORCED_PARTIAL_ASSIGNMENT
+                    && (!line.trim().equals("forbidden machine:"))) {
+                writer.println("Error while parsing input file 1");
+                writer.close();
+                System.exit(0);
+            }
+
         }
-        if (!m.find() && !line.trim().isEmpty() && type == Constraints.FORBIDDEN_MACHINE && (!line.trim().equals("too-near tasks:"))) {
+        if (!m.find() && !line.trim().isEmpty()
+                && type == Constraints.FORBIDDEN_MACHINE
+                && (!line.trim().equals("too-near tasks:"))) {
             writer.println("Error while parsing input file");
             writer.close();
             System.exit(0);
         }
-        if (!m.find() && !line.trim().isEmpty() && type == Constraints.TOO_NEAR_TASKS && (!line.trim().equals("machine penalties:"))) {
+        if (!m.find() && !line.trim().isEmpty()
+                && type == Constraints.TOO_NEAR_TASKS
+                && (!line.trim().equals("machine penalties:"))) {
             writer.println("Error while parsing input file");
             writer.close();
             System.exit(0);
         }
         /*
-        if (!line.trim().isEmpty()) {
-            validFile = false;
-            System.err
-                    .println("Error while parsing input file");
-            System.exit(0);
-            return;
-        }
-        */
+         * if (!line.trim().isEmpty()) { validFile = false; System.err
+         * .println("Error while parsing input file"); System.exit(0); return; }
+         */
     }
 
     private static Scanner tooNearTasks(Scanner input, Constraints c) {
@@ -518,12 +473,11 @@ public class fileIO {
             writer.close();
             System.exit(0);
         }
-        while(line.trim().isEmpty()) {
+        while (line.trim().isEmpty()) {
             if (input.hasNextLine()) {
                 line = input.nextLine();
                 lineCounter++;
-            }
-            else {
+            } else {
                 writer.println("Error while parsing input file");
                 writer.close();
                 System.exit(0);
@@ -541,12 +495,11 @@ public class fileIO {
             writer.close();
             System.exit(0);
         }
-        while(line.trim().isEmpty()) {
+        while (line.trim().isEmpty()) {
             if (input.hasNextLine()) {
                 line = input.nextLine();
                 lineCounter++;
-            }
-            else {
+            } else {
                 writer.println("Error while parsing input file");
                 writer.close();
                 System.exit(0);
@@ -566,12 +519,11 @@ public class fileIO {
             System.exit(0);
         }
         // Skips past blank lines until we hit a non-blank line
-        while(line.trim().isEmpty()) {
+        while (line.trim().isEmpty()) {
             if (input.hasNextLine()) {
                 line = input.nextLine();
                 lineCounter++;
-            }
-            else {
+            } else {
                 writer.println("Error while parsing input file");
                 writer.close();
                 System.exit(0);
