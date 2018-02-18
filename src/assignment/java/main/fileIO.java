@@ -430,7 +430,7 @@ public class fileIO {
             if (line.trim().charAt(4) >= 'A' || line.trim().charAt(4) <= 'H'
                     || line.trim().charAt(2) >= '1'
                     || line.trim().charAt(2) <= '8') {
-                writer.print(line);
+//                writer.print(line);
                 writer.println("invalid machine/task 1");
                 writer.close();
                 System.exit(0);
