@@ -431,7 +431,7 @@ public class fileIO {
                     || line.trim().charAt(2) >= '1'
                     || line.trim().charAt(2) <= '8') {
 //                writer.print(line);
-                writer.println("invalid machine/task 1");
+                writer.println("invalid machine/task");
                 writer.close();
                 System.exit(0);
             }
@@ -439,7 +439,7 @@ public class fileIO {
             if (!m.find() && !line.trim().isEmpty()
                     && type == Constraints.FORCED_PARTIAL_ASSIGNMENT
                     && (!line.trim().equals("forbidden machine:"))) {
-                writer.println("Error while parsing input file 1");
+                writer.println("Error while parsing input file");
                 writer.close();
                 System.exit(0);
             }
